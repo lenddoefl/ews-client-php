@@ -4,14 +4,38 @@ namespace EWSPHPClient
 {
     abstract class EWSPMain
     {
-        /**
-         * @param $file
-         * @return string
-         * Method takes identifier file path and returns json, containing identifier.
-         */
-        protected static function getIdentifier ($file)
+        protected $identifier;
+        protected $decryptionKey;
+        protected $encryptionKey;
+
+        //Methods setIdentifier, setDecryptionKey, setEncryptionKey lets user to set keys and identifier if they
+        //weren't set in the controller.
+
+        public function setIdentifier ($identifier)
         {
-            $identifier = file_get_contents($file);
+            $this->identifier = $identifier;
+        }
+
+        public function setDecryptionKey ($decryptionKey)
+        {
+            $this->decryptionKey = $decryptionKey;
+        }
+
+        public function setEncryptionKey ($encryptionKey)
+        {
+            $this->encryptionKey = $encryptionKey;
+        }
+
+        function __construct($identifier = null, $decryptionKey = null, $encryptionKey = null)
+        {
+            $this->setIdentifier($identifier);
+            $this->setDecryptionKey($decryptionKey);
+            $this->setEncryptionKey($encryptionKey);
+        }
+
+        protected static function getJsonIdentifier ($identifier)
+        {
+            $identifier = file_get_contents($identifier);
             $testPost = [ "identifier"=> $identifier ];
             $json = json_encode($testPost);
             return $json;
@@ -50,14 +74,13 @@ namespace EWSPHPClient
 
         /**
          * @param $url
-         * @param $file
          * @return mixed
          * Method takes API login endpoint url and path to identifier file and returns API json answer.
          */
 
-        public function callLogin ($url, $file)
+        public function callLogin ($url)
         {
-            $json = $this::getIdentifier($file);
+            $json = $this::getJsonIdentifier($this->identifier);
             $response = $this::sendLoginRequest($url, $json);
 
             return $response;
