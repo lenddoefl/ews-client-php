@@ -28,7 +28,7 @@ namespace EWSPHPClient
                 "data"=>$data
             ];
             try {
-                $response = $this::sendRequest($url, $post);
+                $response = self::sendRequest($url, $post);
 
                 $data = \GuzzleHttp\json_encode($response)->data;
                 $this->applicationHash = $data->applicationHash;
@@ -66,7 +66,7 @@ namespace EWSPHPClient
                 "reqToken"=>   $this->reqToken64,
                 "data"=>$data
             ];
-            $response = $this::sendRequest($url, $post);
+            $response = self::sendRequest($url, $post);
 
             array_push($this->attachmentUids, \GuzzleHttp\json_encode($response)->data->attachmentUid);
 

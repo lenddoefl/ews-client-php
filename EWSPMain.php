@@ -42,20 +42,38 @@ namespace EWSPHPClient
             $this->url = trim($url, "/");
         }
 
+        public function getIdentifier ()
+        {
+            return $this->identifier;
+        }
+
+        public function getDecryptionKey ()
+        {
+            return $this->decryptionKey;
+        }
+
+        public function getEncryptionKey ()
+        {
+            return $this->encryptionKey;
+        }
+
+        public function getURL () {
+            return $this->url;
+        }
+
         function __construct($url , $identifier, $decryptionKey, $encryptionKey)
         {
             $this->setIdentifier($identifier);
             $this->setDecryptionKey($decryptionKey);
             $this->setEncryptionKey($encryptionKey);
             $this->setURL($url);
-
         }
 
         /**
          * @param $url
          * @param $post
          * @return \Psr\Http\Message\StreamInterface
-         * Use guzzle by default.
+         * Uses guzzle.
          */
 
         protected static function sendRequest ($url, $post)
@@ -74,7 +92,7 @@ namespace EWSPHPClient
         {
             $url = $this->url . '/login.json';
             $post = [ "identifier"=> $this->identifier ];
-            $response = $this::sendRequest($url, $post);
+            $response = self::sendRequest($url, $post);
 
             return $response;
         }
