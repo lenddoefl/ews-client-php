@@ -1,4 +1,6 @@
 .idea/
-composer.json
 TestKeys/
 Links.php
+composer.lock
+composer.phar
+vendor/

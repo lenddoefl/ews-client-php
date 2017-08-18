@@ -1,7 +1,14 @@
 <?php
 
+namespace {
+    require 'vendor/autoload.php';
+}
+
+
 namespace EWSPHPClient
 {
+    use GuzzleHttp\Client;
+
     abstract class EWSPMain
     {
         protected $identifier;
@@ -13,17 +20,17 @@ namespace EWSPHPClient
 
         public function setIdentifier ($identifier)
         {
-            $this->identifier = $identifier;
+            $this->identifier = file_get_contents($identifier);
         }
 
         public function setDecryptionKey ($decryptionKey)
         {
-            $this->decryptionKey = $decryptionKey;
+            $this->decryptionKey = file_get_contents($decryptionKey);
         }
 
         public function setEncryptionKey ($encryptionKey)
         {
-            $this->encryptionKey = $encryptionKey;
+            $this->encryptionKey = file_get_contents($encryptionKey);
         }
 
         function __construct($identifier = null, $decryptionKey = null, $encryptionKey = null)
@@ -33,43 +40,27 @@ namespace EWSPHPClient
             $this->setEncryptionKey($encryptionKey);
         }
 
-        protected static function getJsonIdentifier ($identifier)
-        {
-            $identifier = file_get_contents($identifier);
-            $testPost = [ "identifier"=> $identifier ];
-            $json = json_encode($testPost);
-            return $json;
-        }
-
         protected static function getKeys ()
-        {
-
-        }
-
-        protected static function sendRequest ()
         {
 
         }
 
         /**
          * @param $url
-         * @param $json
-         * @return mixed
-         * Curl-based implementation is placeholder for test purposes.
+         * @param $post
+         * @return \Psr\Http\Message\StreamInterface
+         * Use guzzle by default.
          */
-        protected static function sendLoginRequest ($url, $json)
-        {
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => $json,
-                CURLOPT_URL => $url,
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
 
-            return $response;
+        protected static function sendRequest ($url, $post)
+        {
+
+            $client = new Client();
+            $response = $client->request('POST', $url, [
+                'json' => $post
+            ]);
+
+            return $response->getBody();
         }
 
         /**
@@ -80,8 +71,8 @@ namespace EWSPHPClient
 
         public function callLogin ($url)
         {
-            $json = $this::getJsonIdentifier($this->identifier);
-            $response = $this::sendLoginRequest($url, $json);
+            $post = [ "identifier"=> $this->identifier ];
+            $response = $this::sendRequest($url, $post);
 
             return $response;
         }
