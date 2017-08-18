@@ -76,6 +76,6 @@ $data = [
             "voterId"=>            '1234124'
           ]
     ],
-    "application"=>   "yourbank"
+    "application"=>   "business"
 ];
 $loginRequestApplicantJourney->callStartSession($data);

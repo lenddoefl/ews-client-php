@@ -42,7 +42,7 @@ namespace EWSPHPClient
             $this->url = trim($url, "/");
         }
 
-        function __construct($url = null, $identifier = null, $decryptionKey = null, $encryptionKey = null)
+        function __construct($url , $identifier, $decryptionKey, $encryptionKey)
         {
             $this->setIdentifier($identifier);
             $this->setDecryptionKey($decryptionKey);

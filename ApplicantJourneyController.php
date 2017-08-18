@@ -16,9 +16,12 @@ namespace EWSPHPClient
 
         protected $sequence = 0;
 
+        protected $attachmentUids = [];
+
         public function callStartSession ($data)
         {
             $url = $this->url . '/startSession.json';
+            $this->encoderDecoder();
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
@@ -50,6 +53,23 @@ namespace EWSPHPClient
                 "data"=>$data
             ];
             $response = $this::sendRequest($url, $post);
+            return $response;
+        }
+
+        public function callCreateAttachment ($data)
+        {
+            //TODO Add attachment size check and attachment quantity check.
+
+            $url = $this->url . 'createAttachment.json';
+            $post = [
+                "authToken"=>  $this->authToken64,
+                "reqToken"=>   $this->reqToken64,
+                "data"=>$data
+            ];
+            $response = $this::sendRequest($url, $post);
+
+            array_push($this->attachmentUids, \GuzzleHttp\json_encode($response)->data->attachmentUid);
+
             return $response;
         }
 
