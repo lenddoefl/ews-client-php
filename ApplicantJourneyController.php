@@ -51,7 +51,7 @@ namespace EWSPHPClient
 
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
         }
 
@@ -76,7 +76,7 @@ namespace EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
         }
 
@@ -98,7 +98,7 @@ namespace EWSPHPClient
                     array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
                     return $response;
                 } catch (\Exception $e) {
-                    return var_dump($e);
+                    return self::handleError($e);
                 }
             }
             else {
@@ -128,7 +128,7 @@ namespace EWSPHPClient
 
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
         }
 
@@ -151,7 +151,7 @@ namespace EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
 
         }
@@ -168,7 +168,7 @@ namespace EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
         }
 
@@ -192,7 +192,7 @@ namespace EWSPHPClient
 
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
         }
     }

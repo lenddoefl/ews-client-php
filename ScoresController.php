@@ -19,7 +19,7 @@ namespace EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
         }
 
@@ -35,7 +35,7 @@ namespace EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return var_dump($e);
+                return self::handleError($e);
             }
         }
     }

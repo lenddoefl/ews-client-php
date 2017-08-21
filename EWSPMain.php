@@ -92,10 +92,16 @@ namespace EWSPHPClient
         {
             $url = $this->url . '/login.json';
             $post = [ "identifier"=> $this->identifier ];
-            $response = self::sendRequest($url, $post);
-            $this->encoderDecoder($response);
+            try{
+                $response = self::sendRequest($url, $post);
+                $this->encoderDecoder($response);
 
-            return $response;
+                return $response;
+            }
+            catch (\Exception $e) {
+                return self::handleError($e);
+            }
+
         }
 
         protected function encoderDecoder ($login)
@@ -116,6 +122,11 @@ namespace EWSPHPClient
             $this->reqToken64 = $reqToken64;
 
             return [$authToken64, $reqToken64];
+        }
+
+        protected static function handleError($error)
+        {
+            return $error;
         }
     }
 }
