@@ -93,13 +93,14 @@ namespace EWSPHPClient
             $url = $this->url . '/login.json';
             $post = [ "identifier"=> $this->identifier ];
             $response = self::sendRequest($url, $post);
+            $this->encoderDecoder($response);
 
             return $response;
         }
 
-        public function encoderDecoder ()
+        protected function encoderDecoder ($login)
         {
-            $login = \GuzzleHttp\json_decode($this->callLogin());
+            $login = \GuzzleHttp\json_decode($login);
 
             $authToken64 = $login->data->authToken;
             $authToken = base64_decode($authToken64);
