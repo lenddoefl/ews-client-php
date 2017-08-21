@@ -1,11 +1,14 @@
 <?php
 require_once 'ApplicantJourneyController.php';
 
-$loginRequestApplicantJourney = new EWSPHPClient\ApplicantJourneyController(
+$requestApplicantJourney = new EWSPHPClient\ApplicantJourneyController(
     'https://uat-external.eflglobal.com/api/v2/applicant_journey/',
     'TestKeys/ApplicantJourney/identifier.txt',
     'TestKeys/ApplicantJourney/decryption.key',
     'TestKeys/ApplicantJourney/encryption.key');
+
+echo "CallLogin method returns: <br>";
+echo $requestApplicantJourney->callLogin();
 
 $data = [
     "applicant"=> [
@@ -76,7 +79,14 @@ $data = [
             "voterId"=>            '1234124'
           ]
     ],
-    "application"=>   "a0d0b349-8e72-11e5-850b-0a2fc0809a2d#1.42"
+    "application"=>   "sdkExample"
 ];
-$loginRequestApplicantJourney->callLogin();
-$loginRequestApplicantJourney->callStartSession($data);
+
+echo "<br><br>CallStartSession method returns: <br>";
+echo $requestApplicantJourney->callStartSession($data);
+
+echo "<br><br>GetUid method returns: <br>";
+echo $requestApplicantJourney->getUid();
+
+echo "<br><br>GetPublicKey method returns: <br>";
+echo $requestApplicantJourney->getPublicKey();

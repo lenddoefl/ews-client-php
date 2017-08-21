@@ -44,7 +44,7 @@ namespace EWSPHPClient
             try {
                 $response = self::sendRequest($url, $post);
 
-                $data = \GuzzleHttp\json_encode($response)->data;
+                $data = \GuzzleHttp\json_decode($response)->data;
                 $this->applicationHash = $data->applicationHash;
                 $this->publicKey = $data->publicKey;
                 $this->uid = $data->uid;
@@ -59,15 +59,25 @@ namespace EWSPHPClient
         {
             $url = $this->url . 'inishSession.json';
 
-            array_push($data, ['sequence'=> $this->sequence], ['uid'=> $this->uid]);
+            if (!isset($data->uid)){
+                $data->uid = $this->uid;
+            }
+            if (!isset($data->sequence)){
+                $data->uid = $this->sequence;
+            }
 
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
                 "data"=>$data
             ];
-            $response = self::sendRequest($url, $post);
-            return $response;
+
+            try {
+                $response = self::sendRequest($url, $post);
+                return $response;
+            } catch (\Exception $e) {
+                return var_dump($e);
+            }
         }
 
         public function callCreateAttachment ($data)
@@ -81,10 +91,15 @@ namespace EWSPHPClient
                     "reqToken"=>   $this->reqToken64,
                     "data"=>$data
                 ];
-                $response = self::sendRequest($url, $post);
 
-                array_push($this->attachmentUids, \GuzzleHttp\json_encode($response)->data->attachmentUid);
-                return $response;
+                try {
+                    $response = self::sendRequest($url, $post);
+
+                    array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
+                    return $response;
+                } catch (\Exception $e) {
+                    return var_dump($e);
+                }
             }
             else {
                 return trigger_error("Too many attachments for this session.");
@@ -94,26 +109,51 @@ namespace EWSPHPClient
         public function callFinishStep ($data)
         {
             $url = $this->url . 'finishStep.json';
+
+            if (!isset($data->uid)){
+                $data->uid = $this->uid;
+            }
+            if (!isset($data->sequence)){
+                $data->uid = $this->sequence;
+            }
+
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
                 "data"=>$data
             ];
-            $response = self::sendRequest($url, $post);
-            return $response;
+            try {
+                $response = self::sendRequest($url, $post);
+                $this->sequence += 1;
+
+                return $response;
+            } catch (\Exception $e) {
+                return var_dump($e);
+            }
         }
 
 
         public function callGetApplication ($data)
         {
             $url = $this->url . 'getApplication.json';
+
+            if (!isset($data->uid)){
+                $data->uid = $this->uid;
+            }
+
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
                 "data"=>$data
             ];
-            $response = self::sendRequest($url, $post);
-            return $response;
+
+            try {
+                $response = self::sendRequest($url, $post);
+                return $response;
+            } catch (\Exception $e) {
+                return var_dump($e);
+            }
+
         }
 
         public function callPrefetchApplications ($data)
@@ -124,8 +164,12 @@ namespace EWSPHPClient
                 "reqToken"=>   $this->reqToken64,
                 "data"=>$data
             ];
-            $response = self::sendRequest($url, $post);
-            return $response;
+            try {
+                $response = self::sendRequest($url, $post);
+                return $response;
+            } catch (\Exception $e) {
+                return var_dump($e);
+            }
         }
 
         public function callResumeSession ($data)
@@ -142,7 +186,7 @@ namespace EWSPHPClient
             try {
                 $response = self::sendRequest($url, $post);
 
-                $data = \GuzzleHttp\json_encode($response)->data;
+                $data = \GuzzleHttp\json_decode($response)->data;
                 $this->publicKey = $data->publicKey;
                 $this->uid = $data->uid;
 

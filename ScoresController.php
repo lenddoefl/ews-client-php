@@ -7,7 +7,7 @@ namespace EWSPHPClient
 {
     class ScoresController extends EWSPMain
     {
-        protected function callDateQuery ($date)
+        public function callDateQuery ($date)
         {
             $url = $this->url . 'dateQuery.json';
             $post = [
@@ -15,11 +15,15 @@ namespace EWSPHPClient
                 "reqToken"=>   $this->reqToken64,
                 "dateQuery"=>$date
             ];
-            $response = self::sendRequest($url, $post);
-            return $response;
+            try {
+                $response = self::sendRequest($url, $post);
+                return $response;
+            } catch (\Exception $e) {
+                return var_dump($e);
+            }
         }
 
-        protected function callSubject ($subject)
+        public function callSubject ($subject)
         {
             $url = $this->url . 'subject.json';
             $post = [
@@ -27,8 +31,12 @@ namespace EWSPHPClient
                 "reqToken"=>   $this->reqToken64,
                 "subjects"=>$subject
             ];
-            $response = self::sendRequest($url, $post);
-            return $response;
+            try {
+                $response = self::sendRequest($url, $post);
+                return $response;
+            } catch (\Exception $e) {
+                return var_dump($e);
+            }
         }
     }
 }
