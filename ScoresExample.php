@@ -6,8 +6,8 @@ $requestScores = new EWSPHPClient\ScoresController('https://uat-external.eflglob
     'TestKeys/Scores/decryption.key',
     'TestKeys/Scores/encryption.key');
 
+echo "CallLogin method returns: <br>";
 echo $requestScores->callLogin();
-echo '<br><br>';
 
 $data = [
     [
@@ -20,10 +20,11 @@ $data = [
     ]
 ];
 
-
+echo "<br><br>CallSubject method returns: <br>";
 echo $requestScores->callSubject($data);
-echo '<br><br>';
 
-$data = "2017-03-14 00:00:00";
 
+$data = "2017-08-14 00:00:00";
+
+echo "<br><br>CallDateQuery method returns: <br>";
 echo $requestScores->callDateQuery($data);
