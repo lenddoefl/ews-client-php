@@ -57,7 +57,7 @@ namespace EWSPHPClient
 
         public function callFinishSession ($data)
         {
-            $url = $this->url . 'inishSession.json';
+            $url = $this->url . '/finishSession.json';
 
             if (!isset($data->uid)){
                 $data->uid = $this->uid;
@@ -85,7 +85,7 @@ namespace EWSPHPClient
 
             if (count($this->attachmentUids) < 10)
             {
-                $url = $this->url . 'createAttachment.json';
+                $url = $this->url . '/createAttachment.json';
                 $post = [
                     "authToken"=>  $this->authToken64,
                     "reqToken"=>   $this->reqToken64,
@@ -108,7 +108,7 @@ namespace EWSPHPClient
 
         public function callFinishStep ($data)
         {
-            $url = $this->url . 'finishStep.json';
+            $url = $this->url . '/finishStep.json';
 
             if (!isset($data->uid)){
                 $data->uid = $this->uid;
@@ -135,7 +135,7 @@ namespace EWSPHPClient
 
         public function callGetApplication ($data)
         {
-            $url = $this->url . 'getApplication.json';
+            $url = $this->url . '/getApplication.json';
 
             if (!isset($data->uid)){
                 $data->uid = $this->uid;
@@ -158,7 +158,7 @@ namespace EWSPHPClient
 
         public function callPrefetchApplications ($data)
         {
-            $url = $this->url . 'prefetchApplications.json';
+            $url = $this->url . '/prefetchApplications.json';
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
@@ -174,7 +174,7 @@ namespace EWSPHPClient
 
         public function callResumeSession ($data)
         {
-            $url = $this->url . 'resumeSession.json';
+            $url = $this->url . '/resumeSession.json';
             if (!isset($data->uid)){
                 $data->uid = $this->uid;
             }

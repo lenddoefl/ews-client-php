@@ -108,14 +108,20 @@ namespace EWSPHPClient
         {
             $login = \GuzzleHttp\json_decode($login);
 
-            $authToken64 = $login->data->authToken;
+            if (get_class($this) == "EWSPHPClient\ScoresController") {
+                $authToken64 = $login->authToken;
+                $reqToken64 = $login->reqToken;
+            }
+            else {
+                $authToken64 = $login->data->authToken;
+                $reqToken64 = $login->data->reqToken;
+            }
+
             $authToken = base64_decode($authToken64);
-
-            $reqToken64 = $login->data->reqToken;
-
             $reqToken = base64_decode($reqToken64);
-            $reqToken = openssl_decrypt($reqToken,'AES-128-CBC' ,$this->decryptionKey, OPENSSL_RAW_DATA, $authToken);
-            $reqToken = openssl_encrypt($reqToken,'AES-128-CBC' ,$this->encryptionKey, OPENSSL_RAW_DATA, $authToken);
+
+            $reqToken = openssl_decrypt($reqToken,'AES-128-CBC', $this->decryptionKey, OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING, $authToken);
+            $reqToken = openssl_encrypt($reqToken,'AES-128-CBC', $this->encryptionKey, OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING, $authToken);
             $reqToken64 = base64_encode($reqToken);
 
             $this->authToken64 = $authToken64;

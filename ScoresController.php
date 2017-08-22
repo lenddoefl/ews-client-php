@@ -9,7 +9,7 @@ namespace EWSPHPClient
     {
         public function callDateQuery ($date)
         {
-            $url = $this->url . 'dateQuery.json';
+            $url = $this->url . '/dateQuery.json';
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
@@ -25,7 +25,7 @@ namespace EWSPHPClient
 
         public function callSubject ($subject)
         {
-            $url = $this->url . 'subject.json';
+            $url = $this->url . '/subject.json';
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
