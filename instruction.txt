@@ -100,7 +100,12 @@ As an argument takes a PHP array of data to send on server. If not provided, uid
 _________________________
 callGetApplication($data)
 Method connects to getApplication endpoint and returns JSON answer. It also stores application hash in class instance.
-As an argument takes a PHP array of data to send on server. If not provided, application hash and uid are taken from stored $uid variables.
+As an argument takes a PHP array of data to send on server. If not provided, application hash and uid are taken from stored variables.
+
+_____________________
+callFinishStep($data)
+Method connects to finishStep endpoint and returns JSON answer.
+As an argument takes a PHP array of data to send on server. If not provided, sequence and uid are taken from stored variables.
 
 ##########################
 # ScoresController class #

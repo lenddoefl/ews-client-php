@@ -17,16 +17,24 @@ namespace EWSPHPClient
         protected $sequence;
         protected $attachmentUids;
 
-        public function getUid(){
+        public function getUid()
+        {
             return $this->uid;
         }
 
-        public function getPublicKey(){
+        public function getPublicKey()
+        {
             return $this->publicKey;
         }
 
-        public function getAttachmentUids(){
+        public function getAttachmentUids()
+        {
             return $this->attachmentUids;
+        }
+
+        public function getApplicationHash()
+        {
+            return $this->applicationHash;
         }
 
         public function callStartSession ($data)
