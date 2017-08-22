@@ -36,6 +36,10 @@ namespace EWSPHPClient
 
             $url = $this->url . '/startSession.json';
 
+            if ((!isset($data->uid)) and (isset($this->applicationHash))){
+                $data['applicationHash'] = $this->applicationHash;
+            }
+
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
@@ -132,13 +136,15 @@ namespace EWSPHPClient
             }
         }
 
-
         public function callGetApplication ($data)
         {
             $url = $this->url . '/getApplication.json';
 
             if (!isset($data->uid)){
                 $data['uid'] = $this->uid;
+            }
+            if (!isset($data->uid)){
+                $data['applicationHash'] = $this->applicationHash;
             }
 
             $post = [
@@ -149,11 +155,14 @@ namespace EWSPHPClient
 
             try {
                 $response = self::sendRequest($url, $post);
+
+                $data = \GuzzleHttp\json_decode($response)->data;
+                $this->applicationHash = $data->applicationHash;
+
                 return $response;
             } catch (\Exception $e) {
                 return self::handleError($e);
             }
-
         }
 
         public function callPrefetchApplications ($data)

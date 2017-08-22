@@ -14,7 +14,11 @@ $requestApplicantJourney = new EWSPHPClient\ApplicantJourneyController(
 echo "CallLogin method returns: <br>";
 echo $requestApplicantJourney->callLogin();
 
-//We provide minimal data needed to start session.
+echo "<br><br>CallPrefetchApplications method returns: <br>";
+echo $requestApplicantJourney->callPrefetchApplications(
+    ["applications" => ["sdkExample"=>   "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"]]);
+
+//We provide data needed to start session.
 $data = [
     "applicant"=> [
           "birthday"=>         '11.11.11',
@@ -103,6 +107,33 @@ echo $requestApplicantJourney->getUid();
 
 echo "<br><br>GetPublicKey method returns: <br>";
 echo $requestApplicantJourney->getPublicKey();
+
+//We provide data needed to getApplication endpoint.
+$data = [
+    "device"=> [
+        "browser"=> null,
+        "deviceId"=> null,
+        "ipAddress"=> null,
+        "os"=> [
+            "type"=> null,
+            "version"=> null,
+        ],
+        "referrer"=> null,
+
+        "viewport"=> [
+            "height"=> null,
+            "width"=> null
+          ]
+],
+
+    "player"=> [
+        "type"=>    "web-embedded",
+        "version"=> "1.20"
+    ]
+  ];
+
+echo "<br><br>CallGetApplication method returns: <br>";
+echo $requestApplicantJourney->callGetApplication($data);
 
 echo "<br><br>CallFinishSession method returns: <br>";
 echo $requestApplicantJourney->callFinishSession();

@@ -77,15 +77,30 @@ Following methods were tested and now workable:
 
 _______________________
 callStartSession($data)
-Method connects to startSession endpoint and returns JSON answer. It also stores uid ans sequence in class instance.
-As an argument takes a PHP array of data to send on server.
+Method connects to startSession endpoint and returns JSON answer. It also stores uid, public key, application hash in class instance and set sequence to 0.
+As an argument takes a PHP array of data to send on server. Method can take stored application hash if one provided.
 Pay attention, that before calling this session you should call to login endpoint ot get reqToken.
 
-_______________________
+__________________________
 callFinishSession([$data])
 Method connects to finishSession endpoint and returns JSON answer.
 It may take a PHP array of data to send on server. If not provided, data is taken from stored $uid and $sequence variables.
 Pay attention, that before calling this session you should call to login endpoint ot get new reqToken.
+
+_______________________________
+callPrefetchApplications($data)
+Method connects to prefetchApplications endpoint and returns JSON answer.
+As an argument takes a PHP array of data to send on server.
+
+________________________
+callResumeSession($data)
+Method connects to resumeSession endpoint and returns JSON answer. It also stores uid and public key in class instance.
+As an argument takes a PHP array of data to send on server. If not provided, uid is taken from stored $uid variables.
+
+_________________________
+callGetApplication($data)
+Method connects to getApplication endpoint and returns JSON answer. It also stores application hash in class instance.
+As an argument takes a PHP array of data to send on server. If not provided, application hash and uid are taken from stored $uid variables.
 
 ##########################
 # ScoresController class #
