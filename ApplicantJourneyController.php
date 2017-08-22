@@ -55,15 +55,15 @@ namespace EWSPHPClient
             }
         }
 
-        public function callFinishSession ($data)
+        public function callFinishSession ($data = [])
         {
             $url = $this->url . '/finishSession.json';
 
             if (!isset($data->uid)){
-                $data->uid = $this->uid;
+                $data['uid'] = $this->uid;
             }
             if (!isset($data->sequence)){
-                $data->uid = $this->sequence;
+                $data['sequence'] = $this->sequence;
             }
 
             $post = [
@@ -111,10 +111,10 @@ namespace EWSPHPClient
             $url = $this->url . '/finishStep.json';
 
             if (!isset($data->uid)){
-                $data->uid = $this->uid;
+                $data['uid'] = $this->uid;
             }
             if (!isset($data->sequence)){
-                $data->uid = $this->sequence;
+                $data['sequence'] = $this->sequence;
             }
 
             $post = [
@@ -138,7 +138,7 @@ namespace EWSPHPClient
             $url = $this->url . '/getApplication.json';
 
             if (!isset($data->uid)){
-                $data->uid = $this->uid;
+                $data['uid'] = $this->uid;
             }
 
             $post = [
@@ -175,9 +175,11 @@ namespace EWSPHPClient
         public function callResumeSession ($data)
         {
             $url = $this->url . '/resumeSession.json';
+
             if (!isset($data->uid)){
-                $data->uid = $this->uid;
+                $data['uid'] = $this->uid;
             }
+
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,

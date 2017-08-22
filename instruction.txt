@@ -79,7 +79,13 @@ _______________________
 callStartSession($data)
 Method connects to startSession endpoint and returns JSON answer. It also stores uid ans sequence in class instance.
 As an argument takes a PHP array of data to send on server.
+Pay attention, that before calling this session you should call to login endpoint ot get reqToken.
 
+_______________________
+callFinishSession([$data])
+Method connects to finishSession endpoint and returns JSON answer.
+It may take a PHP array of data to send on server. If not provided, data is taken from stored $uid and $sequence variables.
+Pay attention, that before calling this session you should call to login endpoint ot get new reqToken.
 
 ##########################
 # ScoresController class #
