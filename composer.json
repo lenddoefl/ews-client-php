@@ -1,4 +1,24 @@
 {
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "eflglobal/ews-client-php",
+                "version": "dev-master",
+                "source": {
+                    "url": "git://github.com/eflglobal/ews-client-php.git",
+                    "type": "git",
+                    "reference": "master"
+                },
+                "autoload": {
+                    "psr-0" : {
+                        "EFLGlobal\\EWSPHPClient" : ""
+                    }
+                }
+            }
+        }
+    ],
+
     "require": {
         "guzzlehttp/guzzle": "^6.3"
     },

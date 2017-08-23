@@ -1,7 +1,7 @@
 <?php
 require_once 'ScoresAPIController.php';
 
-$requestScores = new \EWSPHPClient\ScoresAPIController($argv[1], $argv[2], $argv[3], $argv[4]);
+$requestScores = new \EFLGlobal\EWSPHPClient\ScoresAPIController($argv[1], $argv[2], $argv[3], $argv[4]);
 echo $requestScores->callLogin();
 
 $data = [

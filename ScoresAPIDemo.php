@@ -1,7 +1,7 @@
 <?php
 require_once 'ScoresAPIController.php';
 
-$requestScores = new EWSPHPClient\ScoresAPIController('https://uat-external.eflglobal.com/api/v1/scores/',
+$requestScores = new EFLGlobal\EWSPHPClient\ScoresAPIController('https://uat-external.eflglobal.com/api/v1/scores/',
     'TestKeys/Scores/identifier.txt',
     'TestKeys/Scores/decryption.key',
     'TestKeys/Scores/encryption.key');

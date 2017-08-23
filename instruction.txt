@@ -6,7 +6,7 @@ ________________________________________________________________________________
 
 ApplicantJourneyController and ScoresController classes provide simple access to ApplicantJourney and Scores API's.
 In order to use them you need to include corresponding file in your document and then call an instance of ApplicantJourneyController or ScoresController class.
-Pay attention that both classes take place in EWSPHPClient namespace.
+Pay attention that both classes take place in EFLGlobal\EWSPHPClient namespace.
 
 Class exemplar demands four arguments:
     URL;
@@ -131,3 +131,7 @@ From the same directory you can call test of command line feature (paths work if
 
 php -f ApplicantJourneyCMD.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' 'TestKeys/ApplicantJourney/identifier.txt' 'TestKeys/ApplicantJourney/decryption.key' 'TestKeys/ApplicantJourney/encryption.key' 'sdkExample'
 php -f ScoresCMD.php 'https://uat-external.eflglobal.com/api/v1/scores/' 'TestKeys/Scores/identifier.txt' 'TestKeys/Scores/decryption.key' 'TestKeys/Scores/encryption.key'
+
+To install via composer you can use following console command:
+
+composer create-project eflglobal/ews-client-php path --repository-url=https://github.com/eflglobal/ews-client-php

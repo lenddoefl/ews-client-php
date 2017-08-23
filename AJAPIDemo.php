@@ -5,7 +5,7 @@ require_once 'AJAPIController.php';
  * This file calls most of ApplicantJourneyController class methods in order to show users how the code works.
  */
 
-$requestApplicantJourney = new EWSPHPClient\AJAPIController(
+$requestApplicantJourney = new EFLGlobal\EWSPHPClient\AJAPIController(
     'https://uat-external.eflglobal.com/api/v2/applicant_journey/',
     'TestKeys/ApplicantJourney/identifier.txt',
     'TestKeys/ApplicantJourney/decryption.key',

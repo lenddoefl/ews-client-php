@@ -3,7 +3,7 @@ namespace {
     include_once 'EWSPMain.php';
 }
 
-namespace EWSPHPClient
+namespace EFLGlobal\EWSPHPClient
 {
     class ScoresAPIController extends EWSPMain
     {

@@ -5,7 +5,7 @@ namespace {
 }
 
 
-namespace EWSPHPClient
+namespace EFLGlobal\EWSPHPClient
 {
     use GuzzleHttp\Client;
 
@@ -108,7 +108,7 @@ namespace EWSPHPClient
         {
             $login = \GuzzleHttp\json_decode($login);
 
-            if (get_class($this) == "EWSPHPClient\ScoresController") {
+            if (get_class($this) == "EFLGlobal\EWSPHPClient\ScoresController") {
                 $authToken64 = $login->authToken;
                 $reqToken64 = $login->reqToken;
             }
