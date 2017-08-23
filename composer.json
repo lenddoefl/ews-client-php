@@ -1,21 +1,9 @@
 {
     "repositories": [
         {
-            "type": "package",
-            "package": {
-                "name": "eflglobal/ews-client-php",
-                "version": "dev-master",
-                "source": {
-                    "url": "git://github.com/eflglobal/ews-client-php.git",
-                    "type": "git",
-                    "reference": "master"
-                },
-                "autoload": {
-                    "psr-0" : {
-                        "EFLGlobal\\EWSPHPClient" : ""
-                    }
-                }
-            }
+            "name": "eflglobal/ews-client-php",
+            "version": "dev-master",
+            "type": "library"
         }
     ],
 
