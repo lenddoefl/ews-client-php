@@ -7,7 +7,7 @@ namespace {
 namespace EWSPHPClient
 
 {
-    class ApplicantJourneyController extends EWSPMain
+    class AJAPIController extends EWSPMain
     {
 
         protected $applicationHash;

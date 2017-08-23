@@ -5,7 +5,7 @@ namespace {
 
 namespace EWSPHPClient
 {
-    class ScoresController extends EWSPMain
+    class ScoresAPIController extends EWSPMain
     {
         public function callDateQuery ($date)
         {
