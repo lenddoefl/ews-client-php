@@ -4,3 +4,4 @@ Links.php
 composer.lock
 composer.phar
 vendor/
+TestingData/

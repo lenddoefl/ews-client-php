@@ -221,6 +221,24 @@ $data = [
 echo "<br><br>CallFinishStep method returns: <br>";
 echo $requestApplicantJourney->callFinishStep($data);
 
+$filePicture = fopen("TestingData/prey_logo.jpeg", 'r');
+$file = fread($filePicture, 10485760);
+$fileSize = filesize("TestingData/prey_logo.jpeg");
+$sha1 = sha1($file);
+$file = base64_encode($file);
+$data = [
+      "attachmentType"=>         'photo',
+      "attachmentTypeVersion"=>  '1.0',
+      "contentType"=>            'image/jpeg',
+      "inlineData"=>             $file,
+      "name"=>                   'prey_logo',
+      "sha1Hash"=>               $sha1,
+      "size"=>                   $fileSize,
+];
+
+echo "<br><br>CallCreateAttachment method returns: <br>";
+echo $requestApplicantJourney->callCreateAttachment($data);
+
 echo "<br><br>GetUid method returns: <br>";
 echo $requestApplicantJourney->getUid();
 
@@ -229,6 +247,9 @@ echo $requestApplicantJourney->getPublicKey();
 
 echo "<br><br>GetApplicationHash method returns: <br>";
 echo $requestApplicantJourney->getApplicationHash();
+
+echo "<br><br>GetAttachmentUids method returns: <br>";
+print_r($requestApplicantJourney->getAttachmentUids());
 
 echo "<br><br>CallFinishSession method returns: <br>";
 echo $requestApplicantJourney->callFinishSession();

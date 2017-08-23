@@ -94,28 +94,25 @@ namespace EWSPHPClient
 
         public function callCreateAttachment ($data)
         {
-
-            if (count($this->attachmentUids) < 10)
-            {
-                $url = $this->url . '/createAttachment.json';
-                $post = [
-                    "authToken"=>  $this->authToken64,
-                    "reqToken"=>   $this->reqToken64,
-                    "data"=>$data
-                ];
-
-                try {
-                    $response = self::sendRequest($url, $post);
-
-                    array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
-                    return $response;
-                } catch (\Exception $e) {
-                    return self::handleError($e);
-                }
+            if (!isset($data->uid)){
+                $data['uid'] = $this->uid;
             }
-            else {
-                return trigger_error("Too many attachments for this session.");
+            $url = $this->url . '/createAttachment.json';
+            $post = [
+                "authToken"=>  $this->authToken64,
+                "reqToken"=>   $this->reqToken64,
+                "data"=>$data
+            ];
+
+            try {
+                $response = self::sendRequest($url, $post);
+
+                array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
+                return $response;
+            } catch (\Exception $e) {
+                return self::handleError($e);
             }
+
         }
 
         public function callFinishStep ($data)
