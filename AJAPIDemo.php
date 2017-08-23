@@ -1,5 +1,5 @@
 <?php
-require_once 'ApplicantJourneyController.php';
+require_once 'AJAPController.php';
 
 /**
  * This file calls most of ApplicantJourneyController class methods in order to show users how the code works.

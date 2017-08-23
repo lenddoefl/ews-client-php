@@ -1,5 +1,5 @@
 <?php
-require_once 'ApplicantJourneyController.php';
+require_once 'AJAPController.php';
 
 $test = new \EWSPHPClient\ApplicantJourneyController($argv[1], $argv[2], $argv[3], $argv[4]);
 $data = $data = [

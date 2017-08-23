@@ -1,5 +1,5 @@
 <?php
-require_once 'ScoresController.php';
+require_once 'ScoresAPIController.php';
 
 $requestScores = new \EWSPHPClient\ScoresController($argv[1], $argv[2], $argv[3], $argv[4]);
 echo $requestScores->callLogin();

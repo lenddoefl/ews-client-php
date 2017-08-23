@@ -107,6 +107,12 @@ callFinishStep($data)
 Method connects to finishStep endpoint and returns JSON answer.
 As an argument takes a PHP array of data to send on server. If not provided, sequence and uid are taken from stored variables.
 
+___________________________
+callCreateAttachment($data)
+Method connects to createAttachment endpoint and returns JSON answer. It also stores attachment uid in class instance.
+As an argument takes a PHP array of data to send on server. If not provided, uid is taken from stored variables.
+
+
 ##########################
 # ScoresController class #
 ##########################

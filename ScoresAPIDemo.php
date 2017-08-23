@@ -1,5 +1,5 @@
 <?php
-require_once 'ScoresController.php';
+require_once 'ScoresAPIController.php';
 
 $requestScores = new EWSPHPClient\ScoresController('https://uat-external.eflglobal.com/api/v1/scores/',
     'TestKeys/Scores/identifier.txt',
