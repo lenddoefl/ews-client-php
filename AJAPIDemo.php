@@ -221,9 +221,9 @@ $data = [
 echo "<br><br>CallFinishStep method returns: <br>";
 echo $requestApplicantJourney->callFinishStep($data);
 
-$filePicture = fopen("TestingData/prey_logo.jpeg", 'r');
+$filePicture = fopen("TestingData/test.jpeg", 'r');
 $file = fread($filePicture, 10485760);
-$fileSize = filesize("TestingData/prey_logo.jpeg");
+$fileSize = filesize("TestingData/test.jpeg");
 $sha1 = sha1($file);
 $file = base64_encode($file);
 $data = [
@@ -231,7 +231,7 @@ $data = [
       "attachmentTypeVersion"=>  '1.0',
       "contentType"=>            'image/jpeg',
       "inlineData"=>             $file,
-      "name"=>                   'prey_logo',
+      "name"=>                   'test',
       "sha1Hash"=>               $sha1,
       "size"=>                   $fileSize,
 ];
