@@ -1,13 +1,4 @@
 {
-    "packages": {
-        "vendor/package-name": {
-            "dev-master": {
-                "name": "eflglobal/ews-client-phpews-client-php",
-                "version": "0.1"
-            }
-        }
-    },
-
     "require": {
         "guzzlehttp/guzzle": "^6.3"
     },

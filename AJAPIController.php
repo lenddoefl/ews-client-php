@@ -133,7 +133,7 @@ namespace EFLGlobal\EWSPHPClient
             ];
             try {
                 $response = self::sendRequest($url, $post);
-                $this->sequence += 1;
+                $this->sequence++;
 
                 return $response;
             } catch (\Exception $e) {
