@@ -1,12 +1,4 @@
 {
-    "repositories": [
-        {
-            "name": "eflglobal/ews-client-php",
-            "version": "dev-master",
-            "type": "library"
-        }
-    ],
-
     "require": {
         "guzzlehttp/guzzle": "^6.3"
     },
