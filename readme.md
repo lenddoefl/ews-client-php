@@ -113,3 +113,17 @@ From the same directory you can call test of command line feature (paths work if
 
 > php -f ApplicantJourneyCMD.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' 'TestKeys/ApplicantJourney/identifier.txt' 'TestKeys/ApplicantJourney/decryption.key' 'TestKeys/ApplicantJourney/encryption.key' 'sdkExample'
 > php -f ScoresCMD.php 'https://uat-external.eflglobal.com/api/v1/scores/' 'TestKeys/Scores/identifier.txt' 'TestKeys/Scores/decryption.key' 'TestKeys/Scores/encryption.key'
+
+To install this library you can add following text to your project's **composer.json**.
+
+>  "repositories":\
+>  [\
+>    {\
+>        "url": "https:/*username*:*password*@github.com/eflglobal/ews-client-php",\
+>        "type": "git"\
+>    }\
+>  ],\
+> "require":\
+> {\
+>    "eflglobal/ews-client-php" : "*"\
+> }
