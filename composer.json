@@ -1,7 +1,7 @@
 {
     "packages": {
         "vendor/package-name": {
-            "dev-master": {
+            "0.1": {
                 "name": "eflglobal/ews-client-php",
                 "version": "0.1"
             }
