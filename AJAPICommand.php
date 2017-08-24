@@ -1,10 +1,20 @@
 <?php
 require_once 'AJAPIController.php';
 
-$test = new \EFLGlobal\EWSPHPClient\AJAPIController($argv[1], $argv[2], $argv[3], $argv[4]);
+if (!isset($argv[2])) {
+    $file = fopen($argv[1], 'r');
+    $file = fread($file, 10485760);
+    $arguments = explode(PHP_EOL, $file);
+
+    $test = new \EFLGlobal\EWSPHPClient\AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+}
+else {
+    $test = new \EFLGlobal\EWSPHPClient\AJAPIController($argv[1], $argv[2], $argv[3], $argv[4]);
+}
+
 $data = $data = [
     "applicant"=> new stdClass,
-    "application"=>   $argv[5]
+    "application"=>   (!isset($argv[2])) ? $arguments[4] : $argv[5]
 ];
 echo $test->callLogin();
 echo $test->callStartSession($data);
