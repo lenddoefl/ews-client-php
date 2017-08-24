@@ -319,12 +319,207 @@ class AJAPITests extends TestCase
     /**
      * @depends testCallCreateAttachmentReturnsStatusOK
      */
-
     public function testCallCreateAttachmentPushesUid($return)
     {
         $this->assertAttributeContains($return[1], 'attachmentUids', $return[0], "CallCreateAttachment doesn't store attachment uid.");
     }
 
+    /**
+     * @depends testCallCreateAttachmentReturnsStatusOK
+     */
+    public function testCallFinishSessionReturnsStatusOK($return)
+    {
+        $testInstance = $return[0];
 
+        $response = $testInstance->callFinishSession();
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
+
+
+
+    public function testNoSessionCallPrefetchAttachment()
+    {
+        $testInstance = new AJAPIController('https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key');
+
+        $prefetchApplicationData = ["applications" => ["sdkExample"=>   "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"]];
+
+        $testInstance->callLogin();
+        $response = $testInstance->callPrefetchApplications($prefetchApplicationData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
+
+    public function testStandaloneStartSession()
+    {
+        $testInstance = new AJAPIController('https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key');
+
+        $sessionStartData = [
+            "applicant"=> new stdClass(),
+            "application"=> "sdkExample"
+        ];
+
+        $testInstance->callLogin();
+        $response = $testInstance->callStartSession($sessionStartData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+
+        return $testInstance;
+    }
+
+    /**
+     * @depends testStandaloneStartSession
+     */
+    public function testStandaloneCallFinishSession($testInstance)
+    {
+        $response = $testInstance->callFinishSession();
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
+
+    /**
+     * @depends testStandaloneStartSession
+     */
+    public function testStandaloneCallFinishStep($testInstance)
+    {
+        $finishStepData = [
+            "applicant"=>    [
+                "birthday"=>         '11.11.11',
+                "email"=>            'test@test.test',
+                "employmentStatus"=> 'intern',
+                "firstName"=>       'bob',
+                "gender"=>           'm',
+                "lastName"=>         'dylan',
+                "maritalStatus"=>    'single',
+                "loan"=>            [
+                    "amount"=>         15000,
+                    "businessIncome"=> 15000,
+                    "currency"=>       'PEN',
+                    "personalIncome"=> 12000,
+                    "term"=>           2.17
+                ],
+                "locale"=>           'en',
+                "utcOffset"=>        '2',
+
+                "addresses"=> [
+                    "business"=> [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                    "home"=>     [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                    "work"=>     [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                ],
+
+                "connections"=> [
+                    "facebook"=>   true,
+                    "google"=>     true,
+                    "linkedin"=>   true,
+                    "microsoft"=>  true,
+                    "twitter"=>    true,
+                    "yahoo"=>      true
+                ],
+
+                "idNumbers"=> [
+                    "analyticsId"=>        '123',
+                    "bankAccountNumber"=>  '1234123413414',
+                    "driversLicense"=>     '1234',
+                    "externalKey"=>        '12341234',
+                    "nationalId"=>         '1234123',
+                    "passport"=>           '12341234134',
+                    "phoneNumber"=>        '12341234',
+                    "voterId"=>            '1234124'
+                ]
+            ],
+            "device"=>       [
+                "browser"=> null,
+                "deviceId"=> null,
+                "ipAddress"=> null,
+                "os"=> [
+                    "type"=> null,
+                    "version"=> null,
+                ],
+                "referrer"=> null,
+
+                "viewport"=> [
+                    "height"=> null,
+                    "width"=> null
+                ]
+            ],
+            "metas"=>        new stdClass,
+            "observations"=> new stdClass,
+            "state"=>        new stdClass,
+            "step"=>         'abGlobal',
+        ];
+
+        $response = $testInstance->callFinishStep($finishStepData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+
+    }
+
+    /**
+     * @depends testStandaloneStartSession
+     */
+    public function testStandaloneCallGetApplication($testInstance)
+    {
+        $getApplicationData = [
+            "device"=> [
+                "browser"=> null,
+                "deviceId"=> null,
+                "ipAddress"=> null,
+                "os"=> [
+                    "type"=> null,
+                    "version"=> null,
+                ],
+                "referrer"=> null,
+
+                "viewport"=> [
+                    "height"=> null,
+                    "width"=> null
+                ]
+            ],
+            "player"=> [
+                "type"=>    "web-embedded",
+                "version"=> "1.20"
+            ]
+        ];
+
+        $response = $testInstance->callGetApplication($getApplicationData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
 
 }
