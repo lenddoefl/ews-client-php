@@ -1,4 +1,5 @@
 {
+    "name": "eflglobal/ews-client-php",
     "packages": {
         "vendor/package-name": {
             "0.1": {
