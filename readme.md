@@ -1,9 +1,9 @@
-#EFL Web Services PHP Client
+# EFL Web Services PHP Client
 
 Please, read this instruction to try this project.
 ApplicantJourneyExample.php and ScoresExample.php are executable files that can show you how developers can interact with this project.
 
-##How to use
+## How to use
 
 ApplicantJourneyController and ScoresController classes provide simple access to ApplicantJourney and Scores API's.
 In order to use them you need to include corresponding file in your document and then call an instance of ApplicantJourneyController or ScoresController class.
@@ -33,32 +33,32 @@ This is an abstract class.
 ### Public Methods
 
 
-####setIdentifier ($identifier)
+#### setIdentifier ($identifier)
 Sets new path to identifier file. Needs one argument.
 
 
-####setDecryptionKey ($decryptionKey)
+#### setDecryptionKey ($decryptionKey)
 Sets new path to decryption key file. Needs one argument.
 
-####setEncryptionKey ($encryptionKey)
+#### setEncryptionKey ($encryptionKey)
 Sets new path to encryption key file. Needs one argument.
 
-####setURL ($url)
+#### setURL ($url)
 Sets new URL. Needs one argument.
 
-####getIdentifier ()
+#### getIdentifier ()
 Returns path to identifier file. Needs no arguments.
 
-####getDecryptionKey ()
+#### getDecryptionKey ()
 Returns path to decryption key file. Needs no arguments.
 
-####getEncryptionKey ()
+#### getEncryptionKey ()
 Returns path to encryption key file. Needs no arguments.
 
-####getURL ()
+#### getURL ()
 Returns URL. Needs no arguments.
 
-####callLogin()
+#### callLogin()
 Connects to login endpoint of both API.
 Method also calls protected method encoderDecoder which process received tokens and stores them into the instance.
 Needs no arguments.
@@ -68,40 +68,40 @@ Needs no arguments.
 
 Following methods were tested and now workable:
 
-####callStartSession($data)
+#### callStartSession($data)
 Method connects to startSession endpoint and returns JSON answer. It also stores uid, public key, application hash in class instance and set sequence to 0.
 As an argument takes a PHP array of data to send on server. Method can take stored application hash if one provided.
 Pay attention, that before calling this session you should call to login endpoint ot get reqToken.
 
-####callFinishSession([$data])
+#### callFinishSession([$data])
 Method connects to finishSession endpoint and returns JSON answer.
 It may take a PHP array of data to send on server. If not provided, data is taken from stored $uid and $sequence variables.
 Pay attention, that before calling this session you should call to login endpoint ot get new reqToken.
 
-####callPrefetchApplications($data)
+#### callPrefetchApplications($data)
 Method connects to prefetchApplications endpoint and returns JSON answer.
 As an argument takes a PHP array of data to send on server.
 
-####callResumeSession($data)
+#### callResumeSession($data)
 Method connects to resumeSession endpoint and returns JSON answer. It also stores uid and public key in class instance.
 As an argument takes a PHP array of data to send on server. If not provided, uid is taken from stored $uid variables.
 
-####callGetApplication($data)
+#### callGetApplication($data)
 Method connects to getApplication endpoint and returns JSON answer. It also stores application hash in class instance.
 As an argument takes a PHP array of data to send on server. If not provided, application hash and uid are taken from stored variables.
 
-####callFinishStep($data)
+#### callFinishStep($data)
 Method connects to finishStep endpoint and returns JSON answer.
 As an argument takes a PHP array of data to send on server. If not provided, sequence and uid are taken from stored variables.
 
-####callCreateAttachment($data)
+#### callCreateAttachment($data)
 Method connects to createAttachment endpoint and returns JSON answer. It also stores attachment uid in class instance.
 As an argument takes a PHP array of data to send on server. If not provided, uid is taken from stored variables.
 
 
 ## ScoresController class
 
-####callSubject($subject)
+#### callSubject($subject)
 Method connects to subject endpoint and returns JSON answer.
 As an argument takes a PHP array representing information about subjects.
 
