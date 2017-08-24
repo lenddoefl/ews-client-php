@@ -1,9 +1,11 @@
 {
-  "name": "eflglobal/ews-client-php",
-  "version": "0.1",
-  "dist": {
-    "url": "https://github.com/eflglobal/ews-client-php.git",
-    "type": "git"
+  "packages": {
+    "eflglobal/ews-client-php": {
+      "0.1": {
+        "name": "eflglobal/ews-client-php",
+        "version": "0.1"
+      }
+    }
   },
   "require": {
     "guzzlehttp/guzzle": "^6.3"
