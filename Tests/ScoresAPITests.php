@@ -21,7 +21,7 @@ class ScoresAPITests extends TestCase
     /**
      * @depends testOnCreateInstanceHasNoTokens
      */
-    public function testLoginIfReturnsStatusOK($testInstance)
+    public function testLoginIfReturnsStatusSuccess($testInstance)
     {
         $response = $testInstance->callLogin();
         $response = json_decode($response);
@@ -32,12 +32,47 @@ class ScoresAPITests extends TestCase
     }
 
     /**
-     * @depends testLoginIfReturnsStatusOK
+     * @depends testLoginIfReturnsStatusSuccess
      */
     public function testLoginCreatesReqToken($testInstance)
     {
         $this->assertAttributeNotEmpty('reqToken64', $testInstance, "CallLogin method must store reqToken64 attribute.");
         $this->assertAttributeNotEmpty('authToken64', $testInstance, "CallLogin method must store authToken64 attribute.");
+    }
+
+    /**
+     * @depends testLoginIfReturnsStatusSuccess
+     */
+    public function testCallSubjectReturnsStatusSuccess($testInstance)
+    {
+        $subjectData = [
+            [
+                "identification"=> [
+                    [
+                        "type"=> "nationalId",
+                        "value"=> "DZ-015"
+                    ]
+                ]
+            ]
+        ];
+
+        $response = $testInstance->callSubject($subjectData);
+        $response = json_decode($response);
+        $this->assertEquals($response->status, 1, "Server must return status 1.");
+        $this->assertEquals($response->statusMessage, "Success", "Server must return status message Success.");
+    }
+
+    /**
+     * @depends testLoginIfReturnsStatusSuccess
+     */
+    public function testCallDateQueryReturnesStatusSuccess($testInstance)
+    {
+        $dateQueryData = "2017-08-14 00:00:00";
+
+        $response = $testInstance->callDateQuery($dateQueryData);
+        $response = json_decode($response);
+        $this->assertEquals($response->status, 1, "Server must return status 1.");
+        $this->assertEquals($response->statusMessage, "Success", "Server must return status message Success.");
     }
 
 }
