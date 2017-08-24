@@ -1,18 +1,19 @@
 {
     "name": "eflglobal/ews-client-php",
-    "packages": {
-        "eflglobal/ews-client-php": {
-            "dev-master": {
-                "name": "eflglobal/ews-client-php",
-                "version": "0.1"
-            }
-        }
-    },
-
+    "type": "project",
     "require": {
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "eflglobal/ews-client-php": "*"
+
     },
     "require-dev": {
         "phpunit/phpunit": "^6.2"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://github.com/eflglobal/ews-client-php"
+        }
+    ]
+
 }
