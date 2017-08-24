@@ -108,7 +108,7 @@ namespace EFLGlobal\EWSPHPClient
         {
             $login = \GuzzleHttp\json_decode($login);
 
-            if (get_class($this) == "EFLGlobal\EWSPHPClient\ScoresController") {
+            if (get_class($this) == "EFLGlobal\EWSPHPClient\ScoresAPIController") {
                 $authToken64 = $login->authToken;
                 $reqToken64 = $login->reqToken;
             }

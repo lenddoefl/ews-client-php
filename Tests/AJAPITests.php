@@ -522,4 +522,55 @@ class AJAPITests extends TestCase
         $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
     }
 
+    /**
+     * @depends testStandaloneStartSession
+     */
+    public function testStandaloneCallCreateAttachment($testInstance)
+    {
+        $createAttachmentData = [
+            "attachmentType"=>         'photo',
+            "attachmentTypeVersion"=>  '1.0',
+            "contentType"=>            'image/jpeg',
+            "inlineData"=>             "/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDAAEBAQEBAQEBAQEBAQEB
+            AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+            AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wgARCAAoACgDAREAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAABgkD
+            CAoABf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAU7gQEAYjUhOJ5QflxR/hkYDMs2aDC4ZiNLSj9y6xKZNh2ow4mOP/8QA
+            HhAAAQUBAAMBAAAAAAAAAAAAAgEDBAUGBwARExD/2gAIAQEAAQUCl2DryqSmbRkCVkl/7c6o5Nwsv0PkcVIo8NXSxOCfs5HPsUzTRPkT5x6/
+            0mJycq2m4DBRqmIACAx2CUsdl5VxL53zeHTRhEQHzJ5B6wc5pztqtAAQA/P/xAAUEQEAAAAAAAAAAAAAAAAAAABA/9oACAEDAQE/AU//xAAU
+            EQEAAAAAAAAAAAAAAAAAAABA/9oACAECAQE/AU//xAAoEAABAwIFBAEFAAAAAAAAAAABAAIDESEQEhMiMQRBYfCxMkJx4fH/2gAIAQEABj8C
+            c5zjc/KurJmWtaj5UGowlu1UGAAChOkTuHZRF0YD8ra28YCgUTRC5wzD7VDJLEM+Vp48e+8hrRQBbR399sootMnM4D6f0oeomiGpQHj+eUGt
+            FAMIxpk1I7c8KLqJod1jdv5TWCwaKY//xAAkEAEAAgIBAgcBAQAAAAAAAAABESExQQBRYRBxgZGhwfDhsf/aAAgBAQABPyF9ZmZdrzCZ3p1E
+            hMOqc5Nbx9ctCF/Dq5986jgvK1cp2PSs+nWw1FU1N6l+COI5bCdpiKjy+K4P9/4V/fiZp01+v1chPfkZMyy4Ra+n1d8Hrkw9U4L+8TMpEtk5
+            0E9+n+PuN6Xp0lvC/FdNcU5dyIHuXO+k9uGgXqS4UUYKXdmL4BAAAO3ASisK1M/ocNHDUfJEuIL0GWptGJpOHN3WBmYorgMkXw0AoA8IS4bp
+            LSiWNYYF6IJAHSnzE/pvhYgACivH/9oADAMBAAIAAwAAABAAAQAACQASCCAf/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPxBP/8QA
+            FBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAgEBPxBP/8QAHRABAQEBAQEAAwEAAAAAAAAAAREhMQBBEFGh8P/aAAgBAQABPxB+MmZqVFUzAgYC
+            l4KnVmdUfpSAZYpXWHleCAAQBon1gsWCxJpY7Q1ALwVAIhJBAeFq2664xVSAqgGgMPCQUIFT/QBVVTGEPVQVVSmsaUUVCSV+mPHT2XqVjO3Y
+            MFVDUFe3UsmpZR0MswGnqHnAbQI4KFMA2PBViMVaQr8ukOqHd8qLOsCmhihQVe5Sr5eNb0gkcgVTvwBynfJQGCWgQA0gp8gGciYIfz/d9BuA
+            hUNKU1AU0CLgrwvxREEKEVIWgPF6kCQXggzAMUgJhlDAAEOfjKkDCLTiY3QcAPFiHjYCpodxydCgEjLcAAAAAGcCHPz/AP/Z",
+            "name"=>                   'test',
+            "sha1Hash"=>               "91e408d7897162c9f0946aab6bc4a066d75ae6ea",
+            "size"=>                   1266,
+        ];
+
+        $response = $testInstance->callCreateAttachment($createAttachmentData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
+
+    /**
+     * @depends testStandaloneStartSession
+     */
+    public function testStandaloneCallResumeSession($testInstance)
+    {
+        $sessionResumeData = [
+            "applicant"=> new stdClass()
+        ];
+
+        $testInstance->callLogin();
+        $response = $testInstance->callResumeSession($sessionResumeData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
 }
