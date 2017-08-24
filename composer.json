@@ -1,7 +1,12 @@
 {
     "name": "eflglobal/ews-client-php",
-    "description": "EFLGlogal's PHP client for AJAPI and ScoresApi.",
-    "license": "proprietary",
+    "description": "EFLGlobal's PHP client for AJ and Scores APIs",
+    "version": "dev-master",
+
+    "dist": {
+        "url": "http://github.com/eflglobal/ews-client-php",
+        "type": "git"
+    },
     "require": {
         "guzzlehttp/guzzle": "^6.3"
     },
