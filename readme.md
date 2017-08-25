@@ -170,11 +170,12 @@ For example, you store your keys and identifier in /absolute/path/to/your/projec
 Your text file is /absolute/path/to/your/project/TestingData/environment.txt. (You cau use any extension of text file as long as it is parsed normally by PHP).
 
 Then your environment.txt file is:
-
-> https://uat-external.eflglobal.com/api/v2/applicant_journey/
-> /absolute/path/to/your/project/TestKeys/ApplicantJourney/identifier.txt
-> /absolute/path/to/your/project/TestKeys/ApplicantJourney/decryption.key
-> /absolute/path/to/your/project/TestKeys/ApplicantJourney/encryption.key
+```
+https://uat-external.eflglobal.com/api/v2/applicant_journey/
+/absolute/path/to/your/project/TestKeys/ApplicantJourney/identifier.txt
+/absolute/path/to/your/project/TestKeys/ApplicantJourney/decryption.key
+/absolute/path/to/your/project/TestKeys/ApplicantJourney/encryption.key
+```
 
 Your command line code is something like:
 
@@ -182,6 +183,12 @@ Your command line code is something like:
 
 Another way, and **it is not recommended**, you can store keys in TestKeys/ApplicantJourney subdirectory in directory of ews-client-php.\
 In that case you don't need provide additional argument in command line.
+
+***Pay attention that Scores API may return "Too many requests" error in case of frequent requests.***
+
+## Demos
+
+In Demos directory you can find demo files. They show how to access methods of both client classes. 
 
 ## Development features
 
@@ -192,15 +199,17 @@ From the same directory you can call test of command line feature (paths work if
 > php -f ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' 'TestKeys/Scores/identifier.txt' 'TestKeys/Scores/decryption.key' 'TestKeys/Scores/encryption.key'
 
 To install this library you can add following text to your project's **composer.json**.
+```
+"repositories":
+ [
+   {
+       "url": "https:*username*:*password*@github.com/eflglobal/ews-client-php",
+       "type": "git"
+   }
+ ],
+"require":
+{
+   "eflglobal/ews-client-php" : "*"
+}
 
->  "repositories":\
->  [\
->    {\
->        "url": "https:/*username*:*password*@github.com/eflglobal/ews-client-php",\
->        "type": "git"\
->    }\
->  ],\
-> "require":\
-> {\
->    "eflglobal/ews-client-php" : "*"\
-> }
+```

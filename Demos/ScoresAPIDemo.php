@@ -1,5 +1,5 @@
 <?php
-require_once 'ScoresAPIController.php';
+require_once '../ScoresAPIController.php';
 
 if (isset($argv[1])) {
     $file = fopen($argv[1], 'r');
@@ -8,9 +8,9 @@ if (isset($argv[1])) {
 }
 else {
     $arguments = ['https://uat-external.eflglobal.com/api/v1/scores/',
-        'TestKeys/Scores/identifier.txt',
-        'TestKeys/Scores/decryption.key',
-        'TestKeys/Scores/encryption.key'];
+        '../TestKeys/Scores/identifier.txt',
+        '../TestKeys/Scores/decryption.key',
+        '../TestKeys/Scores/encryption.key'];
 }
 
 $requestScores = new EFLGlobal\EWSPHPClient\ScoresAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);

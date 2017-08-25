@@ -1,5 +1,5 @@
 <?php
-require_once 'ScoresAPIController.php';
+require_once __DIR__. '/../ScoresAPIController.php';
 
 if (!isset($argv[2])) {
     $file = fopen($argv[1], 'r');
