@@ -5,11 +5,19 @@ require_once 'AJAPIController.php';
  * This file calls most of ApplicantJourneyController class methods in order to show users how the code works.
  */
 
-$requestApplicantJourney = new EFLGlobal\EWSPHPClient\AJAPIController(
-    'https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-    'TestKeys/ApplicantJourney/identifier.txt',
-    'TestKeys/ApplicantJourney/decryption.key',
-    'TestKeys/ApplicantJourney/encryption.key');
+if (isset($argv[1])) {
+    $file = fopen($argv[1], 'r');
+    $file = fread($file, 10485760);
+    $arguments = explode(PHP_EOL, $file);
+}
+else {
+    $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+        'TestKeys/ApplicantJourney/identifier.txt',
+        'TestKeys/ApplicantJourney/decryption.key',
+        'TestKeys/ApplicantJourney/encryption.key'];
+}
+
+$requestApplicantJourney = new EFLGlobal\EWSPHPClient\AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
 echo "CallLogin method returns: <br>";
 echo $requestApplicantJourney->callLogin();
