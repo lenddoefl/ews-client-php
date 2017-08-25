@@ -6,7 +6,7 @@ AJAPIDemo.php and ScoresAPIDemo.php are executable files that can show you how d
 ## How to use
 
 **AJAPIController** and **ScoresAPIController** classes provide simple access to ApplicantJourney and Scores API's.
-In order to use them you need to include corresponding file in your document and then call an instance of ApplicantJourneyController or ScoresController class.
+In order to use them you need to include corresponding file in your document and then call an instance of AJAPIController and ScoresAPIController class.
 Pay attention that both classes take place in **EFLGlobal\EWSPHPClient** namespace.
 
 Class exemplar demands four arguments:
@@ -87,8 +87,8 @@ To get variables class uses following public methods:
 
 ### Main methods
 
-These methods need to be provided with sindle argument - PHP array representing data (according to API's documentation) which will be sent to API.
-For callFinishSession method data is not neccessary.
+These methods need to be provided with single argument - PHP array representing data (*i.e. in API's documentation's "data" value*) which will be sent to API.
+For callFinishSession method data is not necessary.
 Methods can take data from stored variables and, after receiving a valid response, also store it. In table below you will find all useful information about what wariables are loaded, stored by methods and what arguments they receive.
 
 ##### callStartSession($data)
@@ -141,12 +141,47 @@ If not provided, uid is taken from stored variables.
 | callPrefetchApplications | array $data            |                               |                                                                                           |
 
 
-## ScoresController class
+## Class ScoresAPIController 
 
-#### callSubject($subject)
-Method connects to subject endpoint and returns JSON answer.
-As an argument takes a PHP array representing information about subjects.
+This class extends EWSPMain. You can use it to connect to Scores API.
 
+### Methods
+
+##### public function callDateQuery ($date)
+
+Method connects to subject endpoint and returns JSON answer.\
+As an argument takes a PHP array representing information about dateQuery (*i.e. in API's documentation's "dateQuery" value*).
+
+##### public function callSubject ($subject)
+
+Method connects to subject endpoint and returns JSON answer.\
+As an argument takes a PHP array representing information about subjects (*i.e. in API's documentation's "subjects" value*).
+
+## Testing
+
+Both PHP clients are provided with automated tests.\
+You can find them in Tests folder.
+
+These are phpunit tests and must be started via phpunit.\
+Basically there are two ways to execute tests. Normally you can provide an additional argument in command line while starting the test (so it is parsed by PHP as $argv[2]).\
+This argument must be an absolute path to one text file. This file must contain 4 lines - arguments for constructor of AJAPIController or ScoresAPIController class.
+
+For example, you store your keys and identifier in /absolute/path/to/your/project/TestKeys/ApplicantJourney. 
+Your text file is /absolute/path/to/your/project/TestingData/environment.txt. (You cau use any extension of text file as long as it is parsed normally by PHP).
+
+Then your environment.txt file is:
+
+> https://uat-external.eflglobal.com/api/v2/applicant_journey/
+> /absolute/path/to/your/project/TestKeys/ApplicantJourney/identifier.txt
+> /absolute/path/to/your/project/TestKeys/ApplicantJourney/decryption.key
+> /absolute/path/to/your/project/TestKeys/ApplicantJourney/encryption.key
+
+Your command line code is something like:
+
+> phpunit /absolute/path/to/ews-client-php/Tests/AJAPITests.php /absolute/path/to/your/project/TestingData/environment.txt
+
+Another way, and **it is not recommended**, you can store keys in TestKeys/ApplicantJourney subdirectory in directory of ews-client-php.\
+In that case you don't need provide additional argument in command line.
 
 ## Development features
 
