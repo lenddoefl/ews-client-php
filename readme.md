@@ -3,6 +3,28 @@
 Please, read this instruction to try this project.\
 AJAPIDemo.php and ScoresAPIDemo.php are executable files that can show you how developers can interact with this client.
 
+## Installation
+
+You can just copy files from the repository 
+
+**OR**
+
+To install this library you can add following text to your project's **composer.json**.
+```
+"repositories":
+ [
+   {
+       "url": "https:*username*:*password*@github.com/eflglobal/ews-client-php",
+       "type": "git"
+   }
+ ],
+"require":
+{
+   "eflglobal/ews-client-php" : "*"
+}
+
+```
+
 ## How to use
 
 **AJAPIController** and **ScoresAPIController** classes provide simple access to ApplicantJourney and Scores API's.
@@ -10,7 +32,7 @@ In order to use them you need to include corresponding file in your document and
 Pay attention that both classes take place in **EFLGlobal\EWSPHPClient** namespace.
 
 Class exemplar demands four arguments:
-+ URL;
++ URL path to API;
 + path to identifier file;
 + path to decryption key file;
 + path to encryption key file.
@@ -186,30 +208,29 @@ In that case you don't need provide additional argument in command line.
 
 ***Pay attention that Scores API may return "Too many requests" error in case of frequent requests.***
 
-## Demos
+## Additional features
 
-In Demos directory you can find demo files. They show how to access methods of both client classes. 
+### Demos
 
-## Development features
+In Demos directory you can find demo files. They show how to access methods of both client classes.\
+Demos works exactly like tests, except they call every key method once and, once executed in browser, will return human-friendly page.
 
-To test the code you should store keys and identifiers in TestKeys/ApplicantJourney and TestKeys/Scores directories of this project.
-From the same directory you can call test of command line feature (paths work if keys stored as described above):
+### Command line demos
 
-> php -f AJAPICommand.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' 'TestKeys/ApplicantJourney/identifier.txt' 'TestKeys/ApplicantJourney/decryption.key' 'TestKeys/ApplicantJourney/encryption.key' 'sdkExample'
-> php -f ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' 'TestKeys/Scores/identifier.txt' 'TestKeys/Scores/decryption.key' 'TestKeys/Scores/encryption.key'
+You can also execute files in CommandLine folder to try clients. You can do it two ways:
++ Use first method we described for testing. In case of AJAPI you need to add 5-th line - application name.
++ Set arguments right in command line. There must be from  4 to 5 arguments:
+  - URL path to API;
+  - path to identifier file;
+  - path to decryption key file;
+  - path to encryption key file;
+  - in case of AJAPI you need to provide 5-th argument - application name.
+  
+Your command line will be something like this:
 
-To install this library you can add following text to your project's **composer.json**.
-```
-"repositories":
- [
-   {
-       "url": "https:*username*:*password*@github.com/eflglobal/ews-client-php",
-       "type": "git"
-   }
- ],
-"require":
-{
-   "eflglobal/ews-client-php" : "*"
-}
+> php AJAPICommand.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' '/absolute/path/to/your/keys/identifier.txt' '/absolute/path/to/your/keys/decryption.key' '/absolute/path/to/your/keys/encryption.key' 'sdkExample'
 
-```
+or this:
+
+> php ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' '/absolute/path/to/your/keys/identifier.txt' '/absolute/path/to/your/keys/decryption.key' '/absolute/path/to/your/keys/encryption.key'
+
