@@ -111,8 +111,8 @@ As an argument takes a PHP array representing information about subjects.
 To test the code you should store keys and identifiers in TestKeys/ApplicantJourney and TestKeys/Scores directories of this project.
 From the same directory you can call test of command line feature (paths work if keys stored as described above):
 
-> php -f ApplicantJourneyCMD.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' 'TestKeys/ApplicantJourney/identifier.txt' 'TestKeys/ApplicantJourney/decryption.key' 'TestKeys/ApplicantJourney/encryption.key' 'sdkExample'
-> php -f ScoresCMD.php 'https://uat-external.eflglobal.com/api/v1/scores/' 'TestKeys/Scores/identifier.txt' 'TestKeys/Scores/decryption.key' 'TestKeys/Scores/encryption.key'
+> php -f AJAPICommand.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' 'TestKeys/ApplicantJourney/identifier.txt' 'TestKeys/ApplicantJourney/decryption.key' 'TestKeys/ApplicantJourney/encryption.key' 'sdkExample'
+> php -f ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' 'TestKeys/Scores/identifier.txt' 'TestKeys/Scores/decryption.key' 'TestKeys/Scores/encryption.key'
 
 To install this library you can add following text to your project's **composer.json**.
 
