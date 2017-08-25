@@ -8,10 +8,19 @@ class AJAPITests extends TestCase
 
     public function testOnCreateInstanceHasNoTokens()
     {
-        $testInstance = new AJAPIController('https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key');
+        global $argv;
+        if (isset($argv[2])){
+            $file = fopen($argv[2], 'r');
+            $file = fread($file, 10485760);
+            $arguments = explode(PHP_EOL, $file);
+        }
+        else {
+            $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+                'TestKeys/ApplicantJourney/identifier.txt',
+                'TestKeys/ApplicantJourney/decryption.key',
+                'TestKeys/ApplicantJourney/encryption.key'];
+        }
+        $testInstance = new AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
         $this->assertAttributeEmpty('reqToken64', $testInstance, 'Attribute reqToken64 must be empty.');
         $this->assertAttributeEmpty('authToken64', $testInstance, 'Attribute authToken64 must be empty.');
 
@@ -341,10 +350,19 @@ class AJAPITests extends TestCase
 
     public function testNoSessionCallPrefetchAttachment()
     {
-        $testInstance = new AJAPIController('https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key');
+        global $argv;
+        if (isset($argv[2])){
+            $file = fopen($argv[2], 'r');
+            $file = fread($file, 10485760);
+            $arguments = explode(PHP_EOL, $file);
+        }
+        else {
+            $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+                'TestKeys/ApplicantJourney/identifier.txt',
+                'TestKeys/ApplicantJourney/decryption.key',
+                'TestKeys/ApplicantJourney/encryption.key'];
+        }
+        $testInstance = new AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $prefetchApplicationData = ["applications" => ["sdkExample"=>   "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"]];
 

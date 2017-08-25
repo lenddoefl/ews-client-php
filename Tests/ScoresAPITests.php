@@ -7,10 +7,19 @@ class ScoresAPITests extends TestCase
 {
     public function testOnCreateInstanceHasNoTokens()
     {
-        $testInstance = new ScoresAPIController('https://uat-external.eflglobal.com/api/v1/scores/',
-            'TestKeys/Scores/identifier.txt',
-            'TestKeys/Scores/decryption.key',
-            'TestKeys/Scores/encryption.key');
+        global $argv;
+        if (isset($argv[2])){
+            $file = fopen($argv[2], 'r');
+            $file = fread($file, 10485760);
+            $arguments = explode(PHP_EOL, $file);
+        }
+        else {
+            $arguments = ['https://uat-external.eflglobal.com/api/v1/scores/',
+                'TestKeys/Scores/identifier.txt',
+                'TestKeys/Scores/decryption.key',
+                'TestKeys/Scores/encryption.key'];
+        }
+        $testInstance = new ScoresAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $this->assertAttributeEmpty('reqToken64', $testInstance, 'Attribute reqToken64 must be empty.');
         $this->assertAttributeEmpty('authToken64', $testInstance, 'Attribute authToken64 must be empty.');
