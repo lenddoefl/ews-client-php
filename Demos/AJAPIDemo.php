@@ -1,15 +1,19 @@
 <?php
-require_once 'AJAPIController.php';
+require_once __DIR__.'/../AJAPIController.php';
 
-/**
- * This file calls most of ApplicantJourneyController class methods in order to show users how the code works.
- */
+if (isset($argv[1])) {
+    $file = fopen($argv[1], 'r');
+    $file = fread($file, 10485760);
+    $arguments = explode(PHP_EOL, $file);
+}
+else {
+    $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+        '../TestKeys/ApplicantJourney/identifier.txt',
+        '../TestKeys/ApplicantJourney/decryption.key',
+        '../TestKeys/ApplicantJourney/encryption.key'];
+}
 
-$requestApplicantJourney = new EFLGlobal\EWSPHPClient\AJAPIController(
-    'https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-    'TestKeys/ApplicantJourney/identifier.txt',
-    'TestKeys/ApplicantJourney/decryption.key',
-    'TestKeys/ApplicantJourney/encryption.key');
+$requestApplicantJourney = new EFLGlobal\EWSPHPClient\AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
 echo "CallLogin method returns: <br>";
 echo $requestApplicantJourney->callLogin();
@@ -221,19 +225,29 @@ $data = [
 echo "<br><br>CallFinishStep method returns: <br>";
 echo $requestApplicantJourney->callFinishStep($data);
 
-$filePicture = fopen("TestingData/test.jpeg", 'r');
-$file = fread($filePicture, 10485760);
-$fileSize = filesize("TestingData/test.jpeg");
-$sha1 = sha1($file);
-$file = base64_encode($file);
 $data = [
-      "attachmentType"=>         'photo',
-      "attachmentTypeVersion"=>  '1.0',
-      "contentType"=>            'image/jpeg',
-      "inlineData"=>             $file,
-      "name"=>                   'test',
-      "sha1Hash"=>               $sha1,
-      "size"=>                   $fileSize,
+    "attachmentType"=>         'photo',
+    "attachmentTypeVersion"=>  '1.0',
+    "contentType"=>            'image/jpeg',
+    "inlineData"=>             "/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDAAEBAQEBAQEBAQEBAQEB
+            AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+            AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wgARCAAoACgDAREAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAABgkD
+            CAoABf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAU7gQEAYjUhOJ5QflxR/hkYDMs2aDC4ZiNLSj9y6xKZNh2ow4mOP/8QA
+            HhAAAQUBAAMBAAAAAAAAAAAAAgEDBAUGBwARExD/2gAIAQEAAQUCl2DryqSmbRkCVkl/7c6o5Nwsv0PkcVIo8NXSxOCfs5HPsUzTRPkT5x6/
+            0mJycq2m4DBRqmIACAx2CUsdl5VxL53zeHTRhEQHzJ5B6wc5pztqtAAQA/P/xAAUEQEAAAAAAAAAAAAAAAAAAABA/9oACAEDAQE/AU//xAAU
+            EQEAAAAAAAAAAAAAAAAAAABA/9oACAECAQE/AU//xAAoEAABAwIFBAEFAAAAAAAAAAABAAIDESEQEhMiMQRBYfCxMkJx4fH/2gAIAQEABj8C
+            c5zjc/KurJmWtaj5UGowlu1UGAAChOkTuHZRF0YD8ra28YCgUTRC5wzD7VDJLEM+Vp48e+8hrRQBbR399sootMnM4D6f0oeomiGpQHj+eUGt
+            FAMIxpk1I7c8KLqJod1jdv5TWCwaKY//xAAkEAEAAgIBAgcBAQAAAAAAAAABESExQQBRYRBxgZGhwfDhsf/aAAgBAQABPyF9ZmZdrzCZ3p1E
+            hMOqc5Nbx9ctCF/Dq5986jgvK1cp2PSs+nWw1FU1N6l+COI5bCdpiKjy+K4P9/4V/fiZp01+v1chPfkZMyy4Ra+n1d8Hrkw9U4L+8TMpEtk5
+            0E9+n+PuN6Xp0lvC/FdNcU5dyIHuXO+k9uGgXqS4UUYKXdmL4BAAAO3ASisK1M/ocNHDUfJEuIL0GWptGJpOHN3WBmYorgMkXw0AoA8IS4bp
+            LSiWNYYF6IJAHSnzE/pvhYgACivH/9oADAMBAAIAAwAAABAAAQAACQASCCAf/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPxBP/8QA
+            FBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAgEBPxBP/8QAHRABAQEBAQEAAwEAAAAAAAAAAREhMQBBEFGh8P/aAAgBAQABPxB+MmZqVFUzAgYC
+            l4KnVmdUfpSAZYpXWHleCAAQBon1gsWCxJpY7Q1ALwVAIhJBAeFq2664xVSAqgGgMPCQUIFT/QBVVTGEPVQVVSmsaUUVCSV+mPHT2XqVjO3Y
+            MFVDUFe3UsmpZR0MswGnqHnAbQI4KFMA2PBViMVaQr8ukOqHd8qLOsCmhihQVe5Sr5eNb0gkcgVTvwBynfJQGCWgQA0gp8gGciYIfz/d9BuA
+            hUNKU1AU0CLgrwvxREEKEVIWgPF6kCQXggzAMUgJhlDAAEOfjKkDCLTiY3QcAPFiHjYCpodxydCgEjLcAAAAAGcCHPz/AP/Z",
+    "name"=>                   'test',
+    "sha1Hash"=>               "91e408d7897162c9f0946aab6bc4a066d75ae6ea",
+    "size"=>                   1266,
 ];
 
 echo "<br><br>CallCreateAttachment method returns: <br>";
