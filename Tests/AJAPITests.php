@@ -375,10 +375,19 @@ class AJAPITests extends TestCase
 
     public function testStandaloneStartSession()
     {
-        $testInstance = new AJAPIController('https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key');
+        global $argv;
+        if (isset($argv[2])){
+            $file = fopen($argv[2], 'r');
+            $file = fread($file, 10485760);
+            $arguments = explode(PHP_EOL, $file);
+        }
+        else {
+            $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+                'TestKeys/ApplicantJourney/identifier.txt',
+                'TestKeys/ApplicantJourney/decryption.key',
+                'TestKeys/ApplicantJourney/encryption.key'];
+        }
+        $testInstance = new AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $sessionStartData = [
             "applicant"=> new stdClass(),
