@@ -76,9 +76,8 @@ namespace EFLGlobal\EWSClient
         {
             $url = $this->url . '/finishSession.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
+
             if (!isset($data->sequence)){
                 $data['sequence'] = $this->sequence;
             }
@@ -99,9 +98,9 @@ namespace EFLGlobal\EWSClient
 
         public function callCreateAttachment ($data)
         {
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+
+            $data['uid'] = $this->uid;
+
             $url = $this->url . '/createAttachment.json';
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -124,9 +123,8 @@ namespace EFLGlobal\EWSClient
         {
             $url = $this->url . '/finishStep.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
+
             if (!isset($data->sequence)){
                 $data['sequence'] = $this->sequence;
             }
@@ -150,9 +148,8 @@ namespace EFLGlobal\EWSClient
         {
             $url = $this->url . '/getApplication.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
+
             if (!isset($data->uid)){
                 $data['applicationHash'] = $this->applicationHash;
             }
@@ -195,9 +192,7 @@ namespace EFLGlobal\EWSClient
         {
             $url = $this->url . '/resumeSession.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
 
             $post = [
                 "authToken"=>  $this->authToken64,
