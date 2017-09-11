@@ -7,6 +7,9 @@ namespace {
 namespace EFLGlobal\EWSClient
 
 {
+
+    use PharIo\Version\Exception;
+
     class AJAPIController extends EWSMain
     {
 
@@ -16,6 +19,9 @@ namespace EFLGlobal\EWSClient
 
         protected $sequence;
         protected $attachmentUids;
+
+        protected $errorUidNotSet = "You don't have active uid. Probably you haven't started session.";
+        protected $errorUidIsSet = "You have active uid. Probably you have already started session.";
 
         public function getUid()
         {
@@ -44,12 +50,21 @@ namespace EFLGlobal\EWSClient
 
         public function callStartSession ($data)
         {
+            try {
+                if (isset($this->uid)) {
+                    throw new \Exception($this->errorUidIsSet);
+                }
+            }
+            catch (Exception $e){
+                return self::getError($e);
+            }
+
             $this->sequence = 0;
             $this->attachmentUids = [];
 
             $url = $this->url . '/startSession.json';
 
-            if ((!isset($data->uid)) and (isset($this->applicationHash))){
+            if (isset($this->applicationHash)){
                 $data['applicationHash'] = $this->applicationHash;
             }
 
@@ -74,6 +89,15 @@ namespace EFLGlobal\EWSClient
 
         public function callFinishSession ($data = [])
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (Exception $e){
+                return self::getError($e);
+            }
+
             $url = $this->url . '/finishSession.json';
 
             $data['uid'] = $this->uid;
@@ -98,6 +122,14 @@ namespace EFLGlobal\EWSClient
 
         public function callCreateAttachment ($data)
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (Exception $e){
+                return self::getError($e);
+            }
 
             $data['uid'] = $this->uid;
 
@@ -121,6 +153,15 @@ namespace EFLGlobal\EWSClient
 
         public function callFinishStep ($data)
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (Exception $e){
+                return self::getError($e);
+            }
+
             $url = $this->url . '/finishStep.json';
 
             $data['uid'] = $this->uid;
@@ -146,6 +187,15 @@ namespace EFLGlobal\EWSClient
 
         public function callGetApplication ($data)
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (Exception $e){
+                return self::getError($e);
+            }
+
             $url = $this->url . '/getApplication.json';
 
             $data['uid'] = $this->uid;
@@ -190,6 +240,15 @@ namespace EFLGlobal\EWSClient
 
         public function callResumeSession ($data)
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (Exception $e){
+                return self::getError($e);
+            }
+
             $url = $this->url . '/resumeSession.json';
 
             $data['uid'] = $this->uid;
