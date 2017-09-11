@@ -37,6 +37,11 @@ namespace EFLGlobal\EWSClient
             return $this->applicationHash;
         }
 
+        public function setUid($uid)
+        {
+            $this->uid = $uid;
+        }
+
         public function callStartSession ($data)
         {
             $this->sequence = 0;
