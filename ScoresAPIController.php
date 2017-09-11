@@ -1,11 +1,11 @@
 <?php
 namespace {
-    include_once 'EWSPMain.php';
+    include_once 'EWSMain.php';
 }
 
-namespace EFLGlobal\EWSPHPClient
+namespace EFLGlobal\EWSClient
 {
-    class ScoresAPIController extends EWSPMain
+    class ScoresAPIController extends EWSMain
     {
         public function callDateQuery ($date)
         {
@@ -19,7 +19,7 @@ namespace EFLGlobal\EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
@@ -35,7 +35,7 @@ namespace EFLGlobal\EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
     }

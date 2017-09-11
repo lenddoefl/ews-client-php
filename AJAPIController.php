@@ -1,13 +1,14 @@
 <?php
 
 namespace {
-    include_once 'EWSPMain.php';
+    include_once 'EWSMain.php';
 }
 
-namespace EFLGlobal\EWSPHPClient
+namespace EFLGlobal\EWSClient
 
 {
-    class AJAPIController extends EWSPMain
+
+    class AJAPIController extends EWSMain
     {
 
         protected $applicationHash;
@@ -16,6 +17,9 @@ namespace EFLGlobal\EWSPHPClient
 
         protected $sequence;
         protected $attachmentUids;
+
+        protected $errorUidNotSet = "You don't have active uid. Probably you haven't started session.";
+        protected $errorUidIsSet = "You have active uid. Probably you have already started session.";
 
         public function getUid()
         {
@@ -37,14 +41,32 @@ namespace EFLGlobal\EWSPHPClient
             return $this->applicationHash;
         }
 
-        public function callStartSession ($data)
+        public function setUid($uid)
         {
+            $this->uid = $uid;
+        }
+
+        public function callStartSession ($data, $repeat=true)
+        {
+            try {
+                if (isset($this->uid)) {
+                    throw new \Exception($this->errorUidIsSet);
+                }
+            }
+            catch (\Exception $e){
+                return self::getError($e);
+            }
+
+            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+                $this->callLogin();
+            }
+
             $this->sequence = 0;
             $this->attachmentUids = [];
 
             $url = $this->url . '/startSession.json';
 
-            if ((!isset($data->uid)) and (isset($this->applicationHash))){
+            if (isset($this->applicationHash)){
                 $data['applicationHash'] = $this->applicationHash;
             }
 
@@ -63,17 +85,31 @@ namespace EFLGlobal\EWSPHPClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                    $this->callLogin();
+                    return $this->callResumeSession($data, false);
+                }
+                else {
+                    return self::getError($e);
+                }
             }
         }
 
         public function callFinishSession ($data = [])
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (\Exception $e){
+                return self::getError($e);
+            }
+
             $url = $this->url . '/finishSession.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
+
             if (!isset($data->sequence)){
                 $data['sequence'] = $this->sequence;
             }
@@ -88,15 +124,23 @@ namespace EFLGlobal\EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
         public function callCreateAttachment ($data)
         {
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
             }
+            catch (\Exception $e){
+                return self::getError($e);
+            }
+
+            $data['uid'] = $this->uid;
+
             $url = $this->url . '/createAttachment.json';
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -110,18 +154,26 @@ namespace EFLGlobal\EWSPHPClient
                 array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
 
         }
 
         public function callFinishStep ($data)
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (\Exception $e){
+                return self::getError($e);
+            }
+
             $url = $this->url . '/finishStep.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
+
             if (!isset($data->sequence)){
                 $data['sequence'] = $this->sequence;
             }
@@ -137,17 +189,25 @@ namespace EFLGlobal\EWSPHPClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
         public function callGetApplication ($data)
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (\Exception $e){
+                return self::getError($e);
+            }
+
             $url = $this->url . '/getApplication.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
+
             if (!isset($data->uid)){
                 $data['applicationHash'] = $this->applicationHash;
             }
@@ -166,12 +226,16 @@ namespace EFLGlobal\EWSPHPClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
-        public function callPrefetchApplications ($data)
+        public function callPrefetchApplications ($data, $repeat=true)
         {
+            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+                $this->callLogin();
+            }
+
             $url = $this->url . '/prefetchApplications.json';
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -182,17 +246,34 @@ namespace EFLGlobal\EWSPHPClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                    $this->callLogin();
+                    return $this->callResumeSession($data, false);
+                }
+                else {
+                    return self::getError($e);
+                }
             }
         }
 
-        public function callResumeSession ($data)
+        public function callResumeSession ($data, $repeat=true)
         {
+            try {
+                if (!isset($this->uid)) {
+                    throw new \Exception($this->errorUidNotSet);
+                }
+            }
+            catch (\Exception $e){
+                return self::getError($e);
+            }
+
+            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))) {
+                $this->callLogin();
+            }
+
             $url = $this->url . '/resumeSession.json';
 
-            if (!isset($data->uid)){
-                $data['uid'] = $this->uid;
-            }
+            $data['uid'] = $this->uid;
 
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -208,7 +289,13 @@ namespace EFLGlobal\EWSPHPClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                    $this->callLogin();
+                    return $this->callResumeSession($data, false);
+                }
+                else {
+                    return self::getError($e);
+                }
             }
         }
     }
