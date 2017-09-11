@@ -15,7 +15,7 @@ else {
 
 $requestApplicantJourney = new EFLGlobal\EWSClient\AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
-echo "<br><br>CallPrefetchApplications method returns: <br>";
+echo "CallPrefetchApplications method returns: <br>";
 echo $requestApplicantJourney->callPrefetchApplications(
     ["applications" => ["sdkExample"=>   "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"]]);
 

@@ -87,7 +87,7 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403") !== false) and ($repeat===true)) {
+                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
                     $this->callLogin();
                     return $this->callResumeSession($data, false);
                 }
@@ -248,7 +248,7 @@ namespace EFLGlobal\EWSClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403") !== false) and ($repeat===true)) {
+                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
                     $this->callLogin();
                     return $this->callResumeSession($data, false);
                 }
@@ -291,7 +291,7 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403") !== false) and ($repeat===true)) {
+                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
                     $this->callLogin();
                     return $this->callResumeSession($data, false);
                 }
