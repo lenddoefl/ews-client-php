@@ -48,7 +48,7 @@ namespace EFLGlobal\EWSClient
             $this->uid = $uid;
         }
 
-        public function callStartSession ($data)
+        public function callStartSession ($data, $repeat=true)
         {
             try {
                 if (isset($this->uid)) {
@@ -57,6 +57,10 @@ namespace EFLGlobal\EWSClient
             }
             catch (Exception $e){
                 return self::getError($e);
+            }
+
+            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+                $this->callLogin();
             }
 
             $this->sequence = 0;
@@ -83,7 +87,13 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                if ((strpos($e, "403") !== false) and ($repeat===true)) {
+                    $this->callLogin();
+                    return $this->callResumeSession($data, false);
+                }
+                else {
+                    return self::getError($e);
+                }
             }
         }
 
@@ -222,8 +232,12 @@ namespace EFLGlobal\EWSClient
             }
         }
 
-        public function callPrefetchApplications ($data)
+        public function callPrefetchApplications ($data, $repeat=true)
         {
+            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+                $this->callLogin();
+            }
+
             $url = $this->url . '/prefetchApplications.json';
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -234,11 +248,17 @@ namespace EFLGlobal\EWSClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                if ((strpos($e, "403") !== false) and ($repeat===true)) {
+                    $this->callLogin();
+                    return $this->callResumeSession($data, false);
+                }
+                else {
+                    return self::getError($e);
+                }
             }
         }
 
-        public function callResumeSession ($data)
+        public function callResumeSession ($data, $repeat=true)
         {
             try {
                 if (!isset($this->uid)) {
@@ -247,6 +267,10 @@ namespace EFLGlobal\EWSClient
             }
             catch (Exception $e){
                 return self::getError($e);
+            }
+
+            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))) {
+                $this->callLogin();
             }
 
             $url = $this->url . '/resumeSession.json';
@@ -267,7 +291,13 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                if ((strpos($e, "403") !== false) and ($repeat===true)) {
+                    $this->callLogin();
+                    return $this->callResumeSession($data, false);
+                }
+                else {
+                    return self::getError($e);
+                }
             }
         }
     }

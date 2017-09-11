@@ -16,5 +16,5 @@ $data = $data = [
     "applicant"=> new stdClass,
     "application"=>   (!isset($argv[2])) ? $arguments[4] : $argv[5]
 ];
-echo $test->callLogin();
+
 echo $test->callStartSession($data);

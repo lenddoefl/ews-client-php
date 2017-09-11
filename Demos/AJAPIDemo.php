@@ -15,9 +15,6 @@ else {
 
 $requestApplicantJourney = new EFLGlobal\EWSClient\AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
-echo "CallLogin method returns: <br>";
-echo $requestApplicantJourney->callLogin();
-
 echo "<br><br>CallPrefetchApplications method returns: <br>";
 echo $requestApplicantJourney->callPrefetchApplications(
     ["applications" => ["sdkExample"=>   "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"]]);
@@ -102,8 +99,6 @@ echo $requestApplicantJourney->callStartSession($data);
 unset($data["application"]);
 
 echo "<br><br>CallResumeSession method returns: <br>";
-//We take new reqToken to resume session.
-$requestApplicantJourney->callLogin();
 echo $requestApplicantJourney->callResumeSession($data);
 
 //We provide data needed to getApplication endpoint.
