@@ -99,7 +99,7 @@ namespace EFLGlobal\EWSClient
                 return $response;
             }
             catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
 
         }
@@ -138,7 +138,7 @@ namespace EFLGlobal\EWSClient
             return [$authToken64, $reqToken64];
         }
 
-        protected static function handleError($error)
+        protected static function getError($error)
         {
             return $error;
         }

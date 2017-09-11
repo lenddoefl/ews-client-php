@@ -19,7 +19,7 @@ namespace EFLGlobal\EWSClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
@@ -35,7 +35,7 @@ namespace EFLGlobal\EWSClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
     }

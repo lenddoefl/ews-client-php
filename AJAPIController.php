@@ -63,7 +63,7 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
@@ -88,7 +88,7 @@ namespace EFLGlobal\EWSClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
@@ -110,7 +110,7 @@ namespace EFLGlobal\EWSClient
                 array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
 
         }
@@ -137,7 +137,7 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
@@ -166,7 +166,7 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
@@ -182,7 +182,7 @@ namespace EFLGlobal\EWSClient
                 $response = self::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
 
@@ -208,7 +208,7 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return self::getError($e);
             }
         }
     }
