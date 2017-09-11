@@ -13,7 +13,7 @@ else {
         '../TestKeys/Scores/encryption.key'];
 }
 
-$requestScores = new EFLGlobal\EWSPHPClient\ScoresAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+$requestScores = new EFLGlobal\EWSClient\ScoresAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
 echo "CallLogin method returns: <br>";
 echo $requestScores->callLogin();

@@ -5,11 +5,11 @@ namespace {
 }
 
 
-namespace EFLGlobal\EWSPHPClient
+namespace EFLGlobal\EWSClient
 {
     use GuzzleHttp\Client;
 
-    abstract class EWSPMain
+    abstract class EWSMain
     {
         protected $identifier;
         protected $decryptionKey;
@@ -108,14 +108,9 @@ namespace EFLGlobal\EWSPHPClient
         {
             $login = \GuzzleHttp\json_decode($login);
 
-            if (get_class($this) == "EFLGlobal\EWSPHPClient\ScoresAPIController") {
-                $authToken64 = $login->authToken;
-                $reqToken64 = $login->reqToken;
-            }
-            else {
-                $authToken64 = $login->data->authToken;
-                $reqToken64 = $login->data->reqToken;
-            }
+            $tokens = $this->extractTokensFromLoginResponse($login);
+            $authToken64 = $tokens[0];
+            $reqToken64 = $tokens[1];
 
             $authToken = base64_decode($authToken64);
             $reqToken = base64_decode($reqToken64);
@@ -127,6 +122,19 @@ namespace EFLGlobal\EWSPHPClient
             $this->authToken64 = $authToken64;
             $this->reqToken64 = $reqToken64;
 
+            return [$authToken64, $reqToken64];
+        }
+
+        protected function extractTokensFromLoginResponse($login)
+        {
+            if (get_class($this) == "EFLGlobal\EWSClient\ScoresAPIController") {
+                $authToken64 = $login->authToken;
+                $reqToken64 = $login->reqToken;
+            }
+            else {
+                $authToken64 = $login->data->authToken;
+                $reqToken64 = $login->data->reqToken;
+            }
             return [$authToken64, $reqToken64];
         }
 

@@ -1,6 +1,6 @@
 <?php
 include __DIR__ . '/../ScoresAPIController.php';
-use EFLGlobal\EWSPHPClient\ScoresAPIController;
+use EFLGlobal\EWSClient\ScoresAPIController;
 use PHPUnit\Framework\TestCase;
 
 class ScoresAPITests extends TestCase

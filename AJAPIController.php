@@ -1,13 +1,13 @@
 <?php
 
 namespace {
-    include_once 'EWSPMain.php';
+    include_once 'EWSMain.php';
 }
 
-namespace EFLGlobal\EWSPHPClient
+namespace EFLGlobal\EWSClient
 
 {
-    class AJAPIController extends EWSPMain
+    class AJAPIController extends EWSMain
     {
 
         protected $applicationHash;

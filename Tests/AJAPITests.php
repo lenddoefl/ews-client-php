@@ -1,6 +1,6 @@
 <?php
 include __DIR__ . '/../AJAPIController.php';
-use EFLGlobal\EWSPHPClient\AJAPIController;
+use EFLGlobal\EWSClient\AJAPIController;
 use PHPUnit\Framework\TestCase;
 
 class AJAPITests extends TestCase

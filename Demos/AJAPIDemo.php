@@ -13,7 +13,7 @@ else {
         '../TestKeys/ApplicantJourney/encryption.key'];
 }
 
-$requestApplicantJourney = new EFLGlobal\EWSPHPClient\AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+$requestApplicantJourney = new EFLGlobal\EWSClient\AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
 echo "CallLogin method returns: <br>";
 echo $requestApplicantJourney->callLogin();
