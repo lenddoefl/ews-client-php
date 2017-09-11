@@ -8,8 +8,6 @@ namespace EFLGlobal\EWSClient
 
 {
 
-    use PharIo\Version\Exception;
-
     class AJAPIController extends EWSMain
     {
 
@@ -55,7 +53,7 @@ namespace EFLGlobal\EWSClient
                     throw new \Exception($this->errorUidIsSet);
                 }
             }
-            catch (Exception $e){
+            catch (\Exception $e){
                 return self::getError($e);
             }
 
@@ -104,7 +102,7 @@ namespace EFLGlobal\EWSClient
                     throw new \Exception($this->errorUidNotSet);
                 }
             }
-            catch (Exception $e){
+            catch (\Exception $e){
                 return self::getError($e);
             }
 
@@ -137,7 +135,7 @@ namespace EFLGlobal\EWSClient
                     throw new \Exception($this->errorUidNotSet);
                 }
             }
-            catch (Exception $e){
+            catch (\Exception $e){
                 return self::getError($e);
             }
 
@@ -168,7 +166,7 @@ namespace EFLGlobal\EWSClient
                     throw new \Exception($this->errorUidNotSet);
                 }
             }
-            catch (Exception $e){
+            catch (\Exception $e){
                 return self::getError($e);
             }
 
@@ -202,7 +200,7 @@ namespace EFLGlobal\EWSClient
                     throw new \Exception($this->errorUidNotSet);
                 }
             }
-            catch (Exception $e){
+            catch (\Exception $e){
                 return self::getError($e);
             }
 
@@ -265,7 +263,7 @@ namespace EFLGlobal\EWSClient
                     throw new \Exception($this->errorUidNotSet);
                 }
             }
-            catch (Exception $e){
+            catch (\Exception $e){
                 return self::getError($e);
             }
 
