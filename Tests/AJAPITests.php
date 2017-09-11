@@ -600,4 +600,72 @@ class AJAPITests extends TestCase
         $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
         $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
     }
+
+    public function testStandaloneStartSessionWithoutManualLogin()
+    {
+        global $argv;
+        if (isset($argv[2])){
+            $file = fopen($argv[2], 'r');
+            $file = fread($file, 10485760);
+            $arguments = explode(PHP_EOL, $file);
+        }
+        else {
+            $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+                'TestKeys/ApplicantJourney/identifier.txt',
+                'TestKeys/ApplicantJourney/decryption.key',
+                'TestKeys/ApplicantJourney/encryption.key'];
+        }
+        $testInstance = new AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $sessionStartData = [
+            "applicant"=> new stdClass(),
+            "application"=> "sdkExample"
+        ];
+
+        $response = $testInstance->callStartSession($sessionStartData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+
+        return $testInstance;
+    }
+
+    /**
+     * @depends testStandaloneStartSessionWithoutManualLogin
+     */
+
+    public function testResumeSessionWithoutManualLogin($testInstance){
+        $sessionResumeData = [
+            "applicant"=> new stdClass()
+        ];
+        $response = $testInstance->callResumeSession($sessionResumeData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
+
+    public function testNoSessionCallPrefetchAttachmentWithoutManualLogin()
+    {
+        global $argv;
+        if (isset($argv[2])){
+            $file = fopen($argv[2], 'r');
+            $file = fread($file, 10485760);
+            $arguments = explode(PHP_EOL, $file);
+        }
+        else {
+            $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+                'TestKeys/ApplicantJourney/identifier.txt',
+                'TestKeys/ApplicantJourney/decryption.key',
+                'TestKeys/ApplicantJourney/encryption.key'];
+        }
+        $testInstance = new AJAPIController($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $prefetchApplicationData = ["applications" => ["sdkExample"=>   "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0"]];
+
+        $response = $testInstance->callPrefetchApplications($prefetchApplicationData);
+        $response = json_decode($response);
+        $this->assertEquals($response->statusCode, 200, "Server must return status code 200.");
+        $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
+    }
+
 }
