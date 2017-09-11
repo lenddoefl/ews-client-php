@@ -1,5 +1,5 @@
 {
-  "name": "eflglobal/ews-client-php",
+  "name": "eflglobal/ewsclient",
   "description": "EFLGlobal's PHP client for AJ and Scores APIs",
   "version": "dev-master",
 
