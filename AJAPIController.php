@@ -57,7 +57,7 @@ namespace EFLGlobal\EWSClient
                 return static::getError($e);
             }
 
-            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+            if ((!isset($this->authToken64)) and ($repeat==true)){
                 $this->callLogin();
             }
 
@@ -85,9 +85,9 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                if (($e->getCode() == 403) and ($repeat===true)) {
                     $this->callLogin();
-                    return $this->callResumeSession($data, false);
+                    return $this->callStartSession($data, false);
                 }
                 else {
                     return static::getError($e);
@@ -232,7 +232,7 @@ namespace EFLGlobal\EWSClient
 
         public function callPrefetchApplications ($data, $repeat=true)
         {
-            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+            if ((!isset($this->authToken64)) and ($repeat==true)){
                 $this->callLogin();
             }
 
@@ -246,9 +246,9 @@ namespace EFLGlobal\EWSClient
                 $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                if (($e->getCode() == 403) and ($repeat===true)) {
                     $this->callLogin();
-                    return $this->callResumeSession($data, false);
+                    return $this->callPrefetchApplications($data, false);
                 }
                 else {
                     return static::getError($e);
@@ -267,7 +267,7 @@ namespace EFLGlobal\EWSClient
                 return static::getError($e);
             }
 
-            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))) {
+            if ((!isset($this->authToken64)) and ($repeat==true)) {
                 $this->callLogin();
             }
 
@@ -289,7 +289,7 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                if (($e->getCode() == 403) and ($repeat===true)) {
                     $this->callLogin();
                     return $this->callResumeSession($data, false);
                 }

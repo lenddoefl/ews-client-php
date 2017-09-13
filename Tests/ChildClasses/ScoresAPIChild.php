@@ -11,9 +11,6 @@ class ScoresAPIChild extends ScoresAPIController
 {
     protected static $mockData;
 
-    protected $authToken64;
-    protected $reqToken64;
-
     public function setDirectlyIdentifier ($identifier)
     {
         $this->identifier = $identifier;

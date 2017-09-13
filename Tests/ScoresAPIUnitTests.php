@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class ScoresAPIUnitTests extends TestCase
 {
     /**
-     * In fact tests testing methods
+     * In fact this method tests testing methods
      */
 
     public function testSendRequest()

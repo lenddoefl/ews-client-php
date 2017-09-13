@@ -126,7 +126,6 @@ Then this argument will be changed to false to be sure that method will not rais
 Method connects to startSession endpoint and returns JSON answer.\
 It also stores uid, public key, application hash in class instance and set sequence to 0.\
 As an argument takes a PHP array of data to send on server and an argument $repeat as described higher. Method can take stored application hash if one provided.\
-Pay attention, that before calling this session you should call to login endpoint ot get reqToken.
 
 Method cannot be called if session have already been started (i.o. uid is set in instance).\
 Method automatically uses calLogin method.
@@ -135,7 +134,6 @@ Method automatically uses calLogin method.
 Method connects to finishSession endpoint and returns JSON answer.\
 It may take a PHP array of data to send on server.\
 If not provided, sequence is taken from stored $sequence variable. Also it is always taken from $uid variable.\
-Pay attention, that before calling this session you should call to login endpoint ot get new reqToken.
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
