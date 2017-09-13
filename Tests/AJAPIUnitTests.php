@@ -697,7 +697,62 @@ class AJAPIUnitTests extends TestCase
         $response = $testInstance->callCreateAttachment($requestData);
 
         $this->assertEquals($data, $response, 'Method callCreateAttachment returns wrong result.');
-        $this->assertAttributeEquals(["ae19b02eb8b749dfabbe666ae0bcac0b"], 'attachmentUids', $testInstance, "Method callCreateAttachment doesn't store Uids.");
+        $this->assertAttributeEquals(["ae19b02eb8b749dfabbe666ae0bcac0b"], 'attachmentUids', $testInstance, "Method callCreateAttachment doesn't store attachment uids.");
+    }
 
+    public function testCallCreateAttachmentWithoutUid()
+    {
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key'];
+        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
+        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
+
+        $data = [
+            "data" => ["attachmentUid"=> 'ae19b02eb8b749dfabbe666ae0bcac0b'],
+            "statusCode"=>    200,
+            "statusMessage"=> "OK"
+        ];
+
+        $data = json_encode($data);
+
+        $testInstance::setMockData([
+            new Response(200, [], $data),
+            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
+        ]);
+
+        $requestData = [
+            "attachmentType"=>         'photo',
+            "attachmentTypeVersion"=>  '1.0',
+            "contentType"=>            'image/jpeg',
+            "inlineData"=>             "/9j/4AAQSkZJRgABAQEASABIAAD//gATQ3JlYXRlZCB3aXRoIEdJTVD/2wBDAAEBAQEBAQEBAQEBAQEB
+            AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+            AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wgARCAAoACgDAREAAhEBAxEB/8QAGgAAAgMBAQAAAAAAAAAAAAAABgkD
+            CAoABf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAU7gQEAYjUhOJ5QflxR/hkYDMs2aDC4ZiNLSj9y6xKZNh2ow4mOP/8QA
+            HhAAAQUBAAMBAAAAAAAAAAAAAgEDBAUGBwARExD/2gAIAQEAAQUCl2DryqSmbRkCVkl/7c6o5Nwsv0PkcVIo8NXSxOCfs5HPsUzTRPkT5x6/
+            0mJycq2m4DBRqmIACAx2CUsdl5VxL53zeHTRhEQHzJ5B6wc5pztqtAAQA/P/xAAUEQEAAAAAAAAAAAAAAAAAAABA/9oACAEDAQE/AU//xAAU
+            EQEAAAAAAAAAAAAAAAAAAABA/9oACAECAQE/AU//xAAoEAABAwIFBAEFAAAAAAAAAAABAAIDESEQEhMiMQRBYfCxMkJx4fH/2gAIAQEABj8C
+            c5zjc/KurJmWtaj5UGowlu1UGAAChOkTuHZRF0YD8ra28YCgUTRC5wzD7VDJLEM+Vp48e+8hrRQBbR399sootMnM4D6f0oeomiGpQHj+eUGt
+            FAMIxpk1I7c8KLqJod1jdv5TWCwaKY//xAAkEAEAAgIBAgcBAQAAAAAAAAABESExQQBRYRBxgZGhwfDhsf/aAAgBAQABPyF9ZmZdrzCZ3p1E
+            hMOqc5Nbx9ctCF/Dq5986jgvK1cp2PSs+nWw1FU1N6l+COI5bCdpiKjy+K4P9/4V/fiZp01+v1chPfkZMyy4Ra+n1d8Hrkw9U4L+8TMpEtk5
+            0E9+n+PuN6Xp0lvC/FdNcU5dyIHuXO+k9uGgXqS4UUYKXdmL4BAAAO3ASisK1M/ocNHDUfJEuIL0GWptGJpOHN3WBmYorgMkXw0AoA8IS4bp
+            LSiWNYYF6IJAHSnzE/pvhYgACivH/9oADAMBAAIAAwAAABAAAQAACQASCCAf/8QAFBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAwEBPxBP/8QA
+            FBEBAAAAAAAAAAAAAAAAAAAAQP/aAAgBAgEBPxBP/8QAHRABAQEBAQEAAwEAAAAAAAAAAREhMQBBEFGh8P/aAAgBAQABPxB+MmZqVFUzAgYC
+            l4KnVmdUfpSAZYpXWHleCAAQBon1gsWCxJpY7Q1ALwVAIhJBAeFq2664xVSAqgGgMPCQUIFT/QBVVTGEPVQVVSmsaUUVCSV+mPHT2XqVjO3Y
+            MFVDUFe3UsmpZR0MswGnqHnAbQI4KFMA2PBViMVaQr8ukOqHd8qLOsCmhihQVe5Sr5eNb0gkcgVTvwBynfJQGCWgQA0gp8gGciYIfz/d9BuA
+            hUNKU1AU0CLgrwvxREEKEVIWgPF6kCQXggzAMUgJhlDAAEOfjKkDCLTiY3QcAPFiHjYCpodxydCgEjLcAAAAAGcCHPz/AP/Z",
+            "name"=>                   'test',
+            "sha1Hash"=>               "91e408d7897162c9f0946aab6bc4a066d75ae6ea",
+            "size"=>                   1266,
+        ];
+
+        $response = $testInstance->callCreateAttachment($requestData);
+
+        $position = strpos($response, $testInstance->getErrorUidNotSet());
+
+        $this->assertNotFalse($position, 'Method callCreateAttachment returns wrong result. Must throw error: ' . $testInstance->getErrorUidNotSet());
     }
 }
