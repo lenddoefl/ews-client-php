@@ -16,10 +16,10 @@ namespace EFLGlobal\EWSClient
                 "dateQuery"=>$date
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                return static::getError($e);
             }
         }
 
@@ -32,10 +32,10 @@ namespace EFLGlobal\EWSClient
                 "subjects"=>$subject
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                return static::getError($e);
             }
         }
     }

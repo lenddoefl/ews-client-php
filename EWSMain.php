@@ -93,13 +93,13 @@ namespace EFLGlobal\EWSClient
             $url = $this->url . '/login.json';
             $post = [ "identifier"=> $this->identifier ];
             try{
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 $this->encoderDecoder($response);
 
                 return $response;
             }
             catch (\Exception $e) {
-                return self::getError($e);
+                return static::getError($e);
             }
 
         }
