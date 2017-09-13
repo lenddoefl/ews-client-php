@@ -46,6 +46,12 @@ namespace EFLGlobal\EWSClient
             $this->uid = $uid;
         }
 
+        function __construct($url , $identifier, $decryptionKey, $encryptionKey)
+        {
+            parent::__construct($url , $identifier, $decryptionKey, $encryptionKey);
+            $this->attachmentUids = [];
+        }
+
         public function callStartSession ($data, $repeat=true)
         {
             try {
