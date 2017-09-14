@@ -755,4 +755,433 @@ class AJAPIUnitTests extends TestCase
 
         $this->assertNotFalse($position, 'Method callCreateAttachment returns wrong result. Must throw error: ' . $testInstance->getErrorUidNotSet());
     }
+
+    public function testCallFinishSession ()
+    {
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key'];
+        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $testInstance->setUid("qwertrwe");
+        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
+        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
+
+        $data = [
+            "data" => [],
+            "statusCode"=>    200,
+            "statusMessage"=> "OK"
+        ];
+
+        $data = json_encode($data);
+
+        $testInstance::setMockData([
+            new Response(200, [], $data),
+            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
+        ]);
+
+        $response = $testInstance->callFinishSession();
+
+        $this->assertEquals($data, $response, 'Method callFinishSession returns wrong result.');
+    }
+
+    public function testCallFinishSessionWithoutUid ()
+    {
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key'];
+        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
+        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
+
+        $data = [
+            "data" => [],
+            "statusCode"=>    200,
+            "statusMessage"=> "OK"
+        ];
+
+        $data = json_encode($data);
+
+        $testInstance::setMockData([
+            new Response(200, [], $data),
+            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
+        ]);
+
+        $response = $testInstance->callFinishSession();
+
+        $position = strpos($response, $testInstance->getErrorUidNotSet());
+
+        $this->assertNotFalse($position, 'Method callFinishSession returns wrong result. Must throw error: ' . $testInstance->getErrorUidNotSet());
+    }
+
+    public function testCallFinishStep ()
+    {
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key'];
+        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $testInstance->setUid("qwertrwe");
+        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
+        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
+
+        $data = [
+            "data" => [],
+            "statusCode"=>    200,
+            "statusMessage"=> "OK"
+        ];
+
+        $data = json_encode($data);
+
+        $testInstance::setMockData([
+            new Response(200, [], $data),
+            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
+        ]);
+
+        $requestData = [
+            "applicant"=>    [
+                "birthday"=>         '11.11.11',
+                "email"=>            'test@test.test',
+                "employmentStatus"=> 'intern',
+                "firstName"=>       'bob',
+                "gender"=>           'm',
+                "lastName"=>         'dylan',
+                "maritalStatus"=>    'single',
+                "loan"=>            [
+                    "amount"=>         15000,
+                    "businessIncome"=> 15000,
+                    "currency"=>       'PEN',
+                    "personalIncome"=> 12000,
+                    "term"=>           2.17
+                ],
+                "locale"=>           'en',
+                "utcOffset"=>        '2',
+
+                "addresses"=> [
+                    "business"=> [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                    "home"=>     [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                    "work"=>     [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                ],
+
+                "connections"=> [
+                    "facebook"=>   true,
+                    "google"=>     true,
+                    "linkedin"=>   true,
+                    "microsoft"=>  true,
+                    "twitter"=>    true,
+                    "yahoo"=>      true
+                ],
+
+                "idNumbers"=> [
+                    "analyticsId"=>        '123',
+                    "bankAccountNumber"=>  '1234123413414',
+                    "driversLicense"=>     '1234',
+                    "externalKey"=>        '12341234',
+                    "nationalId"=>         '1234123',
+                    "passport"=>           '12341234134',
+                    "phoneNumber"=>        '12341234',
+                    "voterId"=>            '1234124'
+                ]
+            ],
+            "device"=>       [
+                "browser"=> null,
+                "deviceId"=> null,
+                "ipAddress"=> null,
+                "os"=> [
+                    "type"=> null,
+                    "version"=> null,
+                ],
+                "referrer"=> null,
+
+                "viewport"=> [
+                    "height"=> null,
+                    "width"=> null
+                ]
+            ],
+            "metas"=>        new stdClass,
+            "observations"=> new stdClass,
+            "state"=>        new stdClass,
+            "step"=>         'abGlobal',
+        ];
+
+        $response = $testInstance->callFinishStep($requestData);
+
+        $this->assertEquals($data, $response, 'Method callFinishStep returns wrong result.');
+        $this->assertAttributeEquals(1, 'sequence', $testInstance, "Method callFinishStep doesn't add one to sequence.");
+    }
+
+    public function testCallFinishStepWithoutUid ()
+    {
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key'];
+        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
+        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
+
+        $data = [
+            "data" => [],
+            "statusCode"=>    200,
+            "statusMessage"=> "OK"
+        ];
+
+        $data = json_encode($data);
+
+        $testInstance::setMockData([
+            new Response(200, [], $data),
+            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
+        ]);
+
+        $requestData = [
+            "applicant"=>    [
+                "birthday"=>         '11.11.11',
+                "email"=>            'test@test.test',
+                "employmentStatus"=> 'intern',
+                "firstName"=>       'bob',
+                "gender"=>           'm',
+                "lastName"=>         'dylan',
+                "maritalStatus"=>    'single',
+                "loan"=>            [
+                    "amount"=>         15000,
+                    "businessIncome"=> 15000,
+                    "currency"=>       'PEN',
+                    "personalIncome"=> 12000,
+                    "term"=>           2.17
+                ],
+                "locale"=>           'en',
+                "utcOffset"=>        '2',
+
+                "addresses"=> [
+                    "business"=> [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                    "home"=>     [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                    "work"=>     [
+                        "city"=>       'asdf',
+                        "country"=>    'USA',
+                        "latitude"=>   12,
+                        "longitude"=>  12,
+                        "street"=>     'qwe',
+                        "postalCode"=> 'qwe',
+                        "region"=>     'qwer'
+                    ],
+                ],
+
+                "connections"=> [
+                    "facebook"=>   true,
+                    "google"=>     true,
+                    "linkedin"=>   true,
+                    "microsoft"=>  true,
+                    "twitter"=>    true,
+                    "yahoo"=>      true
+                ],
+
+                "idNumbers"=> [
+                    "analyticsId"=>        '123',
+                    "bankAccountNumber"=>  '1234123413414',
+                    "driversLicense"=>     '1234',
+                    "externalKey"=>        '12341234',
+                    "nationalId"=>         '1234123',
+                    "passport"=>           '12341234134',
+                    "phoneNumber"=>        '12341234',
+                    "voterId"=>            '1234124'
+                ]
+            ],
+            "device"=>       [
+                "browser"=> null,
+                "deviceId"=> null,
+                "ipAddress"=> null,
+                "os"=> [
+                    "type"=> null,
+                    "version"=> null,
+                ],
+                "referrer"=> null,
+
+                "viewport"=> [
+                    "height"=> null,
+                    "width"=> null
+                ]
+            ],
+            "metas"=>        new stdClass,
+            "observations"=> new stdClass,
+            "state"=>        new stdClass,
+            "step"=>         'abGlobal',
+        ];
+        $response = $testInstance->callFinishStep($requestData);
+
+        $position = strpos($response, $testInstance->getErrorUidNotSet());
+        $this->assertNotFalse($position, 'Method callFinishStep returns wrong result. Must throw error: ' . $testInstance->getErrorUidNotSet());
+    }
+
+    public function testCallGetApplication ()
+    {
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key'];
+        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $testInstance->setUid("qwertrwe");
+        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
+        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
+
+        $data =
+            [
+                "data" => [
+                    "applicant" => new stdClass(),
+                    "applicationHash" => "aasdfasde43fq4q3f4rqr423r",
+                    "playerConfiguration" => new stdClass(),
+                    "useCached" => true,
+
+                    "state" => [
+                        "completedSteps" => ["String"]
+                    ],
+                ],
+
+                "statusCode" => 200,
+                "statusMessage" => "OK"
+            ];
+
+        $data = json_encode($data);
+
+        $testInstance::setMockData([
+            new Response(200, [], $data),
+            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
+        ]);
+
+        $requestData = [
+            "device"=> [
+                "browser"=> null,
+                "deviceId"=> null,
+                "ipAddress"=> null,
+                "os"=> [
+                    "type"=> null,
+                    "version"=> null,
+                ],
+                "referrer"=> null,
+
+                "viewport"=> [
+                    "height"=> null,
+                    "width"=> null
+                ]
+            ],
+            "player"=> [
+                "type"=>    "web-embedded",
+                "version"=> "1.20"
+            ]
+        ];
+
+        $response = $testInstance->callGetApplication($requestData);
+
+        $this->assertEquals($data, $response, 'Method callGetApplication returns wrong result.');
+        $this->assertAttributeEquals("aasdfasde43fq4q3f4rqr423r", 'applicationHash', $testInstance, "Method callGetApplication doesn't store application hash.");
+    }
+
+    public function testCallGetApplicationWithoutUid ()
+    {
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            'TestKeys/ApplicantJourney/identifier.txt',
+            'TestKeys/ApplicantJourney/decryption.key',
+            'TestKeys/ApplicantJourney/encryption.key'];
+        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+
+        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
+        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
+
+        $data =
+            [
+                "data" => [
+                    "applicant" => new stdClass(),
+                    "applicationHash" => "aasdfasde43fq4q3f4rqr423r",
+                    "playerConfiguration" => new stdClass(),
+                    "useCached" => true,
+
+                    "state" => [
+                        "completedSteps" => ["String"]
+                    ],
+                ],
+
+                "statusCode" => 200,
+                "statusMessage" => "OK"
+            ];
+
+        $data = json_encode($data);
+
+        $testInstance::setMockData([
+            new Response(200, [], $data),
+            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
+        ]);
+
+        $requestData = [
+            "device"=> [
+                "browser"=> null,
+                "deviceId"=> null,
+                "ipAddress"=> null,
+                "os"=> [
+                    "type"=> null,
+                    "version"=> null,
+                ],
+                "referrer"=> null,
+
+                "viewport"=> [
+                    "height"=> null,
+                    "width"=> null
+                ]
+            ],
+            "player"=> [
+                "type"=>    "web-embedded",
+                "version"=> "1.20"
+            ]
+        ];
+
+        $response = $testInstance->callGetApplication($requestData);
+
+        $position = strpos($response, $testInstance->getErrorUidNotSet());
+        $this->assertNotFalse($position, 'Method callGetApplication returns wrong result. Must throw error: ' . $testInstance->getErrorUidNotSet());
+    }
 }
+
