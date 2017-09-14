@@ -126,7 +126,6 @@ Then this argument will be changed to false to be sure that method will not rais
 Method connects to startSession endpoint and returns JSON answer.\
 It also stores uid, public key, application hash in class instance and set sequence to 0.\
 As an argument takes a PHP array of data to send on server and an argument $repeat as described higher. Method can take stored application hash if one provided.\
-Pay attention, that before calling this session you should call to login endpoint ot get reqToken.
 
 Method cannot be called if session have already been started (i.o. uid is set in instance).\
 Method automatically uses calLogin method.
@@ -135,7 +134,6 @@ Method automatically uses calLogin method.
 Method connects to finishSession endpoint and returns JSON answer.\
 It may take a PHP array of data to send on server.\
 If not provided, sequence is taken from stored $sequence variable. Also it is always taken from $uid variable.\
-Pay attention, that before calling this session you should call to login endpoint ot get new reqToken.
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
@@ -209,7 +207,10 @@ As an argument takes a PHP array representing information about subjects (*i.e. 
 ## Testing
 
 Both PHP clients are provided with automated tests.\
-You can find them in Tests folder.
+You can find them in Tests folder:
+
++ AJAPITests.php
++ ScoresAPITests.php
 
 These are phpunit tests and must be started via phpunit.\
 Basically there are two ways to execute tests. Normally you can provide an additional argument in command line while starting the test (so it is parsed by PHP as $argv[2]).\
@@ -235,16 +236,22 @@ In that case you don't need provide additional argument in command line.
 
 ***Pay attention that Scores API may return "Too many requests" error in case of frequent requests.***
 
+Also you can perform unit tests which work offline but use child classes of both controller classes.\
+You can start them with phpunit without an additional arguments in the command line. Files are:
+
++ AJAPIUnitTests.php
++ ScoresAPIUnitTests.php
+
 ## Additional features
 
 ### Demos
 
-In Demos directory you can find demo files. They show how to access methods of both client classes.\
+In Demos directory you can find demo files (Demos/AJAPIDemo.php, Demos/ScoresAPIDemo.php). They show how to access methods of both client classes.\
 Demos works exactly like tests, except they call every key method once and, once executed in browser, will return human-friendly page.
 
 ### Command line demos
 
-You can also execute files in CommandLine folder to try clients. You can do it two ways:
+You can also execute command-line based files in Demos folder (Demos/AJAPICommand.php, Demos/ScoresAPICommand.php)to try clients. You can do it two ways:
 + Use first method we described for testing. In case of AJAPI you need to add 5-th line - application name.
 + Set arguments right in command line. There must be from  4 to 5 arguments:
   - URL path to API;

@@ -46,6 +46,12 @@ namespace EFLGlobal\EWSClient
             $this->uid = $uid;
         }
 
+        function __construct($url , $identifier, $decryptionKey, $encryptionKey)
+        {
+            parent::__construct($url , $identifier, $decryptionKey, $encryptionKey);
+            $this->attachmentUids = [];
+        }
+
         public function callStartSession ($data, $repeat=true)
         {
             try {
@@ -54,10 +60,10 @@ namespace EFLGlobal\EWSClient
                 }
             }
             catch (\Exception $e){
-                return self::getError($e);
+                return static::getError($e);
             }
 
-            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+            if ((!isset($this->authToken64)) and ($repeat==true)){
                 $this->callLogin();
             }
 
@@ -76,7 +82,7 @@ namespace EFLGlobal\EWSClient
                 "data"=>$data
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
 
                 $data = \GuzzleHttp\json_decode($response)->data;
                 $this->applicationHash = $data->applicationHash;
@@ -85,12 +91,12 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                if (($e->getCode() == 403) and ($repeat===true)) {
                     $this->callLogin();
-                    return $this->callResumeSession($data, false);
+                    return $this->callStartSession($data, false);
                 }
                 else {
-                    return self::getError($e);
+                    return static::getError($e);
                 }
             }
         }
@@ -103,7 +109,7 @@ namespace EFLGlobal\EWSClient
                 }
             }
             catch (\Exception $e){
-                return self::getError($e);
+                return static::getError($e);
             }
 
             $url = $this->url . '/finishSession.json';
@@ -121,10 +127,10 @@ namespace EFLGlobal\EWSClient
             ];
 
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                return static::getError($e);
             }
         }
 
@@ -136,7 +142,7 @@ namespace EFLGlobal\EWSClient
                 }
             }
             catch (\Exception $e){
-                return self::getError($e);
+                return static::getError($e);
             }
 
             $data['uid'] = $this->uid;
@@ -149,12 +155,12 @@ namespace EFLGlobal\EWSClient
             ];
 
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
 
                 array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                return static::getError($e);
             }
 
         }
@@ -167,7 +173,7 @@ namespace EFLGlobal\EWSClient
                 }
             }
             catch (\Exception $e){
-                return self::getError($e);
+                return static::getError($e);
             }
 
             $url = $this->url . '/finishStep.json';
@@ -184,12 +190,12 @@ namespace EFLGlobal\EWSClient
                 "data"=>$data
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 $this->sequence++;
 
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                return static::getError($e);
             }
         }
 
@@ -201,7 +207,7 @@ namespace EFLGlobal\EWSClient
                 }
             }
             catch (\Exception $e){
-                return self::getError($e);
+                return static::getError($e);
             }
 
             $url = $this->url . '/getApplication.json';
@@ -219,20 +225,20 @@ namespace EFLGlobal\EWSClient
             ];
 
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
 
                 $data = \GuzzleHttp\json_decode($response)->data;
                 $this->applicationHash = $data->applicationHash;
 
                 return $response;
             } catch (\Exception $e) {
-                return self::getError($e);
+                return static::getError($e);
             }
         }
 
         public function callPrefetchApplications ($data, $repeat=true)
         {
-            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))){
+            if ((!isset($this->authToken64)) and ($repeat==true)){
                 $this->callLogin();
             }
 
@@ -243,15 +249,15 @@ namespace EFLGlobal\EWSClient
                 "data"=>$data
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                if (($e->getCode() == 403) and ($repeat===true)) {
                     $this->callLogin();
-                    return $this->callResumeSession($data, false);
+                    return $this->callPrefetchApplications($data, false);
                 }
                 else {
-                    return self::getError($e);
+                    return static::getError($e);
                 }
             }
         }
@@ -264,10 +270,10 @@ namespace EFLGlobal\EWSClient
                 }
             }
             catch (\Exception $e){
-                return self::getError($e);
+                return static::getError($e);
             }
 
-            if ((!isset($this->authToken64)) or (!isset($this->reqToken64))) {
+            if ((!isset($this->authToken64)) and ($repeat==true)) {
                 $this->callLogin();
             }
 
@@ -281,7 +287,7 @@ namespace EFLGlobal\EWSClient
                 "data"=>$data
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
 
                 $data = \GuzzleHttp\json_decode($response)->data;
                 $this->publicKey = $data->publicKey;
@@ -289,12 +295,12 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                if ((strpos($e, "403 FORBIDDEN") !== false) and ($repeat===true)) {
+                if (($e->getCode() == 403) and ($repeat===true)) {
                     $this->callLogin();
                     return $this->callResumeSession($data, false);
                 }
                 else {
-                    return self::getError($e);
+                    return static::getError($e);
                 }
             }
         }
