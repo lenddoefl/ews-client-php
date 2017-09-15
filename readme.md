@@ -154,16 +154,15 @@ Method automatically uses calLogin method.
 
 ##### callGetApplication($data)
 Method connects to getApplication endpoint and returns JSON answer.\
-It also stores application hash in class instance.\
 As an argument takes a PHP array of data to send on server.\
-If not provided, application hash is taken from stored variable. Also uid is always taken from $uid variable.\
+Uid is always taken from $uid variable.
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
 ##### callFinishStep($data)
 Method connects to finishStep endpoint and returns JSON answer.\
 As an argument takes a PHP array of data to send on server.\
-If not provided, sequence is taken from stored variable. Also uid is always taken from $uid variable.\
+If not provided, sequence is taken from stored variable. Also uid is always taken from $uid variable.
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
@@ -171,7 +170,7 @@ Method cannot be called if session haven't been started (i.o. uid is not set in 
 Method connects to createAttachment endpoint and returns JSON answer.\
 It also stores attachment uid in class instance.\
 As an argument takes a PHP array of data to send on server.\
-Uid is always taken from $uid variable.\
+Uid is always taken from $uid variable.
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
@@ -183,7 +182,7 @@ Method cannot be called if session haven't been started (i.o. uid is not set in 
 | callFinishSession        | array $data (optional) | uid, sequence                 |                                                                                           |
 | callCreateAttachment     | array $data            | uid                           | Pushes attachmentUid in attachmentUids array                                              |
 | callFinishStep           | array $data            | uid, sequence                 | Adds 1 do sequence                                                                        |
-| callGetApplication       | array $data            | uid, applicationHash          | applicationHash                                                                           |
+| callGetApplication       | array $data            | uid                           |                                                                                           |
 | callResumeSession        | array $data, $repeat   | uid                           | publicKey, uid                                                                            |
 | callPrefetchApplications | array $data, $repeat   |                               |                                                                                           |
 
