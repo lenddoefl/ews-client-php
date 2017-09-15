@@ -214,10 +214,6 @@ namespace EFLGlobal\EWSClient
 
             $data['uid'] = $this->uid;
 
-            if (!isset($data->uid)){
-                $data['applicationHash'] = $this->applicationHash;
-            }
-
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
@@ -226,9 +222,6 @@ namespace EFLGlobal\EWSClient
 
             try {
                 $response = static::sendRequest($url, $post);
-
-                $data = \GuzzleHttp\json_decode($response)->data;
-                $this->applicationHash = $data->applicationHash;
 
                 return $response;
             } catch (\Exception $e) {
