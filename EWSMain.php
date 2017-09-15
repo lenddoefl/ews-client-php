@@ -1,7 +1,7 @@
 <?php
 
 namespace {
-    require 'vendor/autoload.php';
+    require 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 }
 
 

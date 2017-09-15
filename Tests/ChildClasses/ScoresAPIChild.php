@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../ScoresAPIController.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "ScoresAPIController.php";
 use \EFLGlobal\EWSClient\ScoresAPIController;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;

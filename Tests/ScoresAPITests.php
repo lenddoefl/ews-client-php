@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../ScoresAPIController.php';
+include __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'ScoresAPIController.php';
 use EFLGlobal\EWSClient\ScoresAPIController;
 use PHPUnit\Framework\TestCase;
 

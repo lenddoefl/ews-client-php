@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../AJAPIController.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "AJAPIController.php";
 use \EFLGlobal\EWSClient\AJAPIController;
 
 use GuzzleHttp\Client;
