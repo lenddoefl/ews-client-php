@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/ChildClasses/AJAPIChild.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "ChildClasses" . DIRECTORY_SEPARATOR . "AJAPIChild.php";
 
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Request;

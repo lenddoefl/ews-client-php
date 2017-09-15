@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../ScoresAPIController.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "ScoresAPIController.php";
 use \EFLGlobal\EWSClient\ScoresAPIController;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -51,18 +51,5 @@ class ScoresAPIChild extends ScoresAPIController
         'json' => $post
     ]);
     return $response->getBody();
-    }
-
-    protected function extractTokensFromLoginResponse($login)
-    {
-        if (get_class($this) == "ScoresAPIChild") {
-            $authToken64 = $login->authToken;
-            $reqToken64 = $login->reqToken;
-        }
-        else {
-            $authToken64 = $login->data->authToken;
-            $reqToken64 = $login->data->reqToken;
-        }
-        return [$authToken64, $reqToken64];
     }
 }

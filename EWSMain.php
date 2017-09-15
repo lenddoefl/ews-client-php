@@ -1,7 +1,18 @@
 <?php
 
 namespace {
-    require 'vendor/autoload.php';
+    $paths = [
+        __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'autoload.php',
+        __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
+        __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
+        'vendor', ".."];
+    foreach ($paths as $path) {
+        if (file_exists($path)) {
+            require $path;
+            break;
+        }
+    }
+
 }
 
 
@@ -127,7 +138,7 @@ namespace EFLGlobal\EWSClient
 
         protected function extractTokensFromLoginResponse($login)
         {
-            if (get_class($this) == "EFLGlobal\EWSClient\ScoresAPIController") {
+            if (!isset($login->data)) {
                 $authToken64 = $login->authToken;
                 $reqToken64 = $login->reqToken;
             }

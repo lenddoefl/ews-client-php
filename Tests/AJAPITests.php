@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../AJAPIController.php';
+include __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "AJAPIController.php";
 use EFLGlobal\EWSClient\AJAPIController;
 use PHPUnit\Framework\TestCase;
 
