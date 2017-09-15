@@ -52,17 +52,4 @@ class ScoresAPIChild extends ScoresAPIController
     ]);
     return $response->getBody();
     }
-
-    protected function extractTokensFromLoginResponse($login)
-    {
-        if (get_class($this) == "ScoresAPIChild") {
-            $authToken64 = $login->authToken;
-            $reqToken64 = $login->reqToken;
-        }
-        else {
-            $authToken64 = $login->data->authToken;
-            $reqToken64 = $login->data->reqToken;
-        }
-        return [$authToken64, $reqToken64];
-    }
 }

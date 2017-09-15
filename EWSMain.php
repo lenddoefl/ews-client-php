@@ -127,7 +127,7 @@ namespace EFLGlobal\EWSClient
 
         protected function extractTokensFromLoginResponse($login)
         {
-            if (get_class($this) == "EFLGlobal\EWSClient\ScoresAPIController") {
+            if (!isset($login->data)) {
                 $authToken64 = $login->authToken;
                 $reqToken64 = $login->reqToken;
             }
