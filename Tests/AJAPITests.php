@@ -158,22 +158,6 @@ class AJAPITests extends TestCase
 
         return [$testInstance, $response->data->applicationHash];
     }
-    /**
-     * @depends testCallGetApplicationReturnsStatusOK
-     */
-    public function testCallCallGetApplicationStoresNotEmptyAttributes($return)
-    {
-        $this->assertAttributeNotEmpty('applicationHash', $return[0], "CallResumeSession method must store not empty applicationHash attribute.");
-
-    }
-
-    /**
-     * @depends testCallGetApplicationReturnsStatusOK
-     */
-    public function testCallGetApplicationStoresOwnAttributes($return)
-    {
-        $this->assertAttributeEquals($return[1],'applicationHash', $return[0], "CallResumeSession stores applicationHash variable that is not equal to server response.");
-    }
 
     /**
      * @depends testCallGetApplicationReturnsStatusOK

@@ -16,9 +16,9 @@ class AJAPIUnitTests extends TestCase
     {
 
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance::setMockData([
@@ -34,9 +34,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallLogin()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -67,9 +67,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallStartSession()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -117,9 +117,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallStartSessionWithUidNotEmpty()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -171,9 +171,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallStartSessionResponse403()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -224,9 +224,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallStartSessionAlreadyLogin()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -267,9 +267,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallResumeSession()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -319,9 +319,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallResumeSessionWithUidEmpty()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -371,9 +371,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallResumeSessionResponse403()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -426,9 +426,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallResumeSessionAlreadyLogin()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -481,9 +481,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallPrefetchApplication()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -534,9 +534,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallPrefetchApplicationsResponse403()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -590,9 +590,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallPrefetchApplicationsAlreadyLogin()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -647,9 +647,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallCreateAttachment()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setUid("qwertrwe");
@@ -703,9 +703,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallCreateAttachmentWithoutUid()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
@@ -759,9 +759,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallFinishSession ()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setUid("qwertrwe");
@@ -789,9 +789,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallFinishSessionWithoutUid ()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
@@ -820,9 +820,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallFinishStep ()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setUid("qwertrwe");
@@ -941,9 +941,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallFinishStepWithoutUid ()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
@@ -1060,9 +1060,9 @@ class AJAPIUnitTests extends TestCase
     public function testCallGetApplication ()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setUid("qwertrwe");
@@ -1118,15 +1118,14 @@ class AJAPIUnitTests extends TestCase
         $response = $testInstance->callGetApplication($requestData);
 
         $this->assertEquals($data, $response, 'Method callGetApplication returns wrong result.');
-        $this->assertAttributeEquals("aasdfasde43fq4q3f4rqr423r", 'applicationHash', $testInstance, "Method callGetApplication doesn't store application hash.");
     }
 
     public function testCallGetApplicationWithoutUid ()
     {
         $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            'TestKeys/ApplicantJourney/identifier.txt',
-            'TestKeys/ApplicantJourney/decryption.key',
-            'TestKeys/ApplicantJourney/encryption.key'];
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
