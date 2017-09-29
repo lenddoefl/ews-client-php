@@ -297,6 +297,12 @@ namespace EFLGlobal\EWSClient
                 }
             }
         }
+
+
+        protected function extractTokensFromLoginResponse($login)
+        {
+            return [$login->data->authToken, $login->data->reqToken];
+        }
     }
 }
 
