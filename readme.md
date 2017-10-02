@@ -182,7 +182,7 @@ Arguments:
 Automatically uses:
 + callLogin
 
-##### callResumeSession($data)
+##### callResumeSession([$data])
 Method connects to resumeSession endpoint and returns JSON answer.
 
 Stores:
@@ -190,7 +190,7 @@ Stores:
 + public key
 
 Arguments:
-+ PHP array of data to send on server
++ PHP array of data to send on server (optional) 
 
 Always takes stored:
 + uid
