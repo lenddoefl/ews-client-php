@@ -651,6 +651,10 @@ class AJAPITests extends TestCase
         $this->assertEquals($response->statusMessage, "OK", "Server must return status message OK.");
     }
 
+    /**
+     * These four tests are testing if functions start callLogin and callResumeSession automatically.
+     */
+
     public function testCallCreateAttachmentOn403()
     {
         global $argv;
