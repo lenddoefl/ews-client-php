@@ -87,7 +87,7 @@ namespace EFLGlobal\EWSClient
             if (isset($this->applicationHash)){
                 $data['applicationHash'] = $this->applicationHash;
             }
-            $this->applicant = $data->applicant;
+            $this->applicant = $data["applicant"];
 
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -129,7 +129,7 @@ namespace EFLGlobal\EWSClient
 
             $data['uid'] = $this->uid;
 
-            if (!isset($data->sequence)){
+            if (!isset($data["sequence"])){
                 $data['sequence'] = $this->sequence;
             }
 
@@ -207,7 +207,7 @@ namespace EFLGlobal\EWSClient
 
             $data['uid'] = $this->uid;
 
-            if (!isset($data->sequence)){
+            if (!isset($data["sequence"])){
                 $data['sequence'] = $this->sequence;
             }
 
@@ -310,7 +310,7 @@ namespace EFLGlobal\EWSClient
             $url = $this->url . '/resumeSession.json';
 
             $data['uid'] = $this->uid;
-            if (!isset($data->applicant)){
+            if (!isset($data["applicant"])){
                 $data['applicant'] = $this->applicant;
             }
 

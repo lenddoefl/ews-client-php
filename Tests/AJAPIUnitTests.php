@@ -104,7 +104,7 @@ class AJAPIUnitTests extends TestCase
         ]);
 
         $requestData = [
-        "applicant"=> [],
+        "applicant"=> ["name"=>"RandomName"],
         "application"=>   "sdkExample"
     ];
         $response = $testInstance->callStartSession($requestData);
@@ -112,6 +112,7 @@ class AJAPIUnitTests extends TestCase
         $this->assertEquals($data1, $response, 'Method callStartSession returns wrong result.');
         $this->assertAttributeEquals("nuYt+Y0sobcPXlYUgyQgkg==", 'authToken64', $testInstance, "Method encoderDecoder doesn't store authToken64.");
         $this->assertAttributeEquals("8zhoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==", 'reqToken64', $testInstance, "Method encoderDecoder doesn't store reqToken64.");
+        $this->assertAttributeEquals($requestData["applicant"], 'applicant', $testInstance, "Method encoderDecoder doesn't store applicant.");
     }
 
     public function testCallStartSessionWithUidNotEmpty()
@@ -308,7 +309,7 @@ class AJAPIUnitTests extends TestCase
         $requestData = [
             "applicant"=> [],
         ];
-
+        $testInstance->callLogin();
         $response = $testInstance->callResumeSession($requestData);
 
         $this->assertEquals($data1, $response, 'Method callResumeSession returns wrong result.');
@@ -359,123 +360,13 @@ class AJAPIUnitTests extends TestCase
             "applicant"=> [],
             "application"=>   "sdkExample"
         ];
+
+        $testInstance->callLogin();
         $response = $testInstance->callResumeSession($requestData);
 
         $position = strpos($response, $testInstance->getErrorUidNotSet());
 
         $this->assertNotFalse($position, 'Method callResumeSession returns wrong result. Must throw error: ' . $testInstance->getErrorUidNotSet());
-        $this->assertAttributeEmpty('authToken64', $testInstance, "AuthToken64 is not empty.");
-        $this->assertAttributeEmpty('reqToken64', $testInstance, "ReqToken64 is not empty.");
-    }
-
-    public function testCallResumeSessionResponse403()
-    {
-        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            __DIR__. '/MockData/MockData.txt',
-            __DIR__. '/MockData/MockData.txt',
-            __DIR__. '/MockData/MockData.txt'];
-        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
-
-        $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
-        $testInstance->setDirectlyEncryptionKey("96AC1E2955C4FFE3");
-        $testInstance->setDirectlyDecryptionKey("5BB12CCFE9B52398");
-
-        $testInstance->setUid("qwertrwe");
-
-        $data = ['data'=>
-            [
-                "authToken" => 'nuYt+Y0sobcPXlYUgyQgkg==',
-                "reqToken" => 'Pr1vlujWJPAvnTHP3cUugAkinmdOyjABkkEYr/1QwTD4nXOPTSUgER5c1xhLkyRuLvJmLk49j6t1GluostIOFQ=='
-            ],
-            "statusCode"=>    200,
-            "statusMessage"=> "OK"
-        ];
-        $data1 = [
-            "data"=> [
-                "applicationHash"=> "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0",
-                "publicKey"=> "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmCAmxt5yA1AA3QNXszXpePbJc/XZnKEVwbTIF8wEMn7OT2WFFd4+bJUMVOXaiKsT6jNrQgaAL3wGDougjXiDPdEc6PWEdRPB8m2XojnYgVE9blE5GqceL68SjuE3d7KDFxXJM8F6C4XUjJryGQWYXcQA8UCu5yWxJnGEFn4HuJkZIivCk0mSJyi7lT9HaxCR/HMZr/qZySjbCB0wfCoB+btdpEkEGjvsgWLZlhDwHoT4hXcOhzeYB2z/g4xGdGHgkuPv+QnG8aWDq3GxYGuu+nj2SZyL2CTKXG1kzSoys3lP3P/iJmd2yb/Rv8/7dq0aKTfr7aZfRql2L6aImhg+VwIDAQAB",
-                "uid"=> "49c31aa34b054007888eb3feaf2516a2"
-            ],
-            "statusCode"=> 200,
-            "statusMessage"=> "OK"
-        ];
-
-        $data = json_encode($data);
-        $data1 = json_encode($data1);
-
-        $testInstance::setMockData([
-            new Response(200, []),
-            new RequestException("Error Communicating with Server", new Request('GET', 'test'), new Response(403)),
-            new Response(200, [], $data),
-            new Response(200, [], $data1),
-            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
-        ]);
-
-        $requestData = [
-            "applicant"=> [],
-            "application"=>   "sdkExample"
-        ];
-        $response = $testInstance->callResumeSession($requestData);
-
-
-        $this->assertEquals($data1, $response, 'Method callResumeSession returns wrong result.');
-        $this->assertAttributeEquals("nuYt+Y0sobcPXlYUgyQgkg==", 'authToken64', $testInstance, "Method encoderDecoder doesn't store authToken64.");
-        $this->assertAttributeEquals("8zhoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==", 'reqToken64', $testInstance, "Method encoderDecoder doesn't store reqToken64.");
-    }
-
-    public function testCallResumeSessionAlreadyLogin()
-    {
-        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
-            __DIR__. '/MockData/MockData.txt',
-            __DIR__. '/MockData/MockData.txt',
-            __DIR__. '/MockData/MockData.txt'];
-        $testInstance = new AJAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
-
-        $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
-        $testInstance->setDirectlyEncryptionKey("96AC1E2955C4FFE3");
-        $testInstance->setDirectlyDecryptionKey("5BB12CCFE9B52398");
-
-        $testInstance->setUid("qwertrwe");
-        $testInstance->setAuthToken64("mrYt+Y0sobcPXlYUgyQgkg==");
-        $testInstance->setReqToken64("7ihoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==");
-
-        $data = ['data'=>
-            [
-                "authToken" => 'nuYt+Y0sobcPXlYUgyQgkg==',
-                "reqToken" => 'Pr1vlujWJPAvnTHP3cUugAkinmdOyjABkkEYr/1QwTD4nXOPTSUgER5c1xhLkyRuLvJmLk49j6t1GluostIOFQ=='
-            ],
-            "statusCode"=>    200,
-            "statusMessage"=> "OK"
-        ];
-        $data1 = [
-            "data"=> [
-                "applicationHash"=> "64a9354b-1014-1698-330e-721b75a109bb#1.20.0.0",
-                "publicKey"=> "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmCAmxt5yA1AA3QNXszXpePbJc/XZnKEVwbTIF8wEMn7OT2WFFd4+bJUMVOXaiKsT6jNrQgaAL3wGDougjXiDPdEc6PWEdRPB8m2XojnYgVE9blE5GqceL68SjuE3d7KDFxXJM8F6C4XUjJryGQWYXcQA8UCu5yWxJnGEFn4HuJkZIivCk0mSJyi7lT9HaxCR/HMZr/qZySjbCB0wfCoB+btdpEkEGjvsgWLZlhDwHoT4hXcOhzeYB2z/g4xGdGHgkuPv+QnG8aWDq3GxYGuu+nj2SZyL2CTKXG1kzSoys3lP3P/iJmd2yb/Rv8/7dq0aKTfr7aZfRql2L6aImhg+VwIDAQAB",
-                "uid"=> "49c31aa34b054007888eb3feaf2516a2"
-            ],
-            "statusCode"=> 200,
-            "statusMessage"=> "OK"
-        ];
-
-        $data = json_encode($data);
-        $data1 = json_encode($data1);
-
-        $testInstance::setMockData([
-            new RequestException("Error Communicating with Server", new Request('GET', 'test'), new Response(403)),
-            new Response(200, [], $data),
-            new Response(200, [], $data1),
-            new RequestException("Error Communicating with Server", new Request('GET', 'test'))
-        ]);
-
-        $requestData = [
-            "applicant"=> [],
-            "application"=>   "sdkExample"
-        ];
-        $response = $testInstance->callResumeSession($requestData);
-
-        $this->assertEquals($data1, $response, 'Method callResumeSession returns wrong result.');
-        $this->assertAttributeEquals("nuYt+Y0sobcPXlYUgyQgkg==", 'authToken64', $testInstance, "Method encoderDecoder doesn't store authToken64.");
-        $this->assertAttributeEquals("8zhoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==", 'reqToken64', $testInstance, "Method encoderDecoder doesn't store reqToken64.");
     }
 
     public function testCallPrefetchApplication()
