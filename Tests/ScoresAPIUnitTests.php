@@ -16,10 +16,10 @@ class ScoresAPIUnitTests extends TestCase
     public function testSendRequest()
     {
 
-        $arguments = ['https://uat-external.eflglobal.com/api/v1/scores/',
-            'TestKeys/Scores/identifier.txt',
-            'TestKeys/Scores/decryption.key',
-            'TestKeys/Scores/encryption.key'];
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new ScoresAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance::setMockData([
@@ -34,10 +34,10 @@ class ScoresAPIUnitTests extends TestCase
 
     public function testCallLogin()
     {
-        $arguments = ['https://uat-external.eflglobal.com/api/v1/scores/',
-            'TestKeys/Scores/identifier.txt',
-            'TestKeys/Scores/decryption.key',
-            'TestKeys/Scores/encryption.key'];
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new ScoresAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $testInstance->setDirectlyIdentifier("85677614E96A4CF4B1CE4A4E3F984CF7AFD63DE9A6438446EFD41D16F977D95D");
@@ -65,10 +65,10 @@ class ScoresAPIUnitTests extends TestCase
 
     public function testCallDataQuery()
     {
-        $arguments = ['https://uat-external.eflglobal.com/api/v1/scores/',
-            'TestKeys/Scores/identifier.txt',
-            'TestKeys/Scores/decryption.key',
-            'TestKeys/Scores/encryption.key'];
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new ScoresAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $data = [
@@ -151,10 +151,10 @@ class ScoresAPIUnitTests extends TestCase
 
     public function testCallSubject()
     {
-        $arguments = ['https://uat-external.eflglobal.com/api/v1/scores/',
-            'TestKeys/Scores/identifier.txt',
-            'TestKeys/Scores/decryption.key',
-            'TestKeys/Scores/encryption.key'];
+        $arguments = ['https://uat-external.eflglobal.com/api/v2/applicant_journey/',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt',
+            __DIR__. '/MockData/MockData.txt'];
         $testInstance = new ScoresAPIChild($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
 
         $data = [

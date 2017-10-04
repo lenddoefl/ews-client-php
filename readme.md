@@ -42,10 +42,14 @@ After that you can call methods to work with API.
 Every endpoint of API is represented by method called like callEndpointName. For example for login you should use callLogin.\
 It is also possible to get variables using method getVariableName, or set some of them using setVariableName.
 
-You do not need to use method callLogin to login to API. It will be called in callStartSession, callResumeSession, callPrefetchApplications methods automatically. 
-It still can be used though. 
+You do not need to use method callLogin to login to API. It will be called in callStartSession and callPrefetchApplications methods automatically.
+Methods callCreateAttachment, callFinishSession, callFinishStep, callGetApplication will automatically use login and callResumeSession.
+automatically used methods still can be used manually though. 
+
 As a general rule, calling most methods you have to provide array with data you want to send. In some cases, if data wasn't provided it can be set automatically.
-Uid is always set automatically end override previous uid if it was set manually. 
+
+Uid is always set automatically and override previous uid if it was set manually. Still uid is pretty tricky. 
+Each method checks to see if is set in instance. If uid is set when it is expected to be not set (or vice versa), an exception is thrown.
 Details of this behavior will be explained below. 
 
 As a result you will get pure JSON from API endpoint. Also instance will receive several properties you can access directly through getters.
@@ -67,9 +71,9 @@ To set variables class uses following public methods:
 + setIdentifier ($identifier)
 + setDecryptionKey ($decryptionKey)
 + setEncryptionKey ($encryptionKey)
++ setURL ($url)
 
 To get variables class uses following public methods:
-+ setURL ($url)
 + getIdentifier ()
 + getDecryptionKey ()
 + getEncryptionKey ()
@@ -82,14 +86,16 @@ Constructor of this class receives 4 arguments: $url , $identifier, $decryptionK
 Under the hood class uses protected static function *sendRequest* which receives url and post information ans sends it to API.
 Users do not normally have access to this method.
 
-To process received tokens class uses protected function *encoderDecoder* which receives information from callLogin mehtod, process tokens and stores them into variables.
+To process received tokens class uses protected function *encoderDecoder* which receives information from callLogin method, process tokens and stores them into variables.
+EncoderDecoder uses child-classes method to get login information frm different API. 
+That means that every child class needs to have method *extractTokensFromLoginResponse*. 
 
 To handle errors class uses protected static function *handleError*. 
 It was encapsulated in case of further development by third party to provide a better way for handling errors.
 
 ##### Public method callLogin ()
 Connects to login endpoint of both APIs.\
-Method also calls protected method encoderDecoder which called protected method extractTokensFromLoginResponse.\
+Method also calls protected method encoderDecoder which calls protected method extractTokensFromLoginResponse.\
 Needs no arguments.\
 This method is called by the client automatically and in most cases you don't need to use it.
 
@@ -103,90 +109,144 @@ Variables:
 + $uid;
 + $sequence;
 + $attachmentUids;
++ $applicant;
 
 To get variables class uses following public methods:
 + getUid()
 + getPublicKey()
 + getAttachmentUids()
 + getApplicationHash()
++ getApplicant()
 
 To set variables class uses following public method:
-+ setUid()
++ setUid($uid)
++ setApplicant($applicant)
 
 ### Main methods
 
 These methods need to be provided with single argument - PHP array representing data (*i.e. in API's documentation's "data" value*) which will be sent to API.
 For callFinishSession method data is not necessary.
-Methods can take data from stored variables and, after receiving a valid response, also store it. In table below you will find all useful information about what wariables are loaded, stored by methods and what arguments they receive.
+Methods can take data from stored variables and, after receiving a valid response, also store it. 
 
-Pay attention that some methods may receive second argument $repeat. It may be false or true. By default it is true that means that if, by some reason, server returns "403 FORBIDDEN" error, method will use callLogin and try again. 
-Then this argument will be changed to false to be sure that method will not raise an infinite loop. 
+Pay attention that some methods may receive second argument $repeat. It may be false or true. 
+By default it is true that means that if, by some reason, server returns "403 FORBIDDEN" error, method will use callLogin or callLogin with callResumeSession and try again. 
+This argument will be changed to false to be sure that method will not raise an infinite loop. 
 
 ##### callStartSession($data)
-Method connects to startSession endpoint and returns JSON answer.\
-It also stores uid, public key, application hash in class instance and set sequence to 0.\
-As an argument takes a PHP array of data to send on server and an argument $repeat as described higher. Method can take stored application hash if one provided.\
+Method connects to startSession endpoint and returns JSON answer.
 
-Method cannot be called if session have already been started (i.o. uid is set in instance).\
-Method automatically uses calLogin method.
+Stores:
++ uid
++ public key
++ application hash
++ applicant
+
+Sets sequence to 0.
+
+Arguments:
++ PHP array of data to send on server
++ $repeat
+
+Can take stored:
++ application hash
+
+Automatically uses:
++ callLogin
+
+Method cannot be called if session have already been started (i.o. uid is set in instance).
 
 ##### callFinishSession([$data])
-Method connects to finishSession endpoint and returns JSON answer.\
-It may take a PHP array of data to send on server.\
-If not provided, sequence is taken from stored $sequence variable. Also it is always taken from $uid variable.\
+Method connects to finishSession endpoint and returns JSON answer.
+
+Arguments:
++ PHP array of data to send on server (optional)
+
+Can take stored:
++ sequence
+
+Always takes stored:
++ uid
+
+Automatically uses:
++ callLogin
++ callResumeSession
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
 ##### callPrefetchApplications($data)
-Method connects to prefetchApplications endpoint and returns JSON answer.\
-As an argument takes a PHP array of data to send on server.
+Method connects to prefetchApplications endpoint and returns JSON answer.
 
-Method automatically uses calLogin method.
+Arguments:
++ PHP array of data to send on server
 
-##### callResumeSession($data)
-Method connects to resumeSession endpoint and returns JSON answer.\
-It also stores uid and public key in class instance.\
-As an argument takes a PHP array of data to send on server.\
-Uid is always taken from $uid variable.
+Automatically uses:
++ callLogin
+
+##### callResumeSession([$data])
+Method connects to resumeSession endpoint and returns JSON answer.
+
+Stores:
++ uid 
++ public key
+
+Arguments:
++ PHP array of data to send on server (optional) 
+
+Always takes stored:
++ uid
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).\
-Method automatically uses calLogin method.
 
 ##### callGetApplication($data)
-Method connects to getApplication endpoint and returns JSON answer.\
-It also stores application hash in class instance.\
-As an argument takes a PHP array of data to send on server.\
-If not provided, application hash is taken from stored variable. Also uid is always taken from $uid variable.\
+Method connects to getApplication endpoint and returns JSON answer.
+
+Arguments:
++ PHP array of data to send on server
+
+Always takes stored:
++ uid
+
+Automatically uses:
++ callLogin
++ callResumeSession
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
 ##### callFinishStep($data)
-Method connects to finishStep endpoint and returns JSON answer.\
-As an argument takes a PHP array of data to send on server.\
-If not provided, sequence is taken from stored variable. Also uid is always taken from $uid variable.\
+Method connects to finishStep endpoint and returns JSON answer.
+
+Arguments:
++ PHP array of data to send on server
+
+Can take stored:
++ sequence
+
+Always takes stored:
++ uid
+
+Automatically uses:
++ callLogin
++ callResumeSession
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
 ##### callCreateAttachment($data)
-Method connects to createAttachment endpoint and returns JSON answer.\
-It also stores attachment uid in class instance.\
-As an argument takes a PHP array of data to send on server.\
-Uid is always taken from $uid variable.\
+Method connects to createAttachment endpoint and returns JSON answer.
+
+Arguments:
++ PHP array of data to send on server
+
+Stores:
++ attachment uid
+
+Always takes stored:
++ uid
+
+Automatically uses:
++ callLogin
++ callResumeSession
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
-
-#### Short information
-
-| Method                   | Arguments              | Loads                         | Saves                                                                                     |
-|--------------------------|------------------------|-------------------------------|-------------------------------------------------------------------------------------------|
-| callStartSession         | array $data, $repeat   | applicationHash (if provided) | Sets sequence to  0 ; sets attachmentUids to empty array; applicationHash, publicKey, uid |
-| callFinishSession        | array $data (optional) | uid, sequence                 |                                                                                           |
-| callCreateAttachment     | array $data            | uid                           | Pushes attachmentUid in attachmentUids array                                              |
-| callFinishStep           | array $data            | uid, sequence                 | Adds 1 do sequence                                                                        |
-| callGetApplication       | array $data            | uid, applicationHash          | applicationHash                                                                           |
-| callResumeSession        | array $data, $repeat   | uid                           | publicKey, uid                                                                            |
-| callPrefetchApplications | array $data, $repeat   |                               |                                                                                           |
-
 
 ## Class ScoresAPIController 
 
@@ -211,6 +271,8 @@ You can find them in Tests folder:
 
 + AJAPITests.php
 + ScoresAPITests.php
+
+***It s recommended to take in account that AJAPITests uses child class to set some attributes.***
 
 These are phpunit tests and must be started via phpunit.\
 Basically there are two ways to execute tests. Normally you can provide an additional argument in command line while starting the test (so it is parsed by PHP as $argv[2]).\

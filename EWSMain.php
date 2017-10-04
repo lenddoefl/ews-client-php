@@ -4,8 +4,7 @@ namespace {
     $paths = [
         __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'autoload.php',
         __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
-        __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',
-        'vendor', ".."];
+        __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php',];
     foreach ($paths as $path) {
         if (file_exists($path)) {
             require $path;
@@ -30,6 +29,8 @@ namespace EFLGlobal\EWSClient
 
         protected $authToken64;
         protected $reqToken64;
+
+        abstract protected function extractTokensFromLoginResponse($login);
 
         //Methods setIdentifier, setDecryptionKey, setEncryptionKey lets user to set keys and identifier if they
         //weren't set in the controller.
@@ -133,19 +134,6 @@ namespace EFLGlobal\EWSClient
             $this->authToken64 = $authToken64;
             $this->reqToken64 = $reqToken64;
 
-            return [$authToken64, $reqToken64];
-        }
-
-        protected function extractTokensFromLoginResponse($login)
-        {
-            if (!isset($login->data)) {
-                $authToken64 = $login->authToken;
-                $reqToken64 = $login->reqToken;
-            }
-            else {
-                $authToken64 = $login->data->authToken;
-                $reqToken64 = $login->data->reqToken;
-            }
             return [$authToken64, $reqToken64];
         }
 

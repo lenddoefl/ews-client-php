@@ -98,6 +98,7 @@ echo $requestApplicantJourney->callStartSession($data);
 //We update $data so it is now contains minimal data to resume session.
 unset($data["application"]);
 
+$requestApplicantJourney->callLogin();
 echo "<br><br>CallResumeSession method returns: <br>";
 echo $requestApplicantJourney->callResumeSession($data);
 

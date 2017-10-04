@@ -21,6 +21,8 @@ namespace EFLGlobal\EWSClient
         protected $errorUidNotSet = "You don't have active uid. Probably you haven't started session.";
         protected $errorUidIsSet = "You have active uid. Probably you have already started session.";
 
+        protected $applicant = [];
+
         public function getUid()
         {
             return $this->uid;
@@ -44,6 +46,16 @@ namespace EFLGlobal\EWSClient
         public function setUid($uid)
         {
             $this->uid = $uid;
+        }
+
+        public function getApplicant()
+        {
+            return $this->applicant;
+        }
+
+        public function setApplicant($applicant)
+        {
+            $this->applicant = $applicant;
         }
 
         function __construct($url , $identifier, $decryptionKey, $encryptionKey)
@@ -75,6 +87,7 @@ namespace EFLGlobal\EWSClient
             if (isset($this->applicationHash)){
                 $data['applicationHash'] = $this->applicationHash;
             }
+            $this->applicant = $data["applicant"];
 
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -101,7 +114,7 @@ namespace EFLGlobal\EWSClient
             }
         }
 
-        public function callFinishSession ($data = [])
+        public function callFinishSession ($data = [], $repeat=true)
         {
             try {
                 if (!isset($this->uid)) {
@@ -116,7 +129,7 @@ namespace EFLGlobal\EWSClient
 
             $data['uid'] = $this->uid;
 
-            if (!isset($data->sequence)){
+            if (!isset($data["sequence"])){
                 $data['sequence'] = $this->sequence;
             }
 
@@ -130,11 +143,18 @@ namespace EFLGlobal\EWSClient
                 $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return static::getError($e);
+                if (($e->getCode() == 403) and ($repeat===true)) {
+                    $this->callLogin();
+                    $this->callResumeSession();
+                    return $this->callFinishSession($data, false);
+                }
+                else {
+                    return static::getError($e);
+                }
             }
         }
 
-        public function callCreateAttachment ($data)
+        public function callCreateAttachment ($data, $repeat=true)
         {
             try {
                 if (!isset($this->uid)) {
@@ -160,12 +180,19 @@ namespace EFLGlobal\EWSClient
                 array_push($this->attachmentUids, \GuzzleHttp\json_decode($response)->data->attachmentUid);
                 return $response;
             } catch (\Exception $e) {
-                return static::getError($e);
+                if (($e->getCode() == 403) and ($repeat===true)) {
+                    $this->callLogin();
+                    $this->callResumeSession();
+                    return $this->callCreateAttachment($data, false);
+                }
+                else {
+                    return static::getError($e);
+                }
             }
 
         }
 
-        public function callFinishStep ($data)
+        public function callFinishStep ($data, $repeat=true)
         {
             try {
                 if (!isset($this->uid)) {
@@ -180,7 +207,7 @@ namespace EFLGlobal\EWSClient
 
             $data['uid'] = $this->uid;
 
-            if (!isset($data->sequence)){
+            if (!isset($data["sequence"])){
                 $data['sequence'] = $this->sequence;
             }
 
@@ -195,11 +222,18 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return static::getError($e);
+                if (($e->getCode() == 403) and ($repeat===true)) {
+                    $this->callLogin();
+                    $this->callResumeSession();
+                    return $this->callFinishStep($data, false);
+                }
+                else {
+                    return static::getError($e);
+                }
             }
         }
 
-        public function callGetApplication ($data)
+        public function callGetApplication ($data, $repeat=true)
         {
             try {
                 if (!isset($this->uid)) {
@@ -225,7 +259,14 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                return static::getError($e);
+                if (($e->getCode() == 403) and ($repeat===true)) {
+                    $this->callLogin();
+                    $this->callResumeSession();
+                    return $this->callGetApplication($data, false);
+                }
+                else {
+                    return static::getError($e);
+                }
             }
         }
 
@@ -255,7 +296,7 @@ namespace EFLGlobal\EWSClient
             }
         }
 
-        public function callResumeSession ($data, $repeat=true)
+        public function callResumeSession ($data=[])
         {
             try {
                 if (!isset($this->uid)) {
@@ -266,13 +307,12 @@ namespace EFLGlobal\EWSClient
                 return static::getError($e);
             }
 
-            if ((!isset($this->authToken64)) and ($repeat==true)) {
-                $this->callLogin();
-            }
-
             $url = $this->url . '/resumeSession.json';
 
             $data['uid'] = $this->uid;
+            if (!isset($data["applicant"])){
+                $data['applicant'] = $this->applicant;
+            }
 
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -288,14 +328,14 @@ namespace EFLGlobal\EWSClient
 
                 return $response;
             } catch (\Exception $e) {
-                if (($e->getCode() == 403) and ($repeat===true)) {
-                    $this->callLogin();
-                    return $this->callResumeSession($data, false);
-                }
-                else {
-                    return static::getError($e);
-                }
+                return static::getError($e);
             }
+        }
+
+
+        protected function extractTokensFromLoginResponse($login)
+        {
+            return [$login->data->authToken, $login->data->reqToken];
         }
     }
 }
