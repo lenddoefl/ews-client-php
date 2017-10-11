@@ -1,4 +1,6 @@
 <?php
+
+include_once  __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .'autoload.php';
 require_once __DIR__ . DIRECTORY_SEPARATOR . "ChildClasses" . DIRECTORY_SEPARATOR . "AJAPIChild.php";
 
 use GuzzleHttp\Psr7\Response;

@@ -1,6 +1,8 @@
 <?php
-include __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "AJAPIController.php";
-include __DIR__ . "/ChildClasses/AJAPIChildInt.php";
+
+include_once  __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .'autoload.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "AJAPIController.php";
+require_once __DIR__ . "/ChildClasses/AJAPIChildInt.php";
 use EFLGlobal\EWSClient\AJAPIController;
 use PHPUnit\Framework\TestCase;
 
