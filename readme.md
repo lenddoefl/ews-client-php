@@ -5,7 +5,7 @@ AJAPIDemo.php and ScoresAPIDemo.php are executable files that can show you how d
 
 ## Installation
 
-You can just copy files from the repository 
+You can just copy files from the repository (and include autoload.php any way you prefer) 
 
 **OR**
 
@@ -109,18 +109,15 @@ Variables:
 + $uid;
 + $sequence;
 + $attachmentUids;
-+ $applicant;
 
 To get variables class uses following public methods:
 + getUid()
 + getPublicKey()
 + getAttachmentUids()
 + getApplicationHash()
-+ getApplicant()
 
 To set variables class uses following public method:
 + setUid($uid)
-+ setApplicant($applicant)
 
 ### Main methods
 
@@ -139,7 +136,6 @@ Stores:
 + uid
 + public key
 + application hash
-+ applicant
 
 Sets sequence to 0.
 
@@ -196,6 +192,7 @@ Always takes stored:
 + uid
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).\
+Also it sets empty applicant object if onw awsn't provide.
 
 ##### callGetApplication($data)
 Method connects to getApplication endpoint and returns JSON answer.
@@ -303,6 +300,8 @@ You can start them with phpunit without an additional arguments in the command l
 
 + AJAPIUnitTests.php
 + ScoresAPIUnitTests.php
+
+***Pay attention that tests finds autoload.php (and with it guzzle and phpunit) if client is installed in vendor directory.*** 
 
 ## Additional features
 
