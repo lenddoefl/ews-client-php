@@ -1,6 +1,9 @@
 <?php
 
-include_once  __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .'autoload.php';
+if (strpos(__DIR__, DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'EFLGlobal'.DIRECTORY_SEPARATOR.'EWSClient'.DIRECTORY_SEPARATOR.'Tests'))
+{
+    include_once  __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .'autoload.php';
+}
 require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'ScoresAPIController.php';
 use EFLGlobal\EWSClient\ScoresAPIController;
 use PHPUnit\Framework\TestCase;
