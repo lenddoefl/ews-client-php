@@ -21,8 +21,6 @@ namespace EFLGlobal\EWSClient
         protected $errorUidNotSet = "You don't have active uid. Probably you haven't started session.";
         protected $errorUidIsSet = "You have active uid. Probably you have already started session.";
 
-        protected $applicant = [];
-
         public function getUid()
         {
             return $this->uid;
@@ -46,16 +44,6 @@ namespace EFLGlobal\EWSClient
         public function setUid($uid)
         {
             $this->uid = $uid;
-        }
-
-        public function getApplicant()
-        {
-            return $this->applicant;
-        }
-
-        public function setApplicant($applicant)
-        {
-            $this->applicant = $applicant;
         }
 
         function __construct($url , $identifier, $decryptionKey, $encryptionKey)
@@ -87,7 +75,6 @@ namespace EFLGlobal\EWSClient
             if (isset($this->applicationHash)){
                 $data['applicationHash'] = $this->applicationHash;
             }
-            $this->applicant = $data["applicant"];
 
             $post = [
                 "authToken"=>  $this->authToken64,
@@ -311,7 +298,7 @@ namespace EFLGlobal\EWSClient
 
             $data['uid'] = $this->uid;
             if (!isset($data["applicant"])){
-                $data['applicant'] = $this->applicant;
+                $data['applicant'] = new \stdClass();
             }
 
             $post = [

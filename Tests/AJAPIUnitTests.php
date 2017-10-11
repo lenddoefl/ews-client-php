@@ -1,4 +1,9 @@
 <?php
+
+if (strpos(__DIR__, DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'EFLGlobal'.DIRECTORY_SEPARATOR.'EWSClient'.DIRECTORY_SEPARATOR.'Tests'))
+{
+    include_once  __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR .'autoload.php';
+}
 require_once __DIR__ . DIRECTORY_SEPARATOR . "ChildClasses" . DIRECTORY_SEPARATOR . "AJAPIChild.php";
 
 use GuzzleHttp\Psr7\Response;
@@ -112,7 +117,6 @@ class AJAPIUnitTests extends TestCase
         $this->assertEquals($data1, $response, 'Method callStartSession returns wrong result.');
         $this->assertAttributeEquals("nuYt+Y0sobcPXlYUgyQgkg==", 'authToken64', $testInstance, "Method encoderDecoder doesn't store authToken64.");
         $this->assertAttributeEquals("8zhoCt9TzaxSCPlNLQ5rMDlgpNTWbPvDcKj+6qrsLFUEs/kNL/dlVAkAm/BjW1wy/MZAH3w+F0HYqt0xABXIkg==", 'reqToken64', $testInstance, "Method encoderDecoder doesn't store reqToken64.");
-        $this->assertAttributeEquals($requestData["applicant"], 'applicant', $testInstance, "Method encoderDecoder doesn't store applicant.");
     }
 
     public function testCallStartSessionWithUidNotEmpty()
