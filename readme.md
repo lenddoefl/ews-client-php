@@ -5,7 +5,7 @@ AJAPIDemo.php and ScoresAPIDemo.php are executable files that can show you how d
 
 ## Installation
 
-You can just copy files from the repository (and include autoload.php any way you prefer) 
+You can just copy files from the repository (and include autoload.php any way you prefer)
 
 **OR**
 
@@ -44,17 +44,17 @@ It is also possible to get variables using method getVariableName, or set some o
 
 You do not need to use method callLogin to login to API. It will be called in callStartSession and callPrefetchApplications methods automatically.
 Methods callCreateAttachment, callFinishSession, callFinishStep, callGetApplication will automatically use login and callResumeSession.
-automatically used methods still can be used manually though. 
+automatically used methods still can be used manually though.
 
 As a general rule, calling most methods you have to provide array with data you want to send. In some cases, if data wasn't provided it can be set automatically.
 
 Uid is always set automatically and override previous uid if it was set manually. Still uid is pretty tricky. 
 Each method checks to see if is set in instance. If uid is set when it is expected to be not set (or vice versa), an exception is thrown.
-Details of this behavior will be explained below. 
+Details of this behavior will be explained below.
 
 As a result you will get pure JSON from API endpoint. Also instance will receive several properties you can access directly through getters.
 
-## EWSPMain class 
+## EWSPMain class
 
 This class provides methods you can use with both child-classes AJAPIController and ScoresAPIController.
 This is an abstract class.
@@ -77,7 +77,7 @@ To get variables class uses following public methods:
 + getIdentifier ()
 + getDecryptionKey ()
 + getEncryptionKey ()
-+ getURL () 
++ getURL ()
 
 Constructor of this class receives 4 arguments: $url , $identifier, $decryptionKey, $encryptionKey.
 
@@ -88,7 +88,7 @@ Users do not normally have access to this method.
 
 To process received tokens class uses protected function *encoderDecoder* which receives information from callLogin method, process tokens and stores them into variables.
 EncoderDecoder uses child-classes method to get login information frm different API. 
-That means that every child class needs to have method *extractTokensFromLoginResponse*. 
+That means that every child class needs to have method *extractTokensFromLoginResponse*.
 
 To handle errors class uses protected static function *handleError*. 
 It was encapsulated in case of further development by third party to provide a better way for handling errors.
@@ -99,7 +99,7 @@ Method also calls protected method encoderDecoder which calls protected method e
 Needs no arguments.\
 This method is called by the client automatically and in most cases you don't need to use it.
 
-## Class AJAPIController 
+## Class AJAPIController
 
 This class extends EWSPMain. You can use it to connect to ApplicantJourney API.
 
@@ -123,11 +123,11 @@ To set variables class uses following public method:
 
 These methods need to be provided with single argument - PHP array representing data (*i.e. in API's documentation's "data" value*) which will be sent to API.
 For callFinishSession method data is not necessary.
-Methods can take data from stored variables and, after receiving a valid response, also store it. 
+Methods can take data from stored variables and, after receiving a valid response, also store it.
 
-Pay attention that some methods may receive second argument $repeat. It may be false or true. 
+Pay attention that some methods may receive second argument $repeat. It may be false or true.
 By default it is true that means that if, by some reason, server returns "403 FORBIDDEN" error, method will use callLogin or callLogin with callResumeSession and try again. 
-This argument will be changed to false to be sure that method will not raise an infinite loop. 
+This argument will be changed to false to be sure that method will not raise an infinite loop.
 
 ##### callStartSession($data)
 Method connects to startSession endpoint and returns JSON answer.
@@ -186,13 +186,13 @@ Stores:
 + public key
 
 Arguments:
-+ PHP array of data to send on server (optional) 
++ PHP array of data to send on server (optional)
 
 Always takes stored:
 + uid
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).\
-Also it sets empty applicant object if onw awsn't provide.
+Also it sets empty applicant object if not provided.
 
 ##### callGetApplication($data)
 Method connects to getApplication endpoint and returns JSON answer.
@@ -245,7 +245,7 @@ Automatically uses:
 
 Method cannot be called if session haven't been started (i.o. uid is not set in instance).
 
-## Class ScoresAPIController 
+## Class ScoresAPIController
 
 This class extends EWSPMain. You can use it to connect to Scores API.
 
@@ -269,7 +269,7 @@ You can find them in Tests folder:
 + AJAPITests.php
 + ScoresAPITests.php
 
-***It s recommended to take in account that AJAPITests uses child class to set some attributes.***
+**It is recommended to take in account that AJAPITests uses child class to set some attributes.**
 
 These are phpunit tests and must be started via phpunit.\
 Basically there are two ways to execute tests. Normally you can provide an additional argument in command line while starting the test (so it is parsed by PHP as $argv[2]).\
@@ -288,12 +288,12 @@ https://uat-external.eflglobal.com/api/v2/applicant_journey/
 
 Your command line code is something like:
 
-> phpunit /absolute/path/to/ewsclient/Tests/AJAPITests.php /absolute/path/to/your/project/TestingData/environment.txt
+> phpunit /absolute/path/to/ews-client-php/Tests/AJAPITests.php /absolute/path/to/your/project/TestingData/environment.txt
 
 Another way, and **it is not recommended**, you can store keys in TestKeys/ApplicantJourney subdirectory in directory of ews-client-php.\
 In that case you don't need provide additional argument in command line.
 
-***Pay attention that Scores API may return "Too many requests" error in case of frequent requests.***
+**Pay attention that Scores API may return "Too many requests" error in case of frequent requests.**
 
 Also you can perform unit tests which work offline but use child classes of both controller classes.\
 You can start them with phpunit without an additional arguments in the command line. Files are:
@@ -301,7 +301,7 @@ You can start them with phpunit without an additional arguments in the command l
 + AJAPIUnitTests.php
 + ScoresAPIUnitTests.php
 
-***Pay attention that tests finds autoload.php (and with it guzzle and phpunit) if client is installed in vendor directory.*** 
+**Pay attention that tests finds autoload.php (and with it guzzle and phpunit) if client is installed in vendor directory.**
 
 ## Additional features
 
@@ -319,7 +319,7 @@ You can also execute command-line based files in Demos folder (Demos/AJAPIComman
   - path to identifier file;
   - path to decryption key file;
   - path to encryption key file;
-  - in case of AJAPI you need to provide 5-th argument - application name.
+  - in case of AJAPI you need to provide 5th argument - application name.
   
 Your command line will be something like this:
 
@@ -328,4 +328,3 @@ Your command line will be something like this:
 or this:
 
 > php ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' '/absolute/path/to/your/keys/identifier.txt' '/absolute/path/to/your/keys/decryption.key' '/absolute/path/to/your/keys/encryption.key'
-
