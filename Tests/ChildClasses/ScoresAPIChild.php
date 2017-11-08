@@ -1,7 +1,9 @@
 <?php
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "ScoresAPIController.php";
+require_once 'vendor/autoload.php';
+
 use \EFLGlobal\EWSClient\ScoresAPIController;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
