@@ -1,15 +1,10 @@
 <?php
 
-namespace {
-    require 'vendor/autoload.php';
-}
-
-
-namespace EWSPHPClient
+namespace EFLGlobal\EWSClient
 {
     use GuzzleHttp\Client;
 
-    abstract class EWSPMain
+    abstract class EWSMain
     {
         protected $identifier;
         protected $decryptionKey;
@@ -19,6 +14,8 @@ namespace EWSPHPClient
 
         protected $authToken64;
         protected $reqToken64;
+
+        abstract protected function extractTokensFromLoginResponse($login);
 
         //Methods setIdentifier, setDecryptionKey, setEncryptionKey lets user to set keys and identifier if they
         //weren't set in the controller.
@@ -93,13 +90,13 @@ namespace EWSPHPClient
             $url = $this->url . '/login.json';
             $post = [ "identifier"=> $this->identifier ];
             try{
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 $this->encoderDecoder($response);
 
                 return $response;
             }
             catch (\Exception $e) {
-                return self::handleError($e);
+                return static::getError($e);
             }
 
         }
@@ -108,14 +105,15 @@ namespace EWSPHPClient
         {
             $login = \GuzzleHttp\json_decode($login);
 
-            $authToken64 = $login->data->authToken;
+            $tokens = $this->extractTokensFromLoginResponse($login);
+            $authToken64 = $tokens[0];
+            $reqToken64 = $tokens[1];
+
             $authToken = base64_decode($authToken64);
-
-            $reqToken64 = $login->data->reqToken;
-
             $reqToken = base64_decode($reqToken64);
-            $reqToken = openssl_decrypt($reqToken,'AES-128-CBC' ,$this->decryptionKey, OPENSSL_RAW_DATA, $authToken);
-            $reqToken = openssl_encrypt($reqToken,'AES-128-CBC' ,$this->encryptionKey, OPENSSL_RAW_DATA, $authToken);
+
+            $reqToken = openssl_decrypt($reqToken,'AES-128-CBC', $this->decryptionKey, OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING, $authToken);
+            $reqToken = openssl_encrypt($reqToken,'AES-128-CBC', $this->encryptionKey, OPENSSL_RAW_DATA|OPENSSL_ZERO_PADDING, $authToken);
             $reqToken64 = base64_encode($reqToken);
 
             $this->authToken64 = $authToken64;
@@ -124,7 +122,7 @@ namespace EWSPHPClient
             return [$authToken64, $reqToken64];
         }
 
-        protected static function handleError($error)
+        protected static function getError($error)
         {
             return $error;
         }

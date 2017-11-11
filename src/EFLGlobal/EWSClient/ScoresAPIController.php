@@ -1,42 +1,48 @@
 <?php
 namespace {
-    include_once 'EWSPMain.php';
+    include_once 'EWSMain.php';
 }
 
-namespace EWSPHPClient
+namespace EFLGlobal\EWSClient
 {
-    class ScoresController extends EWSPMain
+    class ScoresAPIController extends EWSMain
     {
         public function callDateQuery ($date)
         {
-            $url = $this->url . 'dateQuery.json';
+            $url = $this->url . '/dateQuery.json';
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
                 "dateQuery"=>$date
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return static::getError($e);
             }
         }
 
         public function callSubject ($subject)
         {
-            $url = $this->url . 'subject.json';
+            $url = $this->url . '/subject.json';
             $post = [
                 "authToken"=>  $this->authToken64,
                 "reqToken"=>   $this->reqToken64,
                 "subjects"=>$subject
             ];
             try {
-                $response = self::sendRequest($url, $post);
+                $response = static::sendRequest($url, $post);
                 return $response;
             } catch (\Exception $e) {
-                return self::handleError($e);
+                return static::getError($e);
             }
+        }
+
+
+        protected function extractTokensFromLoginResponse($login)
+        {
+            return [$login->authToken, $login->reqToken];
         }
     }
 }

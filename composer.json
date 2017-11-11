@@ -1,5 +1,21 @@
 {
-    "require": {
-        "guzzlehttp/guzzle": "^6.3"
+  "name": "EFLGlobal/EWSClient",
+  "description": "EFLGlobal's PHP client for AJ and Scores APIs",
+  "version": "dev-master",
+
+  "dist": {
+    "url": "http://github.com/eflglobal/ews-client-php",
+    "type": "git"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "EFLGlobal\\EWSClient\\": "src/EFLGlobal/EWSClient"
     }
+  }
 }
