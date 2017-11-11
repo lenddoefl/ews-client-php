@@ -1,7 +1,7 @@
 {
   "name": "EFLGlobal/EWSClient",
   "description": "EFLGlobal's PHP client for AJ and Scores APIs",
-  "version": "dev-master",
+  "version": "1.0.0",
 
   "dist": {
     "url": "http://github.com/eflglobal/ews-client-php",
