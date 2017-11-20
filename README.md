@@ -185,6 +185,35 @@ Arguments:
     Note that the double brackets (`[[` and `]]`) are intentional.
 
 ## Additional Features
+### Unit/Functional Tests
+The library ships with a complete test suite.  These tests can be used to verify the functionality of the library, and you can use them as additional documentation (in particular, reading the assertions in each test is a great way to see exactly what the structure of each response payload will be).
+
+To run the unit tests, you will need to install [`phpunit`](https://phpunit.de/) (this will be installed automatically for you if you `php composer.phar install --dev`).
+
+Execute the unit tests like this:
+
+```
+> phpunit Tests/AJAPIUnitTests.php Tests/ScoresAPIUnitTests.php
+```
+
+To run the functional tests requires a little extra preparation.  You will need to install API keys that the client can use to send real API requests and verify the response.
+
+Install API keys into `TestKeys/ApplicantJourney` and `TestKeys/Scores` (relative to current directory).
+
+Example:
+
+```
+# Applicant Journey API Functional Tests
+> mkdir -p TestKeys/ApplicantJourney
+> cp /path/to/applicant_journey/{identifier.txt,decryption.key,encryption.key} TestKeys/ApplicantJourney/
+> phpunit Tests/AJAPITests.php
+
+# Scores API Functional Tests
+> mkdir -p TestKeys/Scores
+> cp /path/to/scores/{identifier.txt,decryption.key,encryption.key} TestKeys/Scores/
+> phpunit Tests/ScoresAPITests.php
+```
+
 ### Demos
 In Demos directory you can find demo files (`Demos/AJAPIDemo.php`, `Demos/ScoresAPIDemo.php`). They show how to access methods of both client classes.
 
