@@ -1,30 +1,35 @@
-# EFL Web Services PHP Client
-This library provides a client that you can integrate into your PHP applications to connect to EFL Web Services, including Applicant Journey and Scores APIs.
+# EFL Web Services PHP Clients
+This library provides a set of clients that you can integrate into your PHP applications to connect to EFL Web Services, including Applicant Journey and Scores APIs.
 
 ## Installation
-**Compatibility:** EWS clients have been tested for compatibility with PHP 7.  Earlier versions of PHP are not supported.
+**Compatibility:** EWS clients have been tested for compatibility with ["Active Support" versions of PHP](http://php.net/supported-versions.php).  Earlier versions of PHP (including "Security Fixes Only" versions) are not supported.
+
+**Dependencies:** [Git](https://git-scm.com/) is required to install the EWS clients library.
 
 ### Using Composer (Recommended)
-To install this library using [Composer](https://getcomposer.org/), add the following to your project's `composer.json` file:
+To install this library using [Composer](https://getcomposer.org/), run the following commands:
 
-```json
-{
-  "repositories": [
-    {
-      "url": "https://github.com/eflglobal/ews-client-php",
-      "type": "git"
-    }
-  ],
-  
-  "require": {
-    "EFLGlobal/EWSClient" : "dev-master"
-  }
-}
-```
+1. Install Composer (see [instructions](https://getcomposer.org/download/)).  Skip this step if Composer is already installed.
+2. Set up `composer.json`.  Skip this step if your project already has a `composer.json` file.
+   ```
+   > php composer.phar init
+   ```
 
-Execute `php composer.phar install --no-dev`, and you should be good to go.
+   **Important:** when it asks if you would like to define dependencies interactively, type "no".
+
+3. Configure `composer.json` to use the `ews-client-php` repository:
+   ```
+   > php composer.phar config repositories.EWSClient '{"type": "git", "url": "https://github.com/eflglobal/ews-client-php"}' 
+   ```
+
+4. Configure `composer.json` to install the EWS clients as a dependency:
+   ```
+   > php composer.phar require 'EFLGlobal/EWSClient' 'dev-master'
+   ```
 
 In order to use EWS clients, ensure that you `require 'vendor/autoload.php';` in your application.  See <https://getcomposer.org/doc/01-basic-usage.md#autoloading> for more information.
+
+**Tip:** `composer.json` and `composer.lock` should be checked into your project's source control system (e.g., `git add composer.json composer.lock`).  `composer.phar` should not be checked in (e.g., add it to `.gitignore`).
 
 ### Manually
 For a manual installation, complete the following steps:
