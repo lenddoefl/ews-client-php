@@ -27,7 +27,7 @@ To install this library using [Composer](https://getcomposer.org/), run the foll
    > php composer.phar require 'EFLGlobal/EWSClient' 'dev-master'
    ```
 
-In order to use EWS clients, ensure that you `require 'vendor/autoload.php';` in your application.  See <https://getcomposer.org/doc/01-basic-usage.md#autoloading> for more information.
+In order to use EWS clients, ensure that you `require 'vendor/autoload.php';` in your application (see [instructions](https://getcomposer.org/doc/01-basic-usage.md#autoloading)).
 
 **Tip:** `composer.json` and `composer.lock` should be checked into your project's source control system (e.g., `git add composer.json composer.lock`).  `composer.phar` should not be checked in (e.g., add it to `.gitignore`).
 
