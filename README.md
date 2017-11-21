@@ -6,21 +6,23 @@ This library provides a client that you can integrate into your PHP applications
 To install this library using [Composer](https://getcomposer.org/), add the following to your project's `composer.json` file:
 
 ```json
-"repositories": [
-  {
-    "url": "https://github.com/eflglobal/ews-client-php",
-    "type": "git"
+{
+  "repositories": [
+    {
+      "url": "https://github.com/eflglobal/ews-client-php",
+      "type": "git"
+    }
+  ],
+  
+  "require": {
+    "EFLGlobal/EWSClient" : "dev-master"
   }
-],
-
-"require": {
-  "eflglobal/ewsclient" : "*"
 }
 ```
 
 Execute `php composer.phar install`, and you should be good to go.
 
-In order to use EWS clients, ensure that you `require 'vendor/autoload.php'` in your application.  See <https://getcomposer.org/doc/01-basic-usage.md#autoloading> for more information.
+In order to use EWS clients, ensure that you `require 'vendor/autoload.php';` in your application.  See <https://getcomposer.org/doc/01-basic-usage.md#autoloading> for more information.
 
 ### Manually
 For a manual installation, complete the following steps:
