@@ -230,15 +230,15 @@ Example:
 If you get an error similar to "command not found: phpunit", refer to <https://stackoverflow.com/q/26753674/> for ways to fix it.
 
 ### Demos
-In Demos directory you can find demo files (`Demos/AJAPIDemo.php`, `Demos/ScoresAPIDemo.php`). They show how to access methods of both client classes.
+Once the library is installed, you will find example scripts in the `vendor/EFLGlobal/EWSClient/Demos` directory that show how to get started with different EWS clients.
 
 **Important:** the demos will only function if the library was installed using Composer.  Regardless, you can still reference the demos to see examples of how to use the library in your application. 
 
 ### Command-Line Demos
-You can also execute command-line based files in Demos folder (`Demos/AJAPICommand.php`, `Demos/ScoresAPICommand.php`) to try clients.
+You can also execute command-line based files in `Demos` directory to try clients.
 
 #### Applicant Journey API
-To execute the Applicant Journey API Command-Line Demo, invoke the `Demos/AJAPICommand.php` script and provide the following arguments:
+To execute the Applicant Journey API Command-Line Demo, invoke the `vendor/EFLGlobal/EWSClient/Demos/AJAPICommand.php` script and provide the following arguments:
 
 1. URL path to API:
     - For testing: `'https://api-uat-external.eflglobal.com/api/v2/applicant_journey/'`
@@ -253,11 +253,11 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```
-> php AJAPICommand.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key' 'sdkExample'
+> php vendor/EFLGlobal/EWSClient/Demos/AJAPICommand.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key' 'sdkExample'
 ```
 
 #### Scores API
-To execute the Scores API Command-Line Demo, invoke the `Demos/ScoresAPICommand.php` script and provide the following arguments:
+To execute the Scores API Command-Line Demo, invoke the `vendor/EFLGlobal/EWSClient/Demos/ScoresAPICommand.php` script and provide the following arguments:
 
 
 1. URL path to API:
@@ -272,5 +272,5 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```
-> php ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key'
+> php vendor/EFLGlobal/EWSClient/Demos/ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key'
 ```
