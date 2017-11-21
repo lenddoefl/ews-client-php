@@ -63,7 +63,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use EFLGlobal\EWSClient\AJAPIController;
 
-$client = AJAPIController(
+$client = new AJAPIController(
   'https://api-uat-external.eflglobal.com/api/v2/applicant_journey/',
   '/path/to/identifier.txt',
   '/path/to/decryption.key',
@@ -168,7 +168,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use EFLGlobal\EWSClient\ScoresAPIController;
 
-$client = ScoresAPIController(
+$client = new ScoresAPIController(
   'https://api-uat-external.eflglobal.com/api/v1/scores/',
   '/path/to/identifier.txt',
   '/path/to/decryption.key',
