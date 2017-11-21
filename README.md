@@ -194,24 +194,18 @@ The library ships with a complete test suite.  These tests can be used to verify
 
 To run the unit tests, you will need to install [`phpunit`](https://phpunit.de/).  You can install this library by running `php composer.phar require --dev phpunit/phpunit '^6.2'`
 
-**If you installed the EWS clients using Composer,** run the unit tests like this:
+**Important:** The unit and functional tests require that the library was installed using Composer.
+
+Run the unit tests like this:
 ```
 > phpunit vendor/EFLGlobal/EWSClient/Tests/AJAPIUnitTests.php vendor/EFLGlobal/EWSClient/Tests/ScoresAPIUnitTests.php
-```
-
-**If you installed the EWS clients manually,** the unit test scripts will be located in the same directory where you cloned the repository.
-
-For example:
-```
-> git clone https://github.com/eflglobal/ews-client-php
-> phpunit ews-client-php/Tests/AJAPIUnitTests.php ews-client-php/Tests/ScoresAPIUnitTests.php
 ```
 
 To run the functional tests requires a little extra preparation.  You will need to install API keys that the client can use to send real API requests and verify the response.
 
 Install API keys into `TestKeys/ApplicantJourney` and `TestKeys/Scores` (relative to current directory).
 
-Example (EWS clients installed using Composer):
+Example:
 ```
 # Applicant Journey API Functional Tests
 > mkdir -p TestKeys/ApplicantJourney
@@ -224,23 +218,12 @@ Example (EWS clients installed using Composer):
 > phpunit vendor/EFLGlobal/EWSClient/Tests/ScoresAPITests.php
 ```
 
-Example (EWS clients installed manually):
-```
-> git clone https://github.com/eflglobal/ews-client-php
-
-# Applicant Journey API Functional Tests
-> mkdir -p TestKeys/ApplicantJourney
-> cp /path/to/applicant_journey/{identifier.txt,decryption.key,encryption.key} TestKeys/ApplicantJourney/
-> phpunit ews-client-php/Tests/AJAPITests.php
-
-# Scores API Functional Tests
-> mkdir -p TestKeys/Scores
-> cp /path/to/scores/{identifier.txt,decryption.key,encryption.key} TestKeys/Scores/
-> phpunit ews-client-php/ScoresAPITests.php
-```
+If you get an error similar to "command not found: phpunit", refer to <https://stackoverflow.com/q/26753674/> for ways to fix it.
 
 ### Demos
 In Demos directory you can find demo files (`Demos/AJAPIDemo.php`, `Demos/ScoresAPIDemo.php`). They show how to access methods of both client classes.
+
+**Important:** the demos will only function if the library was installed using Composer.  Regardless, you can still reference the demos to see examples of how to use the library in your application. 
 
 ### Command-Line Demos
 You can also execute command-line based files in Demos folder (`Demos/AJAPICommand.php`, `Demos/ScoresAPICommand.php`) to try clients.
