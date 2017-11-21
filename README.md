@@ -2,6 +2,8 @@
 This library provides a client that you can integrate into your PHP applications to connect to EFL Web Services, including Applicant Journey and Scores APIs.
 
 ## Installation
+**Compatibility:** EWS clients have been tested for compatibility with PHP 7.  Earlier versions of PHP are not supported.
+
 ### Using Composer
 To install this library using [Composer](https://getcomposer.org/), add the following to your project's `composer.json` file:
 
@@ -20,7 +22,7 @@ To install this library using [Composer](https://getcomposer.org/), add the foll
 }
 ```
 
-Execute `php composer.phar install`, and you should be good to go.
+Execute `php composer.phar install --no-dev`, and you should be good to go.
 
 In order to use EWS clients, ensure that you `require 'vendor/autoload.php';` in your application.  See <https://getcomposer.org/doc/01-basic-usage.md#autoloading> for more information.
 
@@ -190,7 +192,7 @@ Arguments:
 ### Unit/Functional Tests
 The library ships with a complete test suite.  These tests can be used to verify the functionality of the library, and you can use them as additional documentation (in particular, reading the assertions in each test is a great way to see exactly what the structure of each response payload will be).
 
-To run the unit tests, you will need to install [`phpunit`](https://phpunit.de/) (this will be installed automatically for you if you `php composer.phar install --dev`).
+To run the unit tests, you will need to install [`phpunit`](https://phpunit.de/).  You can install this library by running `php composer.phar require --dev phpunit/phpunit '^6.2'`
 
 Execute the unit tests like this:
 
