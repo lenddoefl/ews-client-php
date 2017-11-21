@@ -59,6 +59,7 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```php
+<?php
 require __DIR__ . '/vendor/autoload.php';
 
 use EFLGlobal\EWSClient\AJAPIController;
@@ -164,6 +165,7 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```php
+<?php
 require __DIR__ . '/vendor/autoload.php';
 
 use EFLGlobal\EWSClient\ScoresAPIController;
