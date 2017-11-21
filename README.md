@@ -4,7 +4,7 @@ This library provides a client that you can integrate into your PHP applications
 ## Installation
 **Compatibility:** EWS clients have been tested for compatibility with PHP 7.  Earlier versions of PHP are not supported.
 
-### Using Composer
+### Using Composer (Recommended)
 To install this library using [Composer](https://getcomposer.org/), add the following to your project's `composer.json` file:
 
 ```json
