@@ -194,28 +194,49 @@ The library ships with a complete test suite.  These tests can be used to verify
 
 To run the unit tests, you will need to install [`phpunit`](https://phpunit.de/).  You can install this library by running `php composer.phar require --dev phpunit/phpunit '^6.2'`
 
-Execute the unit tests like this:
-
+**If you installed the EWS clients using Composer,** run the unit tests like this:
 ```
-> phpunit Tests/AJAPIUnitTests.php Tests/ScoresAPIUnitTests.php
+> phpunit vendor/EFLGlobal/EWSClient/Tests/AJAPIUnitTests.php vendor/EFLGlobal/EWSClient/Tests/ScoresAPIUnitTests.php
+```
+
+**If you installed the EWS clients manually,** the unit test scripts will be located in the same directory where you cloned the repository.
+
+For example:
+```
+> git clone https://github.com/eflglobal/ews-client-php
+> phpunit ews-client-php/Tests/AJAPIUnitTests.php ews-client-php/Tests/ScoresAPIUnitTests.php
 ```
 
 To run the functional tests requires a little extra preparation.  You will need to install API keys that the client can use to send real API requests and verify the response.
 
 Install API keys into `TestKeys/ApplicantJourney` and `TestKeys/Scores` (relative to current directory).
 
-Example:
-
+Example (EWS clients installed using Composer):
 ```
 # Applicant Journey API Functional Tests
 > mkdir -p TestKeys/ApplicantJourney
 > cp /path/to/applicant_journey/{identifier.txt,decryption.key,encryption.key} TestKeys/ApplicantJourney/
-> phpunit Tests/AJAPITests.php
+> phpunit vendor/EFLGlobal/EWSClient/Tests/AJAPITests.php
 
 # Scores API Functional Tests
 > mkdir -p TestKeys/Scores
 > cp /path/to/scores/{identifier.txt,decryption.key,encryption.key} TestKeys/Scores/
-> phpunit Tests/ScoresAPITests.php
+> phpunit vendor/EFLGlobal/EWSClient/Tests/ScoresAPITests.php
+```
+
+Example (EWS clients installed manually):
+```
+> git clone https://github.com/eflglobal/ews-client-php
+
+# Applicant Journey API Functional Tests
+> mkdir -p TestKeys/ApplicantJourney
+> cp /path/to/applicant_journey/{identifier.txt,decryption.key,encryption.key} TestKeys/ApplicantJourney/
+> phpunit ews-client-php/Tests/AJAPITests.php
+
+# Scores API Functional Tests
+> mkdir -p TestKeys/Scores
+> cp /path/to/scores/{identifier.txt,decryption.key,encryption.key} TestKeys/Scores/
+> phpunit ews-client-php/ScoresAPITests.php
 ```
 
 ### Demos
