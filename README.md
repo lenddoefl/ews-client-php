@@ -230,7 +230,12 @@ Example:
 If you get an error similar to "command not found: phpunit", refer to <https://stackoverflow.com/q/26753674/> for ways to fix it.
 
 ### Demos
-Once the library is installed, you will find example scripts in the `vendor/EFLGlobal/EWSClient/Demos` directory that show how to get started with different EWS clients.
+The EWS clients library includes example scripts that show how to get started with different EWS clients.
+
+The location of these scripts depends on how the library was installed:
+
+- Installed using Composer:  `vendor/EFLGlobal/EWSClient/Demos`
+- Installed manually: the `ews-client-php/Demos` directory was created when you cloned the Git repository.
 
 **Important:** the demos will only function if the library was installed using Composer.  Regardless, you can still reference the demos to see examples of how to use the library in your application. 
 
