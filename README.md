@@ -10,6 +10,10 @@ This library provides a set of clients that you can integrate into your PHP appl
 To install this library using [Composer](https://getcomposer.org/), run the following commands:
 
 1. Install Composer (see [instructions](https://getcomposer.org/download/)).  Skip this step if Composer is already installed.
+   ```
+   > curl -sS https://getcomposer.org/installer | php
+   ```
+
 2. Set up `composer.json`.  Skip this step if your project already has a `composer.json` file.
    ```
    > php composer.phar init
