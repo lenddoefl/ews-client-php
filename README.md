@@ -1,26 +1,41 @@
-# EFL Web Services PHP Client
-This library provides a client that you can integrate into your PHP applications to connect to EFL Web Services, including Applicant Journey and Scores APIs.
+# EFL Web Services PHP Clients
+This library provides a set of clients that you can integrate into your PHP applications to connect to EFL Web Services, including Applicant Journey and Scores APIs.
 
 ## Installation
-### Using Composer
-To install this library using [Composer](https://getcomposer.org/), add the following to your project's `composer.json` file:
+**Compatibility:** EWS clients have been tested for compatibility with ["Active Support" versions of PHP](http://php.net/supported-versions.php).  Earlier versions of PHP (including "Security Fixes Only" versions) are not supported.
 
-```json
-"repositories": [
-  {
-    "url": "https://github.com/eflglobal/ews-client-php",
-    "type": "git"
-  }
-],
+**Dependencies:** [Git](https://git-scm.com/) is required to install the EWS clients library.
 
-"require": {
-  "eflglobal/ewsclient" : "*"
-}
-```
+### Using Composer (Recommended)
+To install this library using [Composer](https://getcomposer.org/), run the following commands:
 
-Execute `php composer.phar install`, and you should be good to go.
+1. Install Composer (see [instructions](https://getcomposer.org/download/)).  Skip this step if Composer is already installed.
+   ```
+   > curl -sS https://getcomposer.org/installer | php
+   ```
 
-In order to use EWS clients, ensure that you `require 'vendor/autoload.php'` in your application.  See <https://getcomposer.org/doc/01-basic-usage.md#autoloading> for more information.
+2. Set up `composer.json`.  Skip this step if your project already has a `composer.json` file.
+   ```
+   > php composer.phar init
+   ```
+
+   **Important:** when it asks if you would like to define dependencies interactively, type "no".
+
+3. Configure `composer.json` to use the `ews-client-php` repository:
+   ```
+   > php composer.phar config repositories.EWSClient '{"type": "git", "url": "https://github.com/eflglobal/ews-client-php"}' 
+   ```
+
+4. Configure `composer.json` to install the EWS clients as a dependency:
+   ```
+   > php composer.phar require 'EFLGlobal/EWSClient' 'dev-master'
+   ```
+
+   **Note:** This will also install the EWS clients library automatically.
+
+In order to use EWS clients, ensure that you `require 'vendor/autoload.php';` in your application (see [instructions](https://getcomposer.org/doc/01-basic-usage.md#autoloading)).
+
+**Tip:** `composer.json` and `composer.lock` should be checked into your project's source control system (e.g., `git add composer.json composer.lock`).  `composer.phar` should not be checked in (e.g., add it to `.gitignore`).
 
 ### Manually
 For a manual installation, complete the following steps:
@@ -48,11 +63,12 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```php
+<?php
 require __DIR__ . '/vendor/autoload.php';
 
 use EFLGlobal\EWSClient\AJAPIController;
 
-$client = AJAPIController(
+$client = new AJAPIController(
   'https://api-uat-external.eflglobal.com/api/v2/applicant_journey/',
   '/path/to/identifier.txt',
   '/path/to/decryption.key',
@@ -153,11 +169,12 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```php
+<?php
 require __DIR__ . '/vendor/autoload.php';
 
 use EFLGlobal\EWSClient\ScoresAPIController;
 
-$client = ScoresAPIController(
+$client = new ScoresAPIController(
   'https://api-uat-external.eflglobal.com/api/v1/scores/',
   '/path/to/identifier.txt',
   '/path/to/decryption.key',
@@ -188,12 +205,13 @@ Arguments:
 ### Unit/Functional Tests
 The library ships with a complete test suite.  These tests can be used to verify the functionality of the library, and you can use them as additional documentation (in particular, reading the assertions in each test is a great way to see exactly what the structure of each response payload will be).
 
-To run the unit tests, you will need to install [`phpunit`](https://phpunit.de/) (this will be installed automatically for you if you `php composer.phar install --dev`).
+To run the unit tests, you will need to install [`phpunit`](https://phpunit.de/).  You can install this library by running `php composer.phar require --dev phpunit/phpunit '^6.2'`
 
-Execute the unit tests like this:
+**Important:** The unit and functional tests require that the library was installed using Composer.
 
+Run the unit tests like this:
 ```
-> phpunit Tests/AJAPIUnitTests.php Tests/ScoresAPIUnitTests.php
+> phpunit vendor/EFLGlobal/EWSClient/Tests/AJAPIUnitTests.php vendor/EFLGlobal/EWSClient/Tests/ScoresAPIUnitTests.php
 ```
 
 To run the functional tests requires a little extra preparation.  You will need to install API keys that the client can use to send real API requests and verify the response.
@@ -201,27 +219,35 @@ To run the functional tests requires a little extra preparation.  You will need 
 Install API keys into `TestKeys/ApplicantJourney` and `TestKeys/Scores` (relative to current directory).
 
 Example:
-
 ```
 # Applicant Journey API Functional Tests
 > mkdir -p TestKeys/ApplicantJourney
 > cp /path/to/applicant_journey/{identifier.txt,decryption.key,encryption.key} TestKeys/ApplicantJourney/
-> phpunit Tests/AJAPITests.php
+> phpunit vendor/EFLGlobal/EWSClient/Tests/AJAPITests.php
 
 # Scores API Functional Tests
 > mkdir -p TestKeys/Scores
 > cp /path/to/scores/{identifier.txt,decryption.key,encryption.key} TestKeys/Scores/
-> phpunit Tests/ScoresAPITests.php
+> phpunit vendor/EFLGlobal/EWSClient/Tests/ScoresAPITests.php
 ```
 
+If you get an error similar to "command not found: phpunit", refer to <https://stackoverflow.com/q/26753674/> for ways to fix it.
+
 ### Demos
-In Demos directory you can find demo files (`Demos/AJAPIDemo.php`, `Demos/ScoresAPIDemo.php`). They show how to access methods of both client classes.
+The EWS clients library includes example scripts that show how to get started with different EWS clients.
+
+The location of these scripts depends on how the library was installed:
+
+- Installed using Composer:  `vendor/EFLGlobal/EWSClient/Demos`
+- Installed manually: the `ews-client-php/Demos` directory was created when you cloned the Git repository.
+
+**Important:** the demos will only function if the library was installed using Composer.  Regardless, you can still reference the demos to see examples of how to use the library in your application. 
 
 ### Command-Line Demos
-You can also execute command-line based files in Demos folder (`Demos/AJAPICommand.php`, `Demos/ScoresAPICommand.php`) to try clients.
+You can also execute command-line based files in `Demos` directory to try clients.
 
 #### Applicant Journey API
-To execute the Applicant Journey API Command-Line Demo, invoke the `Demos/AJAPICommand.php` script and provide the following arguments:
+To execute the Applicant Journey API Command-Line Demo, invoke the `vendor/EFLGlobal/EWSClient/Demos/AJAPICommand.php` script and provide the following arguments:
 
 1. URL path to API:
     - For testing: `'https://api-uat-external.eflglobal.com/api/v2/applicant_journey/'`
@@ -236,11 +262,11 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```
-> php AJAPICommand.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key' 'sdkExample'
+> php vendor/EFLGlobal/EWSClient/Demos/AJAPICommand.php 'https://uat-external.eflglobal.com/api/v2/applicant_journey/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key' 'sdkExample'
 ```
 
 #### Scores API
-To execute the Scores API Command-Line Demo, invoke the `Demos/ScoresAPICommand.php` script and provide the following arguments:
+To execute the Scores API Command-Line Demo, invoke the `vendor/EFLGlobal/EWSClient/Demos/ScoresAPICommand.php` script and provide the following arguments:
 
 
 1. URL path to API:
@@ -255,5 +281,5 @@ The `identifier.txt`, `decryption.key` and `encryption.key` files can be found i
 Example:
 
 ```
-> php ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key'
+> php vendor/EFLGlobal/EWSClient/Demos/ScoresAPICommand.php 'https://uat-external.eflglobal.com/api/v1/scores/' '/path/to/identifier.txt' '/path/to/decryption.key' '/path/to/encryption.key'
 ```
